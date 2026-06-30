@@ -1,0 +1,60 @@
+import Link from "next/link"
+import { ArrowUp } from "lucide-react"
+import { GithubIcon as Github, LinkedinIcon as Linkedin, TwitterIcon as Twitter } from "@/components/ui/social-icons"
+
+export default function Footer() {
+  return (
+    <footer className="w-full bg-[#02050c] border-t border-card-border px-6 py-12 md:px-12 mt-auto">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Brand */}
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <Link href="/" className="font-display font-bold text-lg tracking-tight flex items-center gap-1.5">
+            <span className="text-primary font-mono">&lt;</span>
+            <span className="text-white">Alex.R</span>
+            <span className="text-primary font-mono">/&gt;</span>
+          </Link>
+          <p className="text-sm text-muted text-center md:text-left max-w-xs">
+            Designing resilient architectures and immersive interfaces.
+          </p>
+        </div>
+
+        {/* Social Links */}
+        <div className="flex items-center gap-4">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted hover:text-white hover:border-primary transition-all duration-300"
+            aria-label="GitHub"
+          >
+            <Github className="w-4 h-4" />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted hover:text-white hover:border-primary transition-all duration-300"
+            aria-label="LinkedIn"
+          >
+            <Linkedin className="w-4 h-4" />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted hover:text-white hover:border-primary transition-all duration-300"
+            aria-label="Twitter"
+          >
+            <Twitter className="w-4 h-4" />
+          </a>
+        </div>
+
+        {/* Copyright & Scroll To Top */}
+        <div className="flex flex-col items-center md:items-end gap-2 text-sm text-muted">
+          <span>&copy; {new Date().getFullYear()} Alex Rivera. All rights reserved.</span>
+          <span className="text-xs">Built with Next.js 15, Tailwind v4 & Prisma.</span>
+        </div>
+      </div>
+    </footer>
+  )
+}
