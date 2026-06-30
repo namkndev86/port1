@@ -88,7 +88,7 @@ export default function ArchitectureShowcase() {
           <div className="w-full lg:w-2/3 h-[250px] sm:h-[350px] relative border border-card-border/50 rounded-2xl bg-[#030611]/80 p-4">
             
             {/* SVG Connecting Paths */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="grad-line" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#6366f1" stopOpacity="0.4" />
@@ -96,17 +96,17 @@ export default function ArchitectureShowcase() {
                 </linearGradient>
               </defs>
               {/* Path 1: CDN -> Routing */}
-              <line x1="15%" y1="50%" x2="30%" y2="50%" stroke="url(#grad-line)" strokeWidth="2" strokeDasharray="5,5" />
+              <line x1="15" y1="50" x2="30" y2="50" stroke="url(#grad-line)" strokeWidth="0.3" strokeDasharray="1,1" />
               {/* Path 2: Routing -> App */}
-              <line x1="35%" y1="50%" x2="52%" y2="50%" stroke="url(#grad-line)" strokeWidth="2" />
+              <line x1="35" y1="50" x2="52" y2="50" stroke="url(#grad-line)" strokeWidth="0.3" />
               {/* Path 3: App -> Services (split) */}
-              <path d="M 57% 50% Q 64.5% 50% 64.5% 30% T 72% 30%" fill="none" stroke="url(#grad-line)" strokeWidth="2" />
+              <path d="M 57 50 Q 64.5 50 64.5 30 T 72 30" fill="none" stroke="url(#grad-line)" strokeWidth="0.3" />
               {/* Path 4: App -> Prisma (split) */}
-              <path d="M 57% 50% Q 64.5% 50% 64.5% 70% T 72% 70%" fill="none" stroke="url(#grad-line)" strokeWidth="2" />
+              <path d="M 57 50 Q 64.5 50 64.5 70 T 72 70" fill="none" stroke="url(#grad-line)" strokeWidth="0.3" />
               {/* Path 5: Services -> DB */}
-              <path d="M 77% 30% Q 83.5% 30% 83.5% 50% T 90% 50%" fill="none" stroke="url(#grad-line)" strokeWidth="2" />
+              <path d="M 77 30 Q 83.5 30 83.5 50 T 90 50" fill="none" stroke="url(#grad-line)" strokeWidth="0.3" />
               {/* Path 6: Prisma -> DB */}
-              <path d="M 77% 70% Q 83.5% 70% 83.5% 50% T 90% 50%" fill="none" stroke="url(#grad-line)" strokeWidth="2" />
+              <path d="M 77 70 Q 83.5 70 83.5 50 T 90 50" fill="none" stroke="url(#grad-line)" strokeWidth="0.3" />
             </svg>
 
             {/* Nodes */}
