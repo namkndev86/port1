@@ -5,11 +5,15 @@ import { formatDate } from "@/lib/utils"
 import { Experience } from "@prisma/client"
 import { Calendar, MapPin, Briefcase } from "lucide-react"
 
+import { useTranslation } from "@/components/common/locale-provider"
+
 interface ExperienceTimelineProps {
   experiences: Experience[]
 }
 
 export default function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
+  const { t } = useTranslation()
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -40,11 +44,11 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div className="flex flex-col gap-2">
-            <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">Career Journey</span>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">Professional History</h2>
+            <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.experience.subtitle')}</span>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.experience.title')}</h2>
           </div>
           <p className="text-muted text-sm md:text-base max-w-sm">
-            A chronological timeline of roles leading technical initiatives, scaling teams, and engineering software.
+            {t('portfolio.experience.desc')}
           </p>
         </div>
 
@@ -84,7 +88,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                     <div className="flex flex-col sm:items-end gap-1.5 text-xs md:text-sm text-muted">
                       <span className="flex items-center gap-1.5 font-mono">
                         <Calendar className="w-3.5 h-3.5" />
-                        {formatDate(exp.startDate)} &mdash; {exp.current ? "Present" : exp.endDate ? formatDate(exp.endDate) : ""}
+                        {formatDate(exp.startDate)} &mdash; {exp.current ? t('portfolio.experience.current') : exp.endDate ? formatDate(exp.endDate) : ""}
                       </span>
                       {exp.location && (
                         <span className="flex items-center gap-1.5 font-mono">

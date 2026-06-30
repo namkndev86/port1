@@ -1,7 +1,7 @@
 "use client"
 
 import { useActionState } from "react"
-import { loginAction } from "@/app/admin/actions"
+import { loginAction } from "@/app/[locale]/admin/actions"
 import { Loader2, Lock, Mail, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 

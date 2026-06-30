@@ -1,20 +1,28 @@
+"use client"
+
 import Link from "next/link"
-import { ArrowUp } from "lucide-react"
 import { GithubIcon as Github, LinkedinIcon as Linkedin, TwitterIcon as Twitter } from "@/components/ui/social-icons"
+import { useTranslation } from "@/components/common/locale-provider"
 
 export default function Footer() {
+  const { t, locale } = useTranslation()
+
+  const getHref = (path: string) => {
+    return path === "/" ? `/${locale}` : `/${locale}${path}`
+  }
+
   return (
     <footer className="w-full bg-[#02050c] border-t border-card-border px-6 py-12 md:px-12 mt-auto">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Brand */}
         <div className="flex flex-col items-center md:items-start gap-2">
-          <Link href="/" className="font-display font-bold text-lg tracking-tight flex items-center gap-1.5">
+          <Link href={getHref("/")} className="font-display font-bold text-lg tracking-tight flex items-center gap-1.5">
             <span className="text-primary font-mono">&lt;</span>
             <span className="text-white">Alex.R</span>
             <span className="text-primary font-mono">/&gt;</span>
           </Link>
           <p className="text-sm text-muted text-center md:text-left max-w-xs">
-            Designing resilient architectures and immersive interfaces.
+            {t('common.footer.tagline')}
           </p>
         </div>
 
@@ -51,8 +59,8 @@ export default function Footer() {
 
         {/* Copyright & Scroll To Top */}
         <div className="flex flex-col items-center md:items-end gap-2 text-sm text-muted">
-          <span>&copy; {new Date().getFullYear()} Alex Rivera. All rights reserved.</span>
-          <span className="text-xs">Built with Next.js 15, Tailwind v4 & Prisma.</span>
+          <span>&copy; {new Date().getFullYear()} Alex Rivera. {t('common.footer.rights')}</span>
+          <span className="text-xs">{t('common.footer.tech')}</span>
         </div>
       </div>
     </footer>

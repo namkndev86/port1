@@ -1,0 +1,65 @@
+{
+  "home": {
+    "badge": "Kiến trúc sư hệ thống & Nhà thiết kế",
+    "title": "Kiến trúc sư Fullstack & Kỹ sư AI",
+    "tagline": "Thiết kế các hệ thống phân tán hiệu năng cao, dịch vụ đám mây container hóa và trải nghiệm giao diện điện ảnh đầy ấn tượng.",
+    "explore": "Khám phá Hồ sơ",
+    "read_blog": "Đọc bài viết"
+  },
+  "hero": {
+    "overview": "Tổng quan",
+    "title": "Thiết kế các hệ thống mở rộng một cách toàn vẹn.",
+    "cta": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "resume": "Hồ sơ / CV"
+    }
+  },
+  "skills": {
+    "subtitle": "Năng lực chuyên môn",
+    "title": "Kho công nghệ",
+    "description": "Năng lực đã được chứng minh qua kỹ thuật phần mềm, hệ thống thiết kế và các vận hành đám mây mở rộng."
+  },
+  "experience": {
+    "subtitle": "Hành trình",
+    "title": "Kinh nghiệm làm việc",
+    "current": "Hiện tại",
+    "desc": "Lịch sử công việc thực tế, dẫn dắt các dự án kỹ thuật, mở rộng quy mô đội ngũ và phát triển phần mềm."
+  },
+  "projects": {
+    "subtitle": "Hồ sơ dự án",
+    "title": "Dự án nổi bật",
+    "all_projects": "Xem tất cả dự án",
+    "details": "Chi tiết dự án",
+    "demo": "Xem thực tế",
+    "challenges": "Thách thức",
+    "solutions": "Giải pháp kỹ thuật",
+    "stack": "Công nghệ sử dụng"
+  },
+  "architecture": {
+    "subtitle": "Sơ đồ kiến trúc",
+    "title": "Kiến trúc hệ thống",
+    "desc": "Sơ đồ tương tác minh họa cấu trúc fullstack nhiều lớp và bảo mật kiểu dữ liệu từ phía client đến nơi lưu trữ cơ sở dữ liệu.",
+    "empty": "Nhấp vào bất kỳ điểm nào trên sơ đồ tương tác để xem chi tiết kiến trúc, định nghĩa công nghệ và trách nhiệm hoạt động của nó."
+  },
+  "contact": {
+    "subtitle": "Liên hệ",
+    "title": "Hợp tác phát triển",
+    "desc": "Bạn đang cần tư vấn kiến trúc phần mềm, cố vấn mở rộng đội ngũ, hay một chuyên gia triển khai kỹ thuật? Hãy điền thông tin vào cổng bảo mật để gửi yêu cầu.",
+    "email": "Email",
+    "timezone": "Múi giờ",
+    "form": {
+      "name": "Tên của bạn",
+      "email": "Địa chỉ Email",
+      "subject": "Tiêu đề yêu cầu",
+      "subject_placeholder": "Đề xuất hợp tác...",
+      "message": "Nội dung lời nhắn...",
+      "sending": "Đang xử lý...",
+      "send": "Gửi yêu cầu",
+      "send_another": "Gửi tin nhắn khác",
+      "success": "Đã truyền tin nhắn thành công!",
+      "success_desc": "Cảm ơn bạn đã liên hệ. Tin nhắn của bạn đã được ghi lại trong hệ thống, tôi sẽ phản hồi sớm nhất có thể.",
+      "error": "Gửi tin nhắn thất bại."
+    }
+  }
+}

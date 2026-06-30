@@ -5,11 +5,14 @@ import { useState, useTransition } from "react"
 import { Search, Loader2 } from "lucide-react"
 import { BlogCategory } from "@prisma/client"
 
+import { useTranslation } from "@/components/common/locale-provider"
+
 interface BlogSearchFilterProps {
   categories: BlogCategory[]
 }
 
 export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) {
+  const { t, locale } = useTranslation()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -27,7 +30,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
     params.set("page", "1") // Reset to page 1
 
     startTransition(() => {
-      router.push(`/blog?${params.toString()}`)
+      router.push(`/${locale}/blog?${params.toString()}`)
     })
   }
 
@@ -45,7 +48,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
           type="text"
           value={searchVal}
           onChange={(e) => setSearchVal(e.target.value)}
-          placeholder="Search technical publications..."
+          placeholder={t('blog.search')}
           className="w-full pl-9 pr-12 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
         />
         {isPending ? (
@@ -61,8 +64,8 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
           )
         )}
       </form>
-
-      {/* Category Pills list */}
+ 
+       {/* Category Pills list */}
       <div className="flex flex-wrap gap-2.5 items-center">
         <span className="text-xs font-mono text-muted uppercase tracking-wider mr-2">Categories:</span>
         <button
@@ -73,7 +76,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
               : "glass text-muted hover:text-white hover:border-primary/40"
           }`}
         >
-          All Articles
+          {t('blog.categories.all')}
         </button>
 
         {categories.map((cat) => (

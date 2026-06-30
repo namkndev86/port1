@@ -1,0 +1,15 @@
+{
+  "title": "Bài viết kỹ thuật",
+  "subtitle": "Chia sẻ về thiết kế cơ sở dữ liệu, hiệu năng serverless và các hoạt họa frontend.",
+  "search": "Tìm kiếm bài viết...",
+  "read_time": "{minutes} phút đọc",
+  "published_at": "Đã xuất bản {date}",
+  "back": "Quay lại Blog",
+  "no_posts": "Không tìm thấy bài viết nào phù hợp.",
+  "categories": {
+    "all": "Tất cả",
+    "architecture": "Kiến trúc",
+    "engineering": "Kỹ thuật",
+    "design": "Thiết kế"
+  }
+}

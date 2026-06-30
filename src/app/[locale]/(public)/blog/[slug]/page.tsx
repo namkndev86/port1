@@ -4,9 +4,13 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, User, Clock, Tag } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import type { Metadata } from "next"
+import { getDictionary } from "@/i18n/get-dictionary"
+import { LocaleProvider } from "@/components/common/locale-provider"
+import { getTranslation } from "@/i18n/server"
+import type { Locale } from "@/i18n/config"
 
 interface BlogPostDetailPageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }
 
 // Generate dynamic metadata
@@ -28,9 +32,14 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
 }
 
 export default async function BlogPostDetailPage({ params }: BlogPostDetailPageProps) {
-  const { slug } = await params
+  const { locale, slug } = await params
   const blogService = new BlogService()
   let post: any = null
+
+  const commonDict = await getDictionary(locale as Locale, 'common')
+  const blogDict = await getDictionary(locale as Locale, 'blog')
+  const dictionary = { common: commonDict, blog: blogDict }
+  const { t } = await getTranslation(locale as Locale)
 
   try {
     post = await blogService.getPostBySlug(slug)
@@ -47,75 +56,81 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
   const wordCount = post.content.split(/\s+/).length
   const readTime = Math.ceil(wordCount / 200)
 
+  const getHref = (path: string) => {
+    return path === "/" ? `/${locale}` : `/${locale}${path}`
+  }
+
   return (
-    <article className="max-w-3xl mx-auto px-6 py-12 md:py-20 flex flex-col gap-8">
-      {/* Back button */}
-      <div>
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          Back to Articles
-        </Link>
-      </div>
-
-      {/* Header Info */}
-      <div className="flex flex-col gap-4 border-b border-card-border/40 pb-6">
-        <div className="flex flex-wrap items-center gap-3 text-xs text-muted font-mono">
-          <span className="px-2 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary uppercase font-bold text-[10px]">
-            {post.category.name}
-          </span>
-          <span className="flex items-center gap-1">
-            <Calendar className="w-3.5 h-3.5" />
-            {formatDate(post.createdAt)}
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" />
-            {readTime} min read
-          </span>
+    <LocaleProvider locale={locale as Locale} dictionary={dictionary}>
+      <article className="max-w-3xl mx-auto px-6 py-12 md:py-20 flex flex-col gap-8">
+        {/* Back button */}
+        <div>
+          <Link
+            href={getHref("/blog")}
+            className="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {t('blog.back')}
+          </Link>
         </div>
 
-        <h1 className="font-display font-black text-3xl md:text-5xl text-white leading-tight">
-          {post.title}
-        </h1>
-
-        <div className="flex items-center gap-3 mt-2 text-sm text-muted font-mono">
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
-            <User className="w-4 h-4" />
-          </div>
-          <span>Written by Alex Rivera</span>
-        </div>
-      </div>
-
-      {/* Cover Image banner */}
-      {post.coverImage && (
-        <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden border border-card-border glass p-1">
-          <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover rounded-xl" />
-        </div>
-      )}
-
-      {/* Blog content write-up */}
-      <div className="prose prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6 whitespace-pre-line">
-        {post.content}
-      </div>
-
-      {/* Tags list */}
-      {post.tags && post.tags.length > 0 && (
-        <div className="border-t border-card-border/40 pt-6 mt-6 flex items-center gap-2 flex-wrap">
-          <Tag className="w-4 h-4 text-muted shrink-0" />
-          <span className="text-xs text-muted font-mono mr-1">Tags:</span>
-          {post.tags.map((tag: any) => (
-            <span
-              key={tag.id}
-              className="px-2.5 py-1 rounded bg-[#0b0f19] border border-card-border text-xs font-mono text-gray-300"
-            >
-              #{tag.name}
+        {/* Header Info */}
+        <div className="flex flex-col gap-4 border-b border-card-border/40 pb-6">
+          <div className="flex flex-wrap items-center gap-3 text-xs text-muted font-mono">
+            <span className="px-2 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary uppercase font-bold text-[10px]">
+              {t(`blog.categories.${post.category.slug}` as any) || post.category.name}
             </span>
-          ))}
+            <span className="flex items-center gap-1">
+              <Calendar className="w-3.5 h-3.5" />
+              {t('blog.published_at', { date: formatDate(post.createdAt) })}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5" />
+              {t('blog.read_time', { minutes: readTime })}
+            </span>
+          </div>
+
+          <h1 className="font-display font-black text-3xl md:text-5xl text-white leading-tight">
+            {post.title}
+          </h1>
+
+          <div className="flex items-center gap-3 mt-2 text-sm text-muted font-mono">
+            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+              <User className="w-4 h-4" />
+            </div>
+            <span>{locale === 'vi' ? 'Viết bởi Alex Rivera' : locale === 'ja' ? '著者：Alex Rivera' : 'Written by Alex Rivera'}</span>
+          </div>
         </div>
-      )}
-    </article>
+
+        {/* Cover Image banner */}
+        {post.coverImage && (
+          <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden border border-card-border glass p-1">
+            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover rounded-xl" />
+          </div>
+        )}
+
+        {/* Blog content write-up */}
+        <div className="prose prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6 whitespace-pre-line">
+          {post.content}
+        </div>
+
+        {/* Tags list */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="border-t border-card-border/40 pt-6 mt-6 flex items-center gap-2 flex-wrap">
+            <Tag className="w-4 h-4 text-muted shrink-0" />
+            <span className="text-xs text-muted font-mono mr-1">{locale === 'vi' ? 'Thẻ:' : locale === 'ja' ? 'タグ:' : 'Tags:'}</span>
+            {post.tags.map((tag: any) => (
+              <span
+                key={tag.id}
+                className="px-2.5 py-1 rounded bg-[#0b0f19] border border-card-border text-xs font-mono text-gray-300"
+              >
+                #{tag.name}
+              </span>
+            ))}
+          </div>
+        )}
+      </article>
+    </LocaleProvider>
   )
 }
 

@@ -6,7 +6,10 @@ import { contactMessageSchema, ContactMessageInput } from "@/lib/validation"
 import { useState } from "react"
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 
+import { useTranslation } from "@/components/common/locale-provider"
+
 export default function ContactForm() {
+  const { t } = useTranslation()
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState("")
 
@@ -37,7 +40,7 @@ export default function ContactForm() {
 
       if (!response.ok) {
         const err = await response.json()
-        throw new Error(err.message || "Failed to submit message")
+        throw new Error(err.message || t('portfolio.contact.form.error'))
       }
 
       setStatus("success")
@@ -45,7 +48,7 @@ export default function ContactForm() {
     } catch (err: any) {
       console.error(err)
       setStatus("error")
-      setErrorMessage(err.message || "Something went wrong. Please try again.")
+      setErrorMessage(err.message || t('portfolio.contact.form.error'))
     }
   }
 
@@ -56,15 +59,15 @@ export default function ContactForm() {
           <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent flex items-center justify-center text-accent animate-bounce">
             <CheckCircle2 className="w-8 h-8" />
           </div>
-          <h3 className="font-display font-bold text-2xl text-white">Message Transmitted!</h3>
+          <h3 className="font-display font-bold text-2xl text-white">{t('portfolio.contact.form.success')}</h3>
           <p className="text-muted max-w-sm">
-            Thank you for reaching out. Your message has been saved in the system, and I will get back to you shortly.
+            {t('portfolio.contact.form.success_desc', { defaultValue: "Thank you for reaching out. Your message has been saved in the system, and I will get back to you shortly." })}
           </p>
           <button
             onClick={() => setStatus("idle")}
-            className="mt-4 px-6 py-2 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-full transition-colors"
+            className="mt-4 px-6 py-2 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-full transition-colors cursor-pointer"
           >
-            Send Another Message
+            {t('portfolio.contact.form.send_another')}
           </button>
         </div>
       ) : (
@@ -80,13 +83,13 @@ export default function ContactForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div className="flex flex-col gap-1.5">
               <label htmlFor="name" className="text-sm font-semibold text-gray-300">
-                Your Name
+                {t('portfolio.contact.form.name')}
               </label>
               <input
                 id="name"
                 type="text"
                 disabled={status === "submitting"}
-                placeholder="John Doe"
+                placeholder="Alex Rivera"
                 {...register("name")}
                 className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
               />
@@ -95,13 +98,13 @@ export default function ContactForm() {
 
             <div className="flex flex-col gap-1.5">
               <label htmlFor="email" className="text-sm font-semibold text-gray-300">
-                Email Address
+                {t('portfolio.contact.form.email')}
               </label>
               <input
                 id="email"
                 type="email"
                 disabled={status === "submitting"}
-                placeholder="john@example.com"
+                placeholder="alex@example.com"
                 {...register("email")}
                 className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
               />
@@ -112,13 +115,13 @@ export default function ContactForm() {
           {/* Subject */}
           <div className="flex flex-col gap-1.5">
             <label htmlFor="subject" className="text-sm font-semibold text-gray-300">
-              Subject
+              {t('portfolio.contact.form.subject')}
             </label>
             <input
               id="subject"
               type="text"
               disabled={status === "submitting"}
-              placeholder="Collaboration proposal..."
+              placeholder={t('portfolio.contact.form.subject_placeholder')}
               {...register("subject")}
               className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
             />
@@ -128,13 +131,13 @@ export default function ContactForm() {
           {/* Message */}
           <div className="flex flex-col gap-1.5">
             <label htmlFor="message" className="text-sm font-semibold text-gray-300">
-              Message Body
+              {t('portfolio.contact.form.message')}
             </label>
             <textarea
               id="message"
               disabled={status === "submitting"}
               rows={5}
-              placeholder="Tell me about your project context and technical challenges..."
+              placeholder="..."
               {...register("message")}
               className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm resize-none"
             />
@@ -150,12 +153,12 @@ export default function ContactForm() {
             {status === "submitting" ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Encrypting & Submitting...
+                {t('portfolio.contact.form.sending')}
               </>
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                Transmit Message
+                {t('portfolio.contact.form.send')}
               </>
             )}
           </button>

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Server, Database, Globe, Layers, ShieldCheck, Zap } from "lucide-react"
+import { useTranslation } from "@/components/common/locale-provider"
 
 const architectureNodes = [
   {
@@ -62,6 +63,7 @@ const architectureNodes = [
 ]
 
 export default function ArchitectureShowcase() {
+  const { t } = useTranslation()
   const [activeNode, setActiveNode] = useState<typeof architectureNodes[0] | null>(null)
 
   return (
@@ -72,11 +74,11 @@ export default function ArchitectureShowcase() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div className="flex flex-col gap-2">
-            <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">System Topology</span>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">Platform Architecture</h2>
+            <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.architecture.subtitle')}</span>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.architecture.title')}</h2>
           </div>
           <p className="text-muted text-sm md:text-base max-w-sm">
-            An interactive visualization of our multi-layered, type-safe fullstack architecture from client to data persistence.
+            {t('portfolio.architecture.desc')}
           </p>
         </div>
 
@@ -167,7 +169,7 @@ export default function ArchitectureShowcase() {
                   className="flex flex-col items-center justify-center text-center p-6 border border-dashed border-card-border/60 rounded-2xl h-full"
                 >
                   <p className="text-muted text-sm">
-                    Click on any node in the interactive topology flow to inspect its architecture details, tech stack definitions, and duties.
+                    {t('portfolio.architecture.empty')}
                   </p>
                 </motion.div>
               )}
