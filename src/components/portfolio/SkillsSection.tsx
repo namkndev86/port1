@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useInView } from "framer-motion"
-import { useRef, useEffect, useState } from "react"
+import { useRef } from "react"
 import * as LucideIcons from "lucide-react"
 import { Skill } from "@prisma/client"
 
@@ -9,56 +9,29 @@ interface SkillsSectionProps {
   skills: Skill[]
 }
 
-// Sub-component for individual skill item with count-up animation
+// Sub-component for individual skill item with entry animation and hover effects
 function SkillItem({ skill }: { skill: Skill }) {
-  const [count, setCount] = useState(0)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
-
-  useEffect(() => {
-    if (isInView) {
-      let start = 0
-      const end = skill.proficiency
-      const duration = 1.5 // seconds
-      const stepTime = Math.abs(Math.floor((duration * 1000) / end))
-      
-      const timer = setInterval(() => {
-        start += 1
-        setCount(start)
-        if (start >= end) {
-          clearInterval(timer)
-        }
-      }, stepTime)
-
-      return () => clearInterval(timer)
-    }
-  }, [isInView, skill.proficiency])
 
   // Resolve Lucide icon
   const Icon = (LucideIcons as any)[skill.icon || "Code"] || LucideIcons.Code
 
   return (
-    <div ref={ref} className="flex flex-col gap-2 p-5 rounded-2xl glass hover:border-primary/20 transition-all duration-300">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Icon className="w-4 h-4" />
-          </div>
-          <span className="font-semibold text-white text-sm md:text-base">{skill.name}</span>
-        </div>
-        <span className="font-mono text-xs md:text-sm font-bold text-accent">{count}%</span>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 15 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="flex items-center gap-3.5 p-4 rounded-xl glass glass-hover group"
+    >
+      <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:text-accent transition-colors duration-300">
+        <Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
       </div>
-
-      {/* Progress Bar Track */}
-      <div className="w-full h-2 bg-[#050811] rounded-full overflow-hidden border border-card-border/40">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${skill.proficiency}%` } : {}}
-          transition={{ type: "spring", stiffness: 40, damping: 15, delay: 0.1 }}
-          className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
-        />
-      </div>
-    </div>
+      <span className="font-semibold text-white text-sm md:text-base transition-colors duration-300">
+        {skill.name}
+      </span>
+    </motion.div>
   )
 }
 
