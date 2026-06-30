@@ -60,6 +60,13 @@
   }
 }
 
+@utility bg-grid-primary {
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+}
+
 @utility text-gradient {
   background-clip: text;
   -webkit-background-clip: text;
