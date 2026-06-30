@@ -1,0 +1,28 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "portfolio": "Hồ sơ",
+    "blog": "Bài viết",
+    "connect": "Liên hệ"
+  },
+  "footer": {
+    "tagline": "Thiết kế kiến trúc hệ thống bền vững và trải nghiệm giao diện điện ảnh.",
+    "rights": "Bản quyền đã được bảo hộ.",
+    "tech": "Xây dựng bằng Next.js 15, Tailwind v4 & Prisma."
+  },
+  "themes": {
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Hệ thống"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt",
+    "ja": "日本語"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Có lỗi xảy ra",
+    "submit": "Gửi đi"
+  }
+}

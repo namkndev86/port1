@@ -5,6 +5,8 @@ import { useRef } from "react"
 import * as LucideIcons from "lucide-react"
 import { Skill } from "@prisma/client"
 
+import { useTranslation } from "@/components/common/locale-provider"
+
 interface SkillsSectionProps {
   skills: Skill[]
 }
@@ -36,6 +38,7 @@ function SkillItem({ skill }: { skill: Skill }) {
 }
 
 export default function SkillsSection({ skills }: SkillsSectionProps) {
+  const { t } = useTranslation()
   // Group skills by category
   const categories = Array.from(new Set(skills.map((s) => s.category)))
 
@@ -47,11 +50,11 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div className="flex flex-col gap-2">
-            <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">Competencies</span>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">Technical Arsenal</h2>
+            <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.skills.subtitle')}</span>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.skills.title')}</h2>
           </div>
           <p className="text-muted text-sm md:text-base max-w-sm">
-            Proven proficiencies across engineering, design systems, architectural layouts, and scalable cloud-native operations.
+            {t('portfolio.skills.description')}
           </p>
         </div>
 

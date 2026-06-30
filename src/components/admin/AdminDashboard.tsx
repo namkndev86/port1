@@ -13,7 +13,7 @@ import {
   markContactMessageReadAction,
   deleteContactMessageAction,
   logoutAction,
-} from "@/app/admin/actions"
+} from "@/app/[locale]/admin/actions"
 import { Project, BlogPost, Skill, Experience, ContactMessage, BlogCategory } from "@prisma/client"
 import {
   FolderGit2,

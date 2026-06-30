@@ -6,20 +6,26 @@ import Link from "next/link"
 import { ArrowUpRight, Code2, Search } from "lucide-react"
 import { ProjectWithImages } from "@/repositories/project.repository"
 
+import { useTranslation } from "@/components/common/locale-provider"
+
 interface ProjectsFilterListProps {
   projects: ProjectWithImages[]
 }
 
 export default function ProjectsFilterList({ projects }: ProjectsFilterListProps) {
+  const { t, locale } = useTranslation()
   const [selectedTag, setSelectedTag] = useState<string>("All")
   const [searchQuery, setSearchQuery] = useState("")
 
+  const allLabel = locale === "vi" ? "Tất cả" : locale === "ja" ? "すべて" : "All"
+
   // Extract all unique tags
-  const allTags = ["All", ...Array.from(new Set(projects.flatMap((p) => p.techStack)))]
+  const allTags = [allLabel, ...Array.from(new Set(projects.flatMap((p) => p.techStack)))]
 
   // Filter projects based on tag and search
   const filteredProjects = projects.filter((project) => {
-    const matchesTag = selectedTag === "All" || project.techStack.includes(selectedTag)
+    const isAll = selectedTag === allLabel || selectedTag === "All"
+    const matchesTag = isAll || project.techStack.includes(selectedTag)
     const matchesSearch =
       project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -39,7 +45,13 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by title, description or stack..."
+            placeholder={
+              locale === "vi"
+                ? "Tìm kiếm dự án..."
+                : locale === "ja"
+                ? "プロジェクトを検索..."
+                : "Search projects..."
+            }
             className="w-full pl-9 pr-4 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
           />
         </div>
@@ -109,10 +121,10 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
 
                 <div className="border-t border-card-border/40 pt-4 flex items-center justify-between">
                   <Link
-                    href={`/portfolio/projects/${project.slug}`}
-                    className="text-xs font-semibold text-white group-hover:text-primary flex items-center gap-1 transition-colors"
+                    href={`/${locale}/portfolio/projects/${project.slug}`}
+                    className="text-xs font-semibold text-white group-hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
                   >
-                    View Project
+                    {t('portfolio.projects.details')}
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                   {project.demoUrl && (
@@ -120,9 +132,9 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] text-muted hover:text-white transition-colors"
+                      className="text-[10px] text-muted hover:text-white transition-colors cursor-pointer"
                     >
-                      Demo
+                      {t('portfolio.projects.demo')}
                     </a>
                   )}
                 </div>
@@ -136,7 +148,11 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
       {filteredProjects.length === 0 && (
         <div className="text-center py-20 border border-dashed border-card-border/60 rounded-3xl">
           <p className="text-muted text-sm">
-            No projects matched the selected filters. Try searching for other technologies or clearing search.
+            {locale === "vi"
+              ? "Không tìm thấy dự án nào phù hợp."
+              : locale === "ja"
+              ? "該当するプロジェクトが見つかりませんでした。"
+              : "No projects matched the selected filters."}
           </p>
         </div>
       )}

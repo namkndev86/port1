@@ -1,0 +1,65 @@
+{
+  "home": {
+    "badge": "Systems Architect & Designer",
+    "title": "Senior Fullstack Architect & AI Engineer",
+    "tagline": "Crafting high-performance distributed systems, containerized cloud services, and cinematic frontend experiences that wow developers.",
+    "explore": "Explore Portfolio",
+    "read_blog": "Read Blog"
+  },
+  "hero": {
+    "overview": "Overview",
+    "title": "Designing platforms that scale with integrity.",
+    "cta": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "resume": "Resume / CV"
+    }
+  },
+  "skills": {
+    "subtitle": "Competencies",
+    "title": "Technical Arsenal",
+    "description": "Proven proficiencies across engineering, design systems, architectural layouts, and scalable cloud-native operations."
+  },
+  "experience": {
+    "subtitle": "Career Journey",
+    "title": "Professional History",
+    "current": "Present",
+    "desc": "A chronological timeline of roles leading technical initiatives, scaling teams, and engineering software."
+  },
+  "projects": {
+    "subtitle": "Portfolio",
+    "title": "Featured Work",
+    "all_projects": "Browse All Projects",
+    "details": "Project Details",
+    "demo": "Live Demo",
+    "challenges": "Challenges",
+    "solutions": "Solutions",
+    "stack": "Tech Stack"
+  },
+  "architecture": {
+    "subtitle": "System Topology",
+    "title": "Platform Architecture",
+    "desc": "An interactive visualization of our multi-layered, type-safe fullstack architecture from client to data persistence.",
+    "empty": "Click on any node in the interactive topology flow to inspect its architecture details, tech stack definitions, and duties."
+  },
+  "contact": {
+    "subtitle": "Contact",
+    "title": "Let's Build Together.",
+    "desc": "Seeking an enterprise software consult, team scaling mentorship, or a technical implementation advisor? Use the secure portal to dispatch an inquiry.",
+    "email": "Email",
+    "timezone": "Time Zone",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject Inquiry",
+      "subject_placeholder": "Collaboration proposal...",
+      "message": "Message body details...",
+      "sending": "Sending Message...",
+      "send": "Dispatch Inquiry",
+      "send_another": "Send Another Message",
+      "success": "Message Transmitted!",
+      "success_desc": "Thank you for reaching out. Your message has been saved in the system, and I will get back to you shortly.",
+      "error": "Failed to send message."
+    }
+  }
+}
