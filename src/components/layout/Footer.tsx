@@ -36,7 +36,7 @@ export default function Footer() {
         {/* Social Links */}
         <div className="flex items-center gap-4">
           <a
-            href="https://github.com"
+            href="https://github.com/namkndev86/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted hover:text-white hover:border-primary transition-all duration-300"
@@ -45,7 +45,7 @@ export default function Footer() {
             <Github className="w-4 h-4" />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/namkndev86/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted hover:text-white hover:border-primary transition-all duration-300"
@@ -54,7 +54,7 @@ export default function Footer() {
             <Linkedin className="w-4 h-4" />
           </a>
           <a
-            href="https://twitter.com"
+            href="https://x.com/namkndev86"
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted hover:text-white hover:border-primary transition-all duration-300"

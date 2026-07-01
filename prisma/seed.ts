@@ -48,9 +48,9 @@ async function main() {
       bio: 'Frontend Developer with 3+ years of experience building enterprise-scale web applications using React and TypeScript. Specializing in leading frontend development for business-critical modules, designing scalable architectures, building reusable component systems, and optimizing application performance.',
       avatarUrl: '/images/avatar.jpg',
       resumeUrl: '/documents/resume.pdf',
-      githubUrl: 'https://github.com/namkndev86',
-      linkedinUrl: 'https://linkedin.com',
-      twitterUrl: 'https://twitter.com',
+      githubUrl: 'https://github.com/namkndev86/',
+      linkedinUrl: 'https://www.linkedin.com/in/namkndev86/',
+      twitterUrl: 'https://x.com/namkndev86',
     },
   })
   console.log('📄 Admin profile created')
