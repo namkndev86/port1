@@ -98,7 +98,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
               <User className="w-4 h-4" />
             </div>
-            <span>{locale === 'vi' ? 'Viết bởi Alex Rivera' : locale === 'ja' ? '著者：Alex Rivera' : 'Written by Alex Rivera'}</span>
+            <span>{locale === 'vi' ? 'Viết bởi Nguyen Khac Nam' : locale === 'ja' ? '著者：Nguyen Khac Nam' : 'Written by Nguyen Khac Nam'}</span>
           </div>
         </div>
 

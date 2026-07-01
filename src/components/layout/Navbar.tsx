@@ -1,44 +1,51 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
-import { Menu, X, ArrowUpRight } from "lucide-react"
-import { useTranslation } from "@/components/common/locale-provider"
-import ThemeSwitcher from "@/components/common/theme-switcher"
-import LanguageSwitcher from "@/components/common/language-switcher"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { useTranslation } from "@/components/common/locale-provider";
+import ThemeSwitcher from "@/components/common/theme-switcher";
+import LanguageSwitcher from "@/components/common/language-switcher";
 
 export default function Navbar() {
-  const pathname = usePathname()
-  const [isOpen, setIsOpen] = useState(false)
-  const { t, locale } = useTranslation()
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+  const { t, locale } = useTranslation();
 
   const navItems = [
-    { name: t('common.nav.home'), path: "/" },
-    { name: t('common.nav.portfolio'), path: "/portfolio" },
-    { name: t('common.nav.blog'), path: "/blog" },
-  ]
+    { name: t("common.nav.home"), path: "/" },
+    { name: t("common.nav.portfolio"), path: "/portfolio" },
+    { name: t("common.nav.blog"), path: "/blog" },
+  ];
 
   const getHref = (path: string) => {
-    return path === "/" ? `/${locale}` : `/${locale}${path}`
-  }
+    return path === "/" ? `/${locale}` : `/${locale}${path}`;
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12">
       <nav className="max-w-6xl mx-auto glass rounded-full px-6 py-3 flex items-center justify-between shadow-2xl">
         {/* Brand */}
-        <Link href={getHref("/")} className="font-display font-bold text-xl tracking-tight flex items-center gap-2 group">
+        <Link
+          href={getHref("/")}
+          className="font-display font-bold text-xl tracking-tight flex items-center gap-2 group"
+        >
           <span className="text-primary font-mono">&lt;</span>
-          <span className="text-white group-hover:text-primary transition-colors">Alex.R</span>
+          <span className="text-white group-hover:text-primary transition-colors">
+            NAM.dev
+          </span>
           <span className="text-primary font-mono">/&gt;</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-1 font-sans">
           {navItems.map((item) => {
-            const itemHref = getHref(item.path)
-            const isActive = pathname === itemHref || (item.path !== "/" && pathname.startsWith(itemHref))
+            const itemHref = getHref(item.path);
+            const isActive =
+              pathname === itemHref ||
+              (item.path !== "/" && pathname.startsWith(itemHref));
             return (
               <Link
                 key={item.path}
@@ -54,7 +61,7 @@ export default function Navbar() {
                 )}
                 {item.name}
               </Link>
-            )
+            );
           })}
         </div>
 
@@ -66,7 +73,7 @@ export default function Navbar() {
             href={getHref("/portfolio#contact")}
             className="flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-all duration-300 group"
           >
-            {t('common.nav.connect')}
+            {t("common.nav.connect")}
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>
@@ -97,25 +104,29 @@ export default function Navbar() {
                 href={getHref(item.path)}
                 onClick={() => setIsOpen(false)}
                 className={`text-lg font-medium py-2 transition-colors ${
-                  pathname === getHref(item.path) ? "text-primary border-l-2 border-primary pl-3" : "text-muted hover:text-white"
+                  pathname === getHref(item.path)
+                    ? "text-primary border-l-2 border-primary pl-3"
+                    : "text-muted hover:text-white"
                 }`}
               >
                 {item.name}
               </Link>
             ))}
-            
+
             <Link
               href={getHref("/portfolio#contact")}
               onClick={() => setIsOpen(false)}
               className="mt-2 w-full text-center py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors flex items-center justify-center gap-1"
             >
-              {t('common.nav.connect')}
+              {t("common.nav.connect")}
               <ArrowUpRight className="w-4 h-4" />
             </Link>
 
             {/* Mobile Preference Panel */}
             <div className="flex items-center justify-between gap-4 mt-2 border-t border-card-border/40 pt-4">
-              <span className="text-xs text-muted font-semibold tracking-wide uppercase">{t('common.common.submit') ? "Settings" : "Preferences"}</span>
+              <span className="text-xs text-muted font-semibold tracking-wide uppercase">
+                {t("common.common.submit") ? "Settings" : "Preferences"}
+              </span>
               <div className="flex items-center gap-2">
                 <ThemeSwitcher />
                 <LanguageSwitcher />
@@ -125,5 +136,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </header>
-  )
+  );
 }
