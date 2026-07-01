@@ -42,6 +42,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     keywords: ["Frontend Developer", "React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Redux", "Web Performance"],
     authors: [{ name: "Nguyen Khac Nam" }],
     creator: "Nguyen Khac Nam",
+    icons: {
+      icon: "/icon.svg",
+    },
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {
