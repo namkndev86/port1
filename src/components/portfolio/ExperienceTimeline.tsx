@@ -45,7 +45,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div className="flex flex-col gap-2">
             <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.experience.subtitle')}</span>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.experience.title')}</h2>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-foreground">{t('portfolio.experience.title')}</h2>
           </div>
           <p className="text-muted text-sm md:text-base max-w-sm">
             {t('portfolio.experience.desc')}
@@ -76,7 +76,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                 <div className="glass rounded-2xl p-6 md:p-8 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div className="flex flex-col gap-1">
-                      <h3 className="font-display font-bold text-lg md:text-xl text-white group-hover:text-primary transition-colors">
+                      <h3 className="font-display font-bold text-lg md:text-xl text-foreground group-hover:text-primary transition-colors">
                         {exp.role}
                       </h3>
                       <span className="text-sm font-semibold text-accent flex items-center gap-1.5">

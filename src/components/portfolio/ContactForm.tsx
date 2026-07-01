@@ -59,7 +59,7 @@ export default function ContactForm() {
           <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent flex items-center justify-center text-accent animate-bounce">
             <CheckCircle2 className="w-8 h-8" />
           </div>
-          <h3 className="font-display font-bold text-2xl text-white">{t('portfolio.contact.form.success')}</h3>
+          <h3 className="font-display font-bold text-2xl text-foreground">{t('portfolio.contact.form.success')}</h3>
           <p className="text-muted max-w-sm">
             {t('portfolio.contact.form.success_desc', { defaultValue: "Thank you for reaching out. Your message has been saved in the system, and I will get back to you shortly." })}
           </p>
@@ -82,7 +82,7 @@ export default function ContactForm() {
           {/* Name & Email Group */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="name" className="text-sm font-semibold text-gray-300">
+              <label htmlFor="name" className="text-sm font-semibold text-foreground">
                 {t('portfolio.contact.form.name')}
               </label>
               <input
@@ -91,13 +91,13 @@ export default function ContactForm() {
                 disabled={status === "submitting"}
                 placeholder="Nguyen Khac Nam"
                 {...register("name")}
-                className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
+                className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-colors text-sm"
               />
               {errors.name && <span className="text-xs text-red-400 font-medium">{errors.name.message}</span>}
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-sm font-semibold text-gray-300">
+              <label htmlFor="email" className="text-sm font-semibold text-foreground">
                 {t('portfolio.contact.form.email')}
               </label>
               <input
@@ -106,7 +106,7 @@ export default function ContactForm() {
                 disabled={status === "submitting"}
                 placeholder="namkndev86@gmail.com"
                 {...register("email")}
-                className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
+                className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-colors text-sm"
               />
               {errors.email && <span className="text-xs text-red-400 font-medium">{errors.email.message}</span>}
             </div>
@@ -114,7 +114,7 @@ export default function ContactForm() {
 
           {/* Subject */}
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="subject" className="text-sm font-semibold text-gray-300">
+            <label htmlFor="subject" className="text-sm font-semibold text-foreground">
               {t('portfolio.contact.form.subject')}
             </label>
             <input
@@ -123,14 +123,14 @@ export default function ContactForm() {
               disabled={status === "submitting"}
               placeholder={t('portfolio.contact.form.subject_placeholder')}
               {...register("subject")}
-              className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
+              className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-colors text-sm"
             />
             {errors.subject && <span className="text-xs text-red-400 font-medium">{errors.subject.message}</span>}
           </div>
 
           {/* Message */}
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="message" className="text-sm font-semibold text-gray-300">
+            <label htmlFor="message" className="text-sm font-semibold text-foreground">
               {t('portfolio.contact.form.message')}
             </label>
             <textarea
@@ -139,7 +139,7 @@ export default function ContactForm() {
               rows={5}
               placeholder="..."
               {...register("message")}
-              className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm resize-none"
+              className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-colors text-sm resize-none"
             />
             {errors.message && <span className="text-xs text-red-400 font-medium">{errors.message.message}</span>}
           </div>

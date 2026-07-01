@@ -49,7 +49,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
           value={searchVal}
           onChange={(e) => setSearchVal(e.target.value)}
           placeholder={t('blog.search')}
-          className="w-full pl-9 pr-12 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
+          className="w-full pl-9 pr-12 py-2.5 bg-card border border-card-border rounded-xl text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-colors text-sm"
         />
         {isPending ? (
           <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary animate-spin" />
@@ -57,7 +57,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
           searchVal !== currentSearch && (
             <button
               type="submit"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-primary hover:text-white transition-colors cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-primary hover:text-foreground transition-colors cursor-pointer"
             >
               Apply
             </button>
@@ -73,7 +73,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
           className={`px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-300 ${
             currentCategory === ""
               ? "bg-primary border-primary text-white"
-              : "glass text-muted hover:text-white hover:border-primary/40"
+              : "glass text-muted hover:text-foreground hover:border-primary/40"
           }`}
         >
           {t('blog.categories.all')}
@@ -86,7 +86,7 @@ export default function BlogSearchFilter({ categories }: BlogSearchFilterProps) 
             className={`px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-300 ${
               currentCategory === cat.slug
                 ? "bg-primary border-primary text-white"
-                : "glass text-muted hover:text-white hover:border-primary/40"
+                : "glass text-muted hover:text-foreground hover:border-primary/40"
             }`}
           >
             {cat.name}

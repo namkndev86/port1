@@ -52,7 +52,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
                 ? "プロジェクトを検索..."
                 : "Search projects..."
             }
-            className="w-full pl-9 pr-4 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
+            className="w-full pl-9 pr-4 py-2.5 bg-card border border-card-border rounded-xl text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-colors text-sm"
           />
         </div>
 
@@ -65,7 +65,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
               className={`px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-300 ${
                 selectedTag === tag
                   ? "bg-primary border-primary text-white"
-                  : "glass text-muted hover:text-white hover:border-primary/40"
+                  : "glass text-muted hover:text-foreground hover:border-primary/40"
               }`}
             >
               {tag}
@@ -88,7 +88,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
               className="glass rounded-2xl overflow-hidden hover:border-primary/20 hover:shadow-2xl transition-all duration-300 flex flex-col h-full group"
             >
               {/* Image Banner */}
-              <div className="h-44 w-full bg-[#080d1e] border-b border-card-border flex items-center justify-center relative overflow-hidden">
+              <div className="h-44 w-full bg-gradient-to-br from-card to-background border-b border-card-border flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
                 {project.images?.[0]?.url ? (
                   <img
@@ -103,7 +103,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
 
               {/* Card content details */}
               <div className="p-5 flex flex-col flex-1 gap-4">
-                <h3 className="font-display font-bold text-lg text-white group-hover:text-primary transition-colors">
+                <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                   {project.title}
                 </h3>
                 <p className="text-muted text-xs md:text-sm leading-relaxed flex-1">
@@ -113,7 +113,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
                 {/* Badges */}
                 <div className="flex flex-wrap gap-1.5 py-1">
                   {project.techStack.map((t) => (
-                    <span key={t} className="px-2 py-0.5 rounded bg-card-border/60 border border-card-border/80 text-[9px] font-mono text-gray-300 uppercase">
+                    <span key={t} className="px-2 py-0.5 rounded bg-card-border/60 border border-card-border/80 text-[9px] font-mono text-muted-dark uppercase">
                       {t}
                     </span>
                   ))}
@@ -122,7 +122,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
                 <div className="border-t border-card-border/40 pt-4 flex items-center justify-between">
                   <Link
                     href={`/${locale}/portfolio/projects/${project.slug}`}
-                    className="text-xs font-semibold text-white group-hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
+                    className="text-xs font-semibold text-foreground group-hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
                   >
                     {t('portfolio.projects.details')}
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -132,7 +132,7 @@ export default function ProjectsFilterList({ projects }: ProjectsFilterListProps
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] text-muted hover:text-white transition-colors cursor-pointer"
+                      className="text-[10px] text-muted hover:text-foreground transition-colors cursor-pointer"
                     >
                       {t('portfolio.projects.demo')}
                     </a>

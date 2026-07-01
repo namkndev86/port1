@@ -42,6 +42,8 @@
   --glass-bg: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(0, 0, 0, 0.08);
   --grid-line-color: rgba(79, 70, 229, 0.04);
+  --text-gradient-start: #0f172a;
+  --text-gradient-end: #3b82f6;
 }
 
 .dark {
@@ -62,6 +64,8 @@
   --glass-bg: rgba(11, 15, 25, 0.7);
   --glass-border: rgba(255, 255, 255, 0.08);
   --grid-line-color: rgba(99, 102, 241, 0.03);
+  --text-gradient-start: #ffffff;
+  --text-gradient-end: #a5b4fc;
 }
 
 @keyframes float {
@@ -111,7 +115,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+  background-image: linear-gradient(135deg, var(--text-gradient-start) 30%, var(--text-gradient-end) 100%);
 }
 
 @utility text-gradient-primary {

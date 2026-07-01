@@ -30,7 +30,7 @@ function SkillItem({ skill }: { skill: Skill }) {
       <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:text-accent transition-colors duration-300">
         <Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
       </div>
-      <span className="font-semibold text-white text-sm md:text-base transition-colors duration-300">
+      <span className="font-semibold text-foreground text-sm md:text-base transition-colors duration-300">
         {skill.name}
       </span>
     </motion.div>
@@ -51,7 +51,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div className="flex flex-col gap-2">
             <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.skills.subtitle')}</span>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.skills.title')}</h2>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-foreground">{t('portfolio.skills.title')}</h2>
           </div>
           <p className="text-muted text-sm md:text-base max-w-sm">
             {t('portfolio.skills.description')}
@@ -62,7 +62,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => (
             <div key={category} className="flex flex-col gap-5">
-              <h3 className="font-display font-semibold text-lg text-white border-b border-card-border pb-2 capitalize tracking-wide flex items-center justify-between">
+              <h3 className="font-display font-semibold text-lg text-foreground border-b border-card-border pb-2 capitalize tracking-wide flex items-center justify-between">
                 <span>{category}</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               </h3>

@@ -7,7 +7,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <LenisProvider>
       {/* Dynamic Background Grid & Ambient Glows */}
-      <div className="fixed inset-0 -z-50 w-full h-full bg-[#030712] overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 -z-50 w-full h-full bg-background overflow-hidden pointer-events-none">
         {/* Subtle primary-colored grid pattern */}
         <div className="absolute inset-0 bg-grid-primary opacity-100" />
         

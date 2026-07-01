@@ -75,7 +75,7 @@ export default function ArchitectureShowcase() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div className="flex flex-col gap-2">
             <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.architecture.subtitle')}</span>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.architecture.title')}</h2>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-foreground">{t('portfolio.architecture.title')}</h2>
           </div>
           <p className="text-muted text-sm md:text-base max-w-sm">
             {t('portfolio.architecture.desc')}
@@ -85,7 +85,7 @@ export default function ArchitectureShowcase() {
         {/* Diagram Canvas Container */}
         <div className="w-full glass rounded-3xl p-6 md:p-12 min-h-[400px] flex flex-col lg:flex-row gap-8 items-center justify-between shadow-2xl relative">
           {/* Interactive SVG Nodes Layout */}
-          <div className="w-full lg:w-2/3 h-[250px] sm:h-[350px] relative border border-card-border/50 rounded-2xl bg-[#030611]/80 p-4">
+          <div className="w-full lg:w-2/3 h-[250px] sm:h-[350px] relative border border-card-border/50 rounded-2xl bg-background/80 p-4">
             
             {/* SVG Connecting Paths */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,7 +125,7 @@ export default function ArchitectureShowcase() {
                     className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl border flex items-center justify-center transition-all duration-300 shadow-lg ${
                       isSelected
                         ? "bg-primary border-primary text-white scale-110 shadow-primary/20"
-                        : "bg-[#0b0f19] border-card-border text-muted group-hover:text-white group-hover:border-primary/50"
+                        : "bg-card border-card-border text-muted group-hover:text-foreground group-hover:border-primary/50"
                     }`}
                   >
                     <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -153,7 +153,7 @@ export default function ArchitectureShowcase() {
                   <span className="font-mono text-xs font-bold text-accent uppercase tracking-wide">
                     {activeNode.tech}
                   </span>
-                  <h3 className="font-display font-bold text-xl text-white">
+                  <h3 className="font-display font-bold text-xl text-foreground">
                     {activeNode.name}
                   </h3>
                   <p className="text-muted text-sm leading-relaxed">

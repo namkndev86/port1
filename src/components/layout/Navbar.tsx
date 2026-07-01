@@ -33,7 +33,7 @@ export default function Navbar() {
           className="font-display font-bold text-xl tracking-tight flex items-center gap-2 group"
         >
           <span className="text-primary font-mono">&lt;</span>
-          <span className="text-white group-hover:text-primary transition-colors">
+          <span className="text-foreground group-hover:text-primary transition-colors">
             NAM.dev
           </span>
           <span className="text-primary font-mono">/&gt;</span>
@@ -50,7 +50,7 @@ export default function Navbar() {
               <Link
                 key={item.path}
                 href={itemHref}
-                className="relative px-4 py-2 text-sm font-medium text-muted hover:text-white transition-colors duration-200"
+                className="relative px-4 py-2 text-sm font-medium text-muted hover:text-foreground transition-colors duration-200"
               >
                 {isActive && (
                   <motion.span
@@ -81,7 +81,7 @@ export default function Navbar() {
         {/* Mobile Navigation Toggle */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-white hover:text-primary transition-colors p-1 cursor-pointer"
+          className="md:hidden text-foreground hover:text-primary transition-colors p-1 cursor-pointer"
           aria-label="Toggle menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -106,7 +106,7 @@ export default function Navbar() {
                 className={`text-lg font-medium py-2 transition-colors ${
                   pathname === getHref(item.path)
                     ? "text-primary border-l-2 border-primary pl-3"
-                    : "text-muted hover:text-white"
+                    : "text-muted hover:text-foreground"
                 }`}
               >
                 {item.name}

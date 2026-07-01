@@ -99,7 +99,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
             {/* Bio text */}
             <div className="lg:col-span-7 flex flex-col gap-6">
               <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.hero.overview')}</span>
-              <h1 className="font-display font-bold text-4xl md:text-6xl text-white leading-tight">
+              <h1 className="font-display font-bold text-4xl md:text-6xl text-foreground leading-tight">
                 {locale === 'vi' ? (
                   <>Thiết kế các hệ thống mở rộng một cách <span className="text-primary">toàn vẹn</span>.</>
                 ) : locale === 'ja' ? (
@@ -148,7 +148,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
                 <div className="w-full h-full rounded-xl bg-[#030611] flex flex-col items-center justify-center gap-4 border border-card-border/60 relative z-10">
                   <Code2 className="w-16 h-16 text-primary group-hover:scale-110 transition-transform duration-500 animate-pulse" />
                   <div className="text-center">
-                    <h3 className="font-display font-bold text-white tracking-wide">{profile.name}</h3>
+                    <h3 className="font-display font-bold text-foreground tracking-wide">{profile.name}</h3>
                     <span className="font-mono text-xs text-accent">{profile.title.split(" & ")[0]}</span>
                   </div>
                 </div>
@@ -189,7 +189,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
                   className="glass rounded-2xl overflow-hidden hover:border-primary/20 hover:shadow-2xl transition-all duration-300 flex flex-col h-full group"
                 >
                   {/* Image Placeholder Visual */}
-                  <div className="h-48 w-full bg-gradient-to-br from-[#080d1e] to-[#040812] border-b border-card-border flex items-center justify-center relative overflow-hidden">
+                  <div className="h-48 w-full bg-gradient-to-br from-card to-background border-b border-card-border flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
                     {project.images?.[0]?.url ? (
                       <img
@@ -203,7 +203,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
                   </div>
 
                   <div className="p-6 md:p-8 flex flex-col flex-1 gap-4">
-                    <h3 className="font-display font-bold text-xl text-white group-hover:text-primary transition-colors">
+                    <h3 className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
                       {project.title}
                     </h3>
                     <p className="text-muted text-sm leading-relaxed flex-1">
@@ -222,7 +222,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
                     <div className="border-t border-card-border/40 pt-4 flex items-center justify-between">
                       <Link
                         href={getHref(`/portfolio/projects/${project.slug}`)}
-                        className="text-sm font-semibold text-white group-hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
+                        className="text-sm font-semibold text-foreground group-hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
                       >
                         {t('portfolio.projects.details')}
                         <ArrowUpRight className="w-4 h-4" />
@@ -232,7 +232,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-muted hover:text-white transition-colors cursor-pointer"
+                          className="text-xs text-muted hover:text-foreground transition-colors cursor-pointer"
                         >
                           {t('portfolio.projects.demo')}
                         </a>
@@ -254,7 +254,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
           <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 flex flex-col gap-6">
               <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('portfolio.contact.subtitle')}</span>
-              <h2 className="font-display font-bold text-3xl md:text-5xl text-white">{t('portfolio.contact.title')}</h2>
+              <h2 className="font-display font-bold text-3xl md:text-5xl text-foreground">{t('portfolio.contact.title')}</h2>
               <p className="text-muted text-sm md:text-base leading-relaxed">
                 {t('portfolio.contact.desc')}
               </p>

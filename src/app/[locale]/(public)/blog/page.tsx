@@ -84,7 +84,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
       <div className="max-w-4xl mx-auto px-6 py-12 md:py-20 flex flex-col gap-8">
         <div className="flex flex-col gap-3">
           <span className="font-mono text-xs text-primary font-semibold tracking-widest uppercase">{t('common.nav.blog')}</span>
-          <h1 className="font-display font-bold text-4xl md:text-6xl text-white">{t('blog.title')}</h1>
+          <h1 className="font-display font-bold text-4xl md:text-6xl text-foreground">{t('blog.title')}</h1>
           <p className="text-muted text-sm md:text-base max-w-xl">
             {t('blog.subtitle')}
           </p>
@@ -103,7 +103,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
               className="glass rounded-2xl p-6 md:p-8 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col md:flex-row gap-6 group"
             >
               {/* Image Placeholder Visual */}
-              <div className="w-full md:w-44 h-32 bg-gradient-to-br from-[#080d1e] to-[#040812] rounded-xl overflow-hidden border border-card-border shrink-0 flex items-center justify-center relative">
+              <div className="w-full md:w-44 h-32 bg-gradient-to-br from-card to-background rounded-xl overflow-hidden border border-card-border shrink-0 flex items-center justify-center relative">
                 <div className="absolute inset-0 bg-primary/5" />
                 {post.coverImage ? (
                   <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -124,7 +124,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                   </span>
                 </div>
 
-                <h3 className="font-display font-bold text-xl text-white group-hover:text-primary transition-colors">
+                <h3 className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
                   <Link href={getHref(`/blog/${post.slug}`)} className="cursor-pointer">{post.title}</Link>
                 </h3>
 
@@ -137,7 +137,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                   </span>
                   <Link
                     href={getHref(`/blog/${post.slug}`)}
-                    className="text-xs font-semibold text-white group-hover:text-primary transition-colors cursor-pointer"
+                    className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors cursor-pointer"
                   >
                     {t('blog.back') === "Back to Blog" ? "Read Article" : t('blog.back')} &rarr;
                   </Link>
@@ -163,7 +163,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
               className={`flex items-center gap-1 px-4 py-2 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
                 page === 1
                   ? "border-card-border/20 text-muted pointer-events-none opacity-40"
-                  : "glass text-white hover:border-primary"
+                  : "glass text-foreground hover:border-primary"
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
               className={`flex items-center gap-1 px-4 py-2 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
                 page === totalPages
                   ? "border-card-border/20 text-muted pointer-events-none opacity-40"
-                  : "glass text-white hover:border-primary"
+                  : "glass text-foreground hover:border-primary"
               }`}
             >
               {locale === 'vi' ? 'Sau' : locale === 'ja' ? '次へ' : 'Next'}

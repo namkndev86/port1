@@ -16,7 +16,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#02050c] border-t border-card-border px-6 py-12 md:px-12 mt-auto">
+    <footer className="w-full bg-card border-t border-card-border px-6 py-12 md:px-12 mt-auto">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Brand */}
         <div className="flex flex-col items-center md:items-start gap-2">
@@ -25,7 +25,7 @@ export default function Footer() {
             className="font-display font-bold text-lg tracking-tight flex items-center gap-1.5"
           >
             <span className="text-primary font-mono">&lt;</span>
-            <span className="text-white">NAM.dev</span>
+            <span className="text-foreground">NAM.dev</span>
             <span className="text-primary font-mono">/&gt;</span>
           </Link>
           <p className="text-sm text-muted text-center md:text-left max-w-xs">

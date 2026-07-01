@@ -67,7 +67,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
         <div>
           <Link
             href={getHref("/blog")}
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             {t('blog.back')}
@@ -90,7 +90,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
             </span>
           </div>
 
-          <h1 className="font-display font-black text-3xl md:text-5xl text-white leading-tight">
+          <h1 className="font-display font-black text-3xl md:text-5xl text-foreground leading-tight">
             {post.title}
           </h1>
 
@@ -110,7 +110,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
         )}
 
         {/* Blog content write-up */}
-        <div className="prose prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6 whitespace-pre-line">
+        <div className="prose dark:prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6 whitespace-pre-line">
           {post.content}
         </div>
 
@@ -122,7 +122,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
             {post.tags.map((tag: any) => (
               <span
                 key={tag.id}
-                className="px-2.5 py-1 rounded bg-[#0b0f19] border border-card-border text-xs font-mono text-gray-300"
+                className="px-2.5 py-1 rounded bg-card border border-card-border text-xs font-mono text-muted-dark"
               >
                 #{tag.name}
               </span>

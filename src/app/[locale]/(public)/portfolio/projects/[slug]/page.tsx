@@ -63,7 +63,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         <div>
           <Link
             href={getHref("/portfolio")}
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             {locale === 'vi' ? 'Quay lại Portfolio' : locale === 'ja' ? 'ポートフォリオに戻る' : 'Back to Portfolio'}
@@ -72,7 +72,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Header Info */}
         <div className="flex flex-col gap-4 border-b border-card-border/40 pb-8">
-          <h1 className="font-display font-black text-3xl md:text-5xl text-white">
+          <h1 className="font-display font-black text-3xl md:text-5xl text-foreground">
             {project.title}
           </h1>
           <p className="text-muted text-base md:text-lg leading-relaxed max-w-2xl">
@@ -86,7 +86,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm font-semibold text-white hover:text-primary transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors cursor-pointer"
               >
                 <Github className="w-4 h-4" />
                 {locale === 'vi' ? 'Mã nguồn' : locale === 'ja' ? 'ソースコード' : 'Source Code'}
@@ -114,7 +114,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             
             {/* Challenge Card */}
             <div className="glass rounded-2xl p-6 border border-red-500/10 bg-red-950/5 flex flex-col gap-3">
-              <h3 className="font-display font-bold text-lg text-white flex items-center gap-2">
+              <h3 className="font-display font-bold text-lg text-foreground flex items-center gap-2">
                 <Terminal className="w-5 h-5 text-red-400" />
                 {t('portfolio.projects.challenges')}
               </h3>
@@ -125,7 +125,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
             {/* Solution Card */}
             <div className="glass rounded-2xl p-6 border border-accent/10 bg-accent/5 flex flex-col gap-3">
-              <h3 className="font-display font-bold text-lg text-white flex items-center gap-2">
+              <h3 className="font-display font-bold text-lg text-foreground flex items-center gap-2">
                 <Shield className="w-5 h-5 text-accent" />
                 {t('portfolio.projects.solutions')}
               </h3>
@@ -135,8 +135,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
 
             {/* Project Write-up / Content */}
-            <div className="prose prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6">
-              <h3 className="font-display font-bold text-xl text-white border-b border-card-border pb-2">
+            <div className="prose dark:prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6">
+              <h3 className="font-display font-bold text-xl text-foreground border-b border-card-border pb-2">
                 {locale === 'vi' ? 'Tổng quan kiến trúc & Thiết lập' : locale === 'ja' ? 'アーキテクチャ概要とセットアップ' : 'Architecture Overview & Setup'}
               </h3>
               <div className="whitespace-pre-line">
@@ -150,7 +150,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             
             {/* Tech Stack card */}
             <div className="glass rounded-2xl p-6 flex flex-col gap-4">
-              <h4 className="font-display font-bold text-white flex items-center gap-2 text-sm uppercase tracking-wider">
+              <h4 className="font-display font-bold text-foreground flex items-center gap-2 text-sm uppercase tracking-wider">
                 <Sparkles className="w-4 h-4 text-primary" />
                 {t('portfolio.projects.stack')}
               </h4>
@@ -158,7 +158,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 {project.techStack.map((tech: string) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 rounded bg-[#050811] border border-card-border/60 text-xs font-mono text-gray-300"
+                    className="px-3 py-1 rounded bg-card border border-card-border/60 text-xs font-mono text-muted-dark"
                   >
                     {tech}
                   </span>
@@ -169,7 +169,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             {/* Project Screenshots */}
             {project.images && project.images.length > 0 && (
               <div className="flex flex-col gap-4">
-                <h4 className="font-display font-bold text-white text-sm uppercase tracking-wider">
+                <h4 className="font-display font-bold text-foreground text-sm uppercase tracking-wider">
                   {locale === 'vi' ? 'Ảnh chụp màn hình' : locale === 'ja' ? 'スクリーンショット' : 'Screenshots'}
                 </h4>
                 <div className="flex flex-col gap-3">

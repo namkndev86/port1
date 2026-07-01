@@ -77,7 +77,7 @@ export default function HomeClient() {
         {/* Professional Title */}
         <motion.h2
           variants={itemVariants}
-          className="font-display font-semibold text-xl md:text-3xl text-white max-w-2xl tracking-wide leading-snug"
+          className="font-display font-semibold text-xl md:text-3xl text-foreground max-w-2xl tracking-wide leading-snug"
         >
           {t("portfolio.home.title")}
         </motion.h2>
@@ -104,7 +104,7 @@ export default function HomeClient() {
           </Link>
           <Link
             href={getHref("/blog")}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 glass hover:bg-white/5 text-white font-semibold rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 glass hover:bg-black/5 dark:hover:bg-white/5 text-foreground font-semibold rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group cursor-pointer"
           >
             <BookOpen className="w-4 h-4 text-muted group-hover:text-primary transition-colors" />
             {t("portfolio.home.read_blog")}
