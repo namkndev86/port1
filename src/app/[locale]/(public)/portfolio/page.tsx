@@ -157,9 +157,9 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
                 </a>
                 <a
                   href={profile.resumeUrl}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-card-border hover:bg-white/10 hover:text-white transition-all duration-300 text-sm font-semibold cursor-pointer"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full glass hover:text-primary hover:border-primary transition-all duration-300 text-sm font-semibold cursor-pointer"
                 >
-                  <FileText className="w-4 h-4 text-muted" />
+                  <FileText className="w-4 h-4" />
                   {t("portfolio.hero.cta.resume")}
                 </a>
               </div>
