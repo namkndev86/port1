@@ -1,8 +1,8 @@
 {
   "home": {
-    "badge": "Kiến trúc sư hệ thống & Nhà thiết kế",
-    "title": "Kiến trúc sư Fullstack & Kỹ sư AI",
-    "tagline": "Thiết kế các hệ thống phân tán hiệu năng cao, dịch vụ đám mây container hóa và trải nghiệm giao diện điện ảnh đầy ấn tượng.",
+    "badge": "Lập trình viên Frontend",
+    "title": "Lập trình viên Frontend",
+    "tagline": "Xây dựng các ứng dụng web doanh nghiệp hiệu năng cao và thiết kế hệ thống giao diện người dùng tái sử dụng.",
     "explore": "Khám phá Hồ sơ",
     "read_blog": "Đọc bài viết"
   },
@@ -45,7 +45,7 @@
   "contact": {
     "subtitle": "Liên hệ",
     "title": "Hợp tác phát triển",
-    "desc": "Bạn đang cần tư vấn kiến trúc phần mềm, cố vấn mở rộng đội ngũ, hay một chuyên gia triển khai kỹ thuật? Hãy điền thông tin vào cổng bảo mật để gửi yêu cầu.",
+    "desc": "Bạn quan tâm đến việc hợp tác phát triển hoặc có câu hỏi cần giải đáp? Hãy gửi tin nhắn tại đây!",
     "email": "Email",
     "timezone": "Múi giờ",
     "form": {

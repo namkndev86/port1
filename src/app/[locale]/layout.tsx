@@ -35,13 +35,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   
   return {
     title: {
-      template: "%s | Alex Rivera - Senior Software Architect",
-      default: "Alex Rivera | Senior Fullstack Architect & AI Engineer",
+      template: "%s | Nguyen Khac Nam - Frontend Developer",
+      default: "Nguyen Khac Nam | Frontend Developer",
     },
-    description: "Senior Software Architect specializing in Next.js, Go, TypeScript, and cloud-native systems. Browse my portfolio, read technical blog posts, or start a consultation.",
-    keywords: ["Software Architect", "Next.js", "React", "TypeScript", "Go", "PostgreSQL", "Animations"],
-    authors: [{ name: "Alex Rivera" }],
-    creator: "Alex Rivera",
+    description: "Frontend Developer specializing in React, Next.js, TypeScript, and enterprise-scale web applications. Browse my portfolio, read technical blog posts, or start a collaboration.",
+    keywords: ["Frontend Developer", "React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Redux", "Web Performance"],
+    authors: [{ name: "Nguyen Khac Nam" }],
+    creator: "Nguyen Khac Nam",
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {

@@ -133,7 +133,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                 <div className="flex items-center justify-between border-t border-card-border/40 pt-4 mt-2">
                   <span className="flex items-center gap-1.5 text-xs text-muted font-mono">
                     <User className="w-3.5 h-3.5" />
-                    Alex Rivera
+                    Nguyen Khac Nam
                   </span>
                   <Link
                     href={getHref(`/blog/${post.slug}`)}

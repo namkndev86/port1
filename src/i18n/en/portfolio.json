@@ -1,8 +1,8 @@
 {
   "home": {
-    "badge": "Systems Architect & Designer",
-    "title": "Senior Fullstack Architect & AI Engineer",
-    "tagline": "Crafting high-performance distributed systems, containerized cloud services, and cinematic frontend experiences that wow developers.",
+    "badge": "Frontend Developer",
+    "title": "Frontend Developer",
+    "tagline": "Building high-performance enterprise web applications and crafting reusable frontend interfaces.",
     "explore": "Explore Portfolio",
     "read_blog": "Read Blog"
   },
@@ -45,7 +45,7 @@
   "contact": {
     "subtitle": "Contact",
     "title": "Let's Build Together.",
-    "desc": "Seeking an enterprise software consult, team scaling mentorship, or a technical implementation advisor? Use the secure portal to dispatch an inquiry.",
+    "desc": "Interested in working together or have a question? Drop a message here!",
     "email": "Email",
     "timezone": "Time Zone",
     "form": {

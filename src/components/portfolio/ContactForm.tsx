@@ -89,7 +89,7 @@ export default function ContactForm() {
                 id="name"
                 type="text"
                 disabled={status === "submitting"}
-                placeholder="Alex Rivera"
+                placeholder="Nguyen Khac Nam"
                 {...register("name")}
                 className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
               />
@@ -104,7 +104,7 @@ export default function ContactForm() {
                 id="email"
                 type="email"
                 disabled={status === "submitting"}
-                placeholder="alex@example.com"
+                placeholder="namkndev86@gmail.com"
                 {...register("email")}
                 className="w-full px-4 py-3 bg-[#050811] border border-card-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-primary transition-colors text-sm"
               />
