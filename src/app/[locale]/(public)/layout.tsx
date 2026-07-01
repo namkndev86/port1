@@ -2,10 +2,12 @@ import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import { LenisProvider } from "@/components/animations/lenis-provider"
 import { ReactNode } from "react"
+import ReadingProgress from "@/components/blog/ReadingProgress"
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <LenisProvider>
+      <ReadingProgress />
       {/* Dynamic Background Grid & Ambient Glows */}
       <div className="fixed inset-0 -z-50 w-full h-full bg-background overflow-hidden pointer-events-none">
         {/* Subtle primary-colored grid pattern */}
