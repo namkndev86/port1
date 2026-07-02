@@ -56,6 +56,8 @@ import CMSPagination from "./CMSPagination"
 import CMSEmptyState from "./CMSEmptyState"
 import CMSSkeleton from "./CMSSkeleton"
 import ThemeSwitcher from "@/components/common/theme-switcher"
+import RichBlogEditor from "./editor/RichBlogEditor"
+import MediaLibrary from "./media/MediaLibrary"
 
 interface AdminDashboardProps {
   initialProjects: any[]
@@ -66,7 +68,7 @@ interface AdminDashboardProps {
   categories: BlogCategory[]
 }
 
-type TabType = "projects" | "blog" | "skills" | "experience" | "messages"
+type TabType = "projects" | "blog" | "skills" | "experience" | "messages" | "media"
 
 export default function AdminDashboard({
   initialProjects,
@@ -98,6 +100,9 @@ export default function AdminDashboard({
   const [editingItem, setEditingItem] = useState<any>(null)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewItem, setPreviewItem] = useState<any>(null)
+  const [formTab, setFormTab] = useState<"content" | "seo" | "publishing">("content")
+  const [editorContent, setEditorContent] = useState("")
+  const [readingTimeState, setReadingTimeState] = useState<number | null>(null)
   
   // Custom dialog config
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -130,6 +135,18 @@ export default function AdminDashboard({
     setEditingItem(null)
   }, [activeTab])
 
+  // Sync editing item contents for blog post editor
+  useEffect(() => {
+    if (editingItem && activeTab === "blog") {
+      setEditorContent(editingItem.content || "")
+      setReadingTimeState(editingItem.readingTime || null)
+    } else {
+      setEditorContent("")
+      setReadingTimeState(null)
+    }
+    setFormTab("content")
+  }, [editingItem, activeTab])
+
   // Helpers to format dates for form fields
   const formatDateForInput = (dateVal: any) => {
     if (!dateVal) return ""
@@ -145,6 +162,7 @@ export default function AdminDashboard({
     if (activeTab === "blog") return blogPosts
     if (activeTab === "skills") return skills
     if (activeTab === "experience") return experiences
+    if (activeTab === "media") return []
     return messages
   }, [activeTab, projects, blogPosts, skills, experiences, messages])
 
@@ -357,14 +375,35 @@ export default function AdminDashboard({
   const handleSaveBlogPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
+
+    const statusVal = fd.get("status") as string || "DRAFT"
+    const isPublished = statusVal === "PUBLISHED" || statusVal === "SCHEDULED"
+    const isArchived = statusVal === "ARCHIVED"
+    const pubDateStr = fd.get("publishedAt") as string
+    const publishedAt = pubDateStr ? new Date(pubDateStr) : (statusVal === "PUBLISHED" ? new Date() : null)
+    const readTimeVal = fd.get("readingTime") ? parseInt(fd.get("readingTime") as string, 10) : null
+
     const data = {
       title: fd.get("title") as string,
       slug: fd.get("slug") as string,
       summary: fd.get("summary") as string,
-      content: fd.get("content") as string,
-      coverImage: fd.get("coverImage") as string,
-      published: fd.get("published") === "true",
-      archived: fd.get("archived") === "true",
+      description: fd.get("description") as string || null,
+      content: fd.get("content") as string || "[]",
+      coverImage: fd.get("coverImage") as string || null,
+      thumbnail: fd.get("thumbnail") as string || null,
+      readingTime: readTimeVal,
+      status: statusVal,
+      published: isPublished,
+      archived: isArchived,
+      publishedAt,
+      seoTitle: fd.get("seoTitle") as string || null,
+      seoDescription: fd.get("seoDescription") as string || null,
+      seoKeywords: fd.get("seoKeywords") as string || null,
+      canonicalUrl: fd.get("canonicalUrl") as string || null,
+      ogImage: fd.get("ogImage") as string || null,
+      visibility: fd.get("visibility") as string || "PUBLIC",
+      language: fd.get("language") as string || "en",
+      themeMetadata: fd.get("themeMetadata") as string || null,
       categoryId: fd.get("categoryId") as string,
       tagIds: editingItem ? (editingItem.tags?.map((t: any) => t.id) || []) : [],
     }
@@ -396,14 +435,32 @@ export default function AdminDashboard({
   const handleBlogStatusChange = async (id: string, newStatus: { published?: boolean; archived?: boolean }) => {
     const item = blogPosts.find((p) => p.id === id)
     if (!item) return
+
+    const published = newStatus.published !== undefined ? newStatus.published : item.published
+    const archived = newStatus.archived !== undefined ? newStatus.archived : item.archived
+    const status = archived ? "ARCHIVED" : (published ? "PUBLISHED" : "DRAFT")
+
     const data = {
       title: item.title,
       slug: item.slug,
       summary: item.summary,
+      description: item.description,
       content: item.content,
       coverImage: item.coverImage || "",
-      published: newStatus.published !== undefined ? newStatus.published : item.published,
-      archived: newStatus.archived !== undefined ? newStatus.archived : item.archived,
+      thumbnail: item.thumbnail || "",
+      readingTime: item.readingTime,
+      status,
+      published,
+      archived,
+      publishedAt: item.publishedAt ? new Date(item.publishedAt) : null,
+      seoTitle: item.seoTitle,
+      seoDescription: item.seoDescription,
+      seoKeywords: item.seoKeywords,
+      canonicalUrl: item.canonicalUrl || "",
+      ogImage: item.ogImage || "",
+      visibility: item.visibility || "PUBLIC",
+      language: item.language || "en",
+      themeMetadata: item.themeMetadata,
       categoryId: item.categoryId,
       tagIds: item.tags?.map((t: any) => t.id) || [],
     }
@@ -770,6 +827,7 @@ export default function AdminDashboard({
             { id: "skills", name: "Skills", count: skills.length },
             { id: "experience", name: "Experience", count: experiences.length },
             { id: "messages", name: "Contact Inbox", count: messages.filter((m) => !m.read).length },
+            { id: "media", name: "Media Assets", count: 0 },
           ].map((tab) => {
             const isActive = activeTab === tab.id
             return (
@@ -800,33 +858,47 @@ export default function AdminDashboard({
         {/* Content Workspace */}
         <main className="flex-1 flex flex-col gap-6 min-w-0">
           
-          <div className="flex flex-col gap-2">
-            <h2 className="font-display font-black text-2xl md:text-3xl text-foreground capitalize leading-none">
-              {activeTab} Manager
-            </h2>
-            <p className="text-muted text-xs md:text-sm leading-relaxed">
-              Query, status toggle, duplicate, update, and manage entries within the developer portfolio.
-            </p>
-          </div>
+          {activeTab === "media" ? (
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2">
+                <h2 className="font-display font-black text-2xl md:text-3xl text-foreground capitalize leading-none">
+                  Media Assets Gallery
+                </h2>
+                <p className="text-muted text-xs md:text-sm leading-relaxed">
+                  Manage static assets, images, and project screenshots inside the virtual folders gallery.
+                </p>
+              </div>
+              <MediaLibrary />
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-display font-black text-2xl md:text-3xl text-foreground capitalize leading-none">
+                  {activeTab} Manager
+                </h2>
+                <p className="text-muted text-xs md:text-sm leading-relaxed">
+                  Query, status toggle, duplicate, update, and manage entries within the developer portfolio.
+                </p>
+              </div>
 
-          {/* 3. Stat counters display */}
-          <CMSStats type={activeTab} items={activeItems} />
+              {/* 3. Stat counters display */}
+              <CMSStats type={activeTab} items={activeItems} />
 
-          {/* 4. Filter bar component */}
-          <CMSFilterBar
-            type={activeTab}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            showForm={showForm}
-            onAddClick={() => {
-              setEditingItem(null)
-              setShowForm(!showForm)
-            }}
-          />
+              {/* 4. Filter bar component */}
+              <CMSFilterBar
+                type={activeTab}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                statusFilter={statusFilter}
+                setStatusFilter={setStatusFilter}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                showForm={showForm}
+                onAddClick={() => {
+                  setEditingItem(null)
+                  setShowForm(!showForm)
+                }}
+              />
 
           {/* 5. Creation/Editing Formdisplay panel */}
           {showForm && (
@@ -916,69 +988,171 @@ export default function AdminDashboard({
 
               {/* BlogPost Form */}
               {activeTab === "blog" && (
-                <form
-                  key={editingItem ? editingItem.id : "new-blog"}
-                  onSubmit={handleSaveBlogPost}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                >
-                  <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Article Title</label>
-                    <input required name="title" defaultValue={editingItem?.title || ""} placeholder="Post Title" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Slug (kebab-case)</label>
-                    <input required name="slug" defaultValue={editingItem?.slug || ""} placeholder="slug (kebab-case)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Category</label>
-                    <select required name="categoryId" defaultValue={editingItem?.categoryId || ""} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
-                      <option value="" className="bg-card">Select Category</option>
-                      {categories.map((c) => (
-                        <option key={c.id} value={c.id} className="bg-card">{c.name}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Cover Image URL</label>
-                    <input name="coverImage" defaultValue={editingItem?.coverImage || ""} placeholder="Cover Image URL" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
-                  </div>
+                <div className="flex flex-col gap-5">
                   
-                  <div className="grid grid-cols-2 gap-4 md:col-span-2">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono font-bold text-muted uppercase">Publication Status</label>
-                      <select name="published" defaultValue={editingItem?.published ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
-                        <option value="false" className="bg-card">Draft</option>
-                        <option value="true" className="bg-card">Published</option>
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono font-bold text-muted uppercase">Archived Status</label>
-                      <select name="archived" defaultValue={editingItem?.archived ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
-                        <option value="false" className="bg-card">No (Normal)</option>
-                        <option value="true" className="bg-card">Yes (Archived)</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Short Description (Summary)</label>
-                    <textarea required name="summary" defaultValue={editingItem?.summary || ""} placeholder="Short description summary" rows={2} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Content Body (Markdown supported)</label>
-                    <textarea required name="content" defaultValue={editingItem?.content || ""} placeholder="Content Body (Markdown)" rows={6} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
+                  {/* Tabs header selector */}
+                  <div className="flex border-b border-card-border/40 select-none pb-1.5 mb-2 overflow-x-auto gap-1">
+                    {[
+                      { id: "content", name: "Content Editor" },
+                      { id: "seo", name: "SEO Optimization" },
+                      { id: "publishing", name: "Publishing & Metadata" },
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setFormTab(tab.id as any)}
+                        className={`px-4 py-2 text-xs font-mono font-bold border-b-2 cursor-pointer transition-all shrink-0 ${
+                          formTab === tab.id
+                            ? "border-primary text-primary bg-primary/5"
+                            : "border-transparent text-muted hover:text-foreground"
+                        }`}
+                      >
+                        {tab.name}
+                      </button>
+                    ))}
                   </div>
 
-                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
-                    {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
-                    {editingItem ? "Update Post" : "Publish Post"}
-                  </button>
-                </form>
+                  <form
+                    key={editingItem ? editingItem.id : "new-blog"}
+                    onSubmit={handleSaveBlogPost}
+                    className="flex flex-col gap-5"
+                  >
+                    
+                    {/* Hidden inputs to capture state values */}
+                    <input type="hidden" name="content" value={editorContent} />
+                    <input type="hidden" name="readingTime" value={readingTimeState || ""} />
+
+                    {/* CONTENT TAB */}
+                    {formTab === "content" && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Article Title</label>
+                          <input required name="title" defaultValue={editingItem?.title || ""} placeholder="Post Title" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Slug (kebab-case)</label>
+                          <input required name="slug" defaultValue={editingItem?.slug || ""} placeholder="slug (kebab-case)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Category</label>
+                          <select required name="categoryId" defaultValue={editingItem?.categoryId || ""} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                            <option value="" className="bg-card">Select Category</option>
+                            {categories.map((c) => (
+                              <option key={c.id} value={c.id} className="bg-card">{c.name}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Short Description (Excerpt / Summary)</label>
+                          <textarea required name="summary" defaultValue={editingItem?.summary || ""} placeholder="Short description excerpt summary..." rows={2} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Cover Image URL</label>
+                          <input name="coverImage" defaultValue={editingItem?.coverImage || ""} placeholder="Cover Image URL" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
+                        </div>
+
+                        {/* ADVANCED RICH BLOCK EDITOR CONTAINER */}
+                        <div className="flex flex-col gap-1.5 md:col-span-2 mt-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Visual Block Editor</label>
+                          <RichBlogEditor initialValue={editorContent} onChange={setEditorContent} onChangeReadingTime={setReadingTimeState} />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* SEO TAB */}
+                    {formTab === "seo" && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">SEO Title Meta Tag</label>
+                          <input name="seoTitle" defaultValue={editingItem?.seoTitle || ""} placeholder="SEO Meta Title (defaults to title)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">SEO Description Meta Tag</label>
+                          <textarea name="seoDescription" defaultValue={editingItem?.seoDescription || ""} placeholder="SEO Meta Description (defaults to summary)" rows={2} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Keywords (comma-separated)</label>
+                          <input name="seoKeywords" defaultValue={editingItem?.seoKeywords || ""} placeholder="e.g. serverless, caching, nextjs" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Canonical Link URL</label>
+                          <input name="canonicalUrl" defaultValue={editingItem?.canonicalUrl || ""} placeholder="https://example.com/blog/slug" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">OpenGraph OG Image URL</label>
+                          <input name="ogImage" defaultValue={editingItem?.ogImage || ""} placeholder="OG Share Image URL (defaults to coverImage)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* PUBLISHING TAB */}
+                    {formTab === "publishing" && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Status</label>
+                          <select name="status" defaultValue={editingItem?.status || "DRAFT"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none">
+                            <option value="DRAFT" className="bg-card">Draft (Unpublished)</option>
+                            <option value="PUBLISHED" className="bg-card">Published (Live)</option>
+                            <option value="SCHEDULED" className="bg-card">Scheduled (Delay Publish)</option>
+                            <option value="ARCHIVED" className="bg-card">Archived</option>
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Schedule Publish Date/Time</label>
+                          <input name="publishedAt" type="datetime-local" defaultValue={editingItem?.publishedAt ? new Date(editingItem.publishedAt).toISOString().slice(0, 16) : ""} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Visibility</label>
+                          <select name="visibility" defaultValue={editingItem?.visibility || "PUBLIC"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none">
+                            <option value="PUBLIC" className="bg-card">Public (Everyone)</option>
+                            <option value="PRIVATE" className="bg-card">Private (Author Only)</option>
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Language</label>
+                          <select name="language" defaultValue={editingItem?.language || "en"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none">
+                            <option value="en" className="bg-card">English (en)</option>
+                            <option value="vi" className="bg-card">Tiếng Việt (vi)</option>
+                            <option value="ja" className="bg-card">日本語 (ja)</option>
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Thumbnail URL</label>
+                          <input name="thumbnail" defaultValue={editingItem?.thumbnail || ""} placeholder="Small thumbnail thumbnail URL" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Full Excerpt Description</label>
+                          <textarea name="description" defaultValue={editingItem?.description || ""} placeholder="Extended article markdown overview description..." rows={2} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="text-[10px] font-mono font-bold text-muted uppercase">Theme Configuration Metadata</label>
+                          <input name="themeMetadata" defaultValue={editingItem?.themeMetadata || ""} placeholder='e.g. {"theme": "dark", "layout": "full"}' className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Submit Actions */}
+                    <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover w-full cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                      {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                      {editingItem ? "Update Post Settings" : "Publish New Post"}
+                    </button>
+
+                  </form>
+                </div>
               )}
 
               {/* Skill Form */}
@@ -1146,17 +1320,21 @@ export default function AdminDashboard({
             onPageChange={(page) => setCurrentPage(page)}
           />
 
+            </>
+          )}
         </main>
       </div>
 
       {/* Floating Bulk Operations Toolbar */}
-      <CMSBulkToolbar
-        type={activeTab}
-        selectedCount={selectedIds.length}
-        onClear={() => setSelectedIds([])}
-        onBulkAction={handleBulkActionTrigger}
-        isPending={isPending}
-      />
+      {activeTab !== "media" && (
+        <CMSBulkToolbar
+          type={activeTab}
+          selectedCount={selectedIds.length}
+          onClear={() => setSelectedIds([])}
+          onBulkAction={handleBulkActionTrigger}
+          isPending={isPending}
+        />
+      )}
 
       {/* Custom Reusable Dialog Modals */}
       <CMSConfirmDialog
@@ -1168,15 +1346,17 @@ export default function AdminDashboard({
         isPending={isPending}
       />
 
-      <CMSPreviewModal
-        isOpen={previewOpen}
-        item={previewItem}
-        type={activeTab}
-        onClose={() => {
-          setPreviewOpen(false)
-          setPreviewItem(null)
-        }}
-      />
+      {activeTab !== "media" && (
+        <CMSPreviewModal
+          isOpen={previewOpen}
+          item={previewItem}
+          type={activeTab}
+          onClose={() => {
+            setPreviewOpen(false)
+            setPreviewItem(null)
+          }}
+        />
+      )}
 
       {/* Custom Animated Success/Error Toasts */}
       <Toast toasts={toasts} onClose={(id) => setToasts((prev) => prev.filter((t) => t.id !== id))} />
