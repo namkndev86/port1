@@ -33,6 +33,9 @@ export class BlogRepository {
     if (publishedOnly) {
       whereClause.published = true;
       whereClause.archived = false;
+      whereClause.status = "PUBLISHED";
+      whereClause.visibility = "PUBLIC";
+      whereClause.publishedAt = { lte: new Date() };
     }
 
     if (categorySlug) {
@@ -50,6 +53,7 @@ export class BlogRepository {
         { title: { contains: search, mode: 'insensitive' } },
         { summary: { contains: search, mode: 'insensitive' } },
         { content: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
       ];
     }
 
@@ -60,7 +64,7 @@ export class BlogRepository {
           category: true,
           tags: true,
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { publishedAt: 'desc' },
         skip,
         take: limit,
       }),
@@ -91,13 +95,17 @@ export class BlogRepository {
   }
 
   async create(
-    data: Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt' | 'publishedAt'>,
+    data: Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt' | 'publishedAt'> & { publishedAt?: Date | null },
     tagIds: string[] = []
   ): Promise<BlogPostWithRelations> {
+    const publishedAt = data.status === "PUBLISHED" 
+      ? (data.publishedAt || new Date()) 
+      : (data.status === "SCHEDULED" ? data.publishedAt : null);
+
     return prisma.blogPost.create({
       data: {
         ...data,
-        publishedAt: data.published ? new Date() : null,
+        publishedAt,
         tags: {
           connect: tagIds.map((id) => ({ id })),
         },
@@ -111,13 +119,19 @@ export class BlogRepository {
 
   async update(
     id: string,
-    data: Partial<Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt' | 'publishedAt'>>,
+    data: Partial<Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt' | 'publishedAt'>> & { publishedAt?: Date | null },
     tagIds?: string[]
   ): Promise<BlogPostWithRelations> {
     const updateData: any = { ...data };
 
-    if (data.published !== undefined) {
-      updateData.publishedAt = data.published ? new Date() : null;
+    if (data.status !== undefined) {
+      if (data.status === "PUBLISHED") {
+        updateData.publishedAt = data.publishedAt || new Date();
+      } else if (data.status === "SCHEDULED") {
+        updateData.publishedAt = data.publishedAt;
+      } else {
+        updateData.publishedAt = null;
+      }
     }
 
     if (tagIds) {

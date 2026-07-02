@@ -15,7 +15,7 @@ import prisma from "@/lib/db"
 // Helper to assert admin authorization status
 async function assertAdmin() {
   const session = await auth()
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !session.user || session.user.role !== "ADMIN") {
     throw new Error("Access denied. Unauthorized operation.")
   }
   return session
@@ -235,10 +235,22 @@ export async function duplicateBlogPostAction(id: string) {
       title: `Copy of ${original.title}`,
       slug: newSlug,
       summary: original.summary,
+      description: original.description,
       content: original.content,
       coverImage: original.coverImage,
+      thumbnail: original.thumbnail,
+      readingTime: original.readingTime,
+      status: "DRAFT",
       published: false,
       archived: false,
+      seoTitle: original.seoTitle,
+      seoDescription: original.seoDescription,
+      seoKeywords: original.seoKeywords,
+      canonicalUrl: original.canonicalUrl,
+      ogImage: original.ogImage,
+      visibility: original.visibility,
+      language: original.language,
+      themeMetadata: original.themeMetadata,
       authorId: original.authorId,
       categoryId: original.categoryId,
       tags: {

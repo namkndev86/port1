@@ -35,14 +35,14 @@ export default function CMSEmptyState({ type, hasFilters, onAddClick }: CMSEmpty
   const showAdd = type !== "messages" && !hasFilters
 
   return (
-    <div className="flex flex-col items-center justify-center text-center p-8 md:p-16 glass rounded-2xl border border-card-border/30 bg-[#040813]/20 py-16">
+    <div className="flex flex-col items-center justify-center text-center p-8 md:p-16 glass rounded-2xl border border-card-border/30 bg-card/30 py-16">
       
       {/* Icon Graphic */}
-      <div className="p-4 rounded-2xl bg-white/5 border border-card-border/40 text-primary/40 mb-4 shrink-0 animate-pulse-slow">
+      <div className="p-4 rounded-2xl bg-background border border-card-border text-primary/40 mb-4 shrink-0 animate-pulse-slow">
         <Icon className="w-10 h-10" />
       </div>
 
-      <h3 className="font-display font-bold text-base md:text-lg text-white mb-1.5">
+      <h3 className="font-display font-bold text-base md:text-lg text-foreground mb-1.5">
         {title}
       </h3>
       

@@ -90,7 +90,7 @@ export default function CMSFilterBar({
   const currentSortLabel = sortOptions.find((opt) => opt.value === sortBy)?.label || "Newest Created"
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between w-full p-4 glass rounded-2xl border border-card-border/40 bg-[#040813]/60 shadow-lg relative">
+    <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between w-full p-4 glass rounded-2xl border border-card-border/40 bg-card/60 shadow-lg relative">
       
       {/* 1. Search Box with Icon */}
       <div className="flex-1 min-w-[200px] relative">
@@ -103,12 +103,12 @@ export default function CMSFilterBar({
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={`Search by title or details...`}
           aria-label="Search CMS list items"
-          className="w-full pl-10 pr-9 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-white text-sm placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary/50 transition-all font-sans"
+          className="w-full pl-10 pr-9 py-2.5 bg-background border border-card-border rounded-xl text-foreground text-sm placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary/50 transition-all font-sans"
         />
         {searchQuery && (
           <button
             onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded-lg text-gray-500 hover:text-white transition-colors cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded-lg text-muted hover:text-foreground transition-colors cursor-pointer"
             aria-label="Clear search query"
           >
             <X className="w-3.5 h-3.5" />
@@ -129,14 +129,14 @@ export default function CMSFilterBar({
               setStatusOpen(!statusOpen)
               setSortOpen(false)
             }}
-            className="px-4 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-xs font-semibold text-gray-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary select-none w-40 justify-between"
+            className="px-4 py-2.5 bg-background border border-card-border rounded-xl text-xs font-semibold text-muted hover:text-foreground transition-colors cursor-pointer flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary select-none w-40 justify-between"
           >
             <span className="truncate">{currentStatusLabel}</span>
             <ChevronDown className="w-3.5 h-3.5 opacity-60 shrink-0" />
           </button>
 
           {statusOpen && (
-            <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl bg-[#0b0f19] border border-card-border/80 shadow-2xl z-20 overflow-hidden py-1">
+            <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl bg-card border border-card-border/85 shadow-2xl z-20 overflow-hidden py-1">
               {statusOptions.map((opt) => (
                 <button
                   key={opt.value}
@@ -145,8 +145,8 @@ export default function CMSFilterBar({
                     setStatusFilter(opt.value)
                     setStatusOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-[#1a2333]/50 transition-colors cursor-pointer flex items-center justify-between ${
-                    opt.value === statusFilter ? "text-primary bg-primary/5" : "text-gray-300"
+                  className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-background/80 transition-colors cursor-pointer flex items-center justify-between ${
+                    opt.value === statusFilter ? "text-primary bg-primary/5" : "text-muted hover:text-foreground"
                   }`}
                 >
                   {opt.label}
@@ -168,14 +168,14 @@ export default function CMSFilterBar({
               setSortOpen(!sortOpen)
               setStatusOpen(false)
             }}
-            className="px-4 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-xs font-semibold text-gray-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary select-none w-44 justify-between"
+            className="px-4 py-2.5 bg-background border border-card-border rounded-xl text-xs font-semibold text-muted hover:text-foreground transition-colors cursor-pointer flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary select-none w-44 justify-between"
           >
             <span className="truncate">{currentSortLabel}</span>
             <ChevronDown className="w-3.5 h-3.5 opacity-60 shrink-0" />
           </button>
 
           {sortOpen && (
-            <div className="absolute right-0 top-full mt-1.5 w-48 rounded-xl bg-[#0b0f19] border border-card-border/80 shadow-2xl z-20 overflow-hidden py-1">
+            <div className="absolute right-0 top-full mt-1.5 w-48 rounded-xl bg-card border border-card-border/85 shadow-2xl z-20 overflow-hidden py-1">
               {sortOptions.map((opt) => (
                 <button
                   key={opt.value}
@@ -184,8 +184,8 @@ export default function CMSFilterBar({
                     setSortBy(opt.value)
                     setSortOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-[#1a2333]/50 transition-colors cursor-pointer flex items-center justify-between ${
-                    opt.value === sortBy ? "text-primary bg-primary/5" : "text-gray-300"
+                  className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-background/80 transition-colors cursor-pointer flex items-center justify-between ${
+                    opt.value === sortBy ? "text-primary bg-primary/5" : "text-muted hover:text-foreground"
                   }`}
                 >
                   {opt.label}

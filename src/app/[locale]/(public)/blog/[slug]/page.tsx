@@ -8,6 +8,7 @@ import { getDictionary } from "@/i18n/get-dictionary"
 import { LocaleProvider } from "@/components/common/locale-provider"
 import { getTranslation } from "@/i18n/server"
 import type { Locale } from "@/i18n/config"
+import BlockRenderer from "@/components/common/BlockRenderer"
 
 interface BlogPostDetailPageProps {
   params: Promise<{ locale: string; slug: string }>
@@ -26,8 +27,15 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
       }
     }
     return {
-      title: post.title,
-      description: post.summary,
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.summary,
+      keywords: post.seoKeywords ? post.seoKeywords.split(",").map((k: any) => k.trim()) : undefined,
+      alternates: post.canonicalUrl ? { canonical: post.canonicalUrl } : undefined,
+      openGraph: {
+        title: post.seoTitle || post.title,
+        description: post.seoDescription || post.summary,
+        images: post.ogImage ? [{ url: post.ogImage }] : (post.coverImage ? [{ url: post.coverImage }] : []),
+      },
     }
   } catch {
     return {
@@ -62,8 +70,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
   }
 
   // Calculate mock reading time
-  const wordCount = post.content.split(/\s+/).length
-  const readTime = Math.ceil(wordCount / 200)
+  const readTime = post.readingTime || Math.max(1, Math.ceil(post.content.split(/\s+/).length / 200))
 
   const getHref = (path: string) => {
     return path === "/" ? `/${locale}` : `/${locale}${path}`
@@ -119,8 +126,8 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
         )}
 
         {/* Blog content write-up */}
-        <div className="prose dark:prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed flex flex-col gap-6 whitespace-pre-line">
-          {post.content}
+        <div className="max-w-none w-full">
+          <BlockRenderer content={post.content} />
         </div>
 
         {/* Tags list */}
