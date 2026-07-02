@@ -78,7 +78,7 @@ export default function CMSConfirmDialog({
             aria-modal="true"
             aria-labelledby="confirm-dialog-title"
             aria-describedby="confirm-dialog-desc"
-            className="relative w-full max-w-md p-6 rounded-2xl bg-[#0b0f19] border border-card-border/60 shadow-2xl flex flex-col gap-4 z-10"
+            className="relative w-full max-w-md p-6 rounded-2xl bg-card border border-card-border shadow-2xl flex flex-col gap-4 z-10"
           >
             <div className="flex items-start gap-4">
               <div
@@ -93,7 +93,7 @@ export default function CMSConfirmDialog({
               <div className="flex-1 flex flex-col gap-1">
                 <h3
                   id="confirm-dialog-title"
-                  className="text-lg font-bold text-white leading-snug font-display"
+                  className="text-lg font-bold text-foreground leading-snug font-display"
                 >
                   {title}
                 </h3>
@@ -109,7 +109,7 @@ export default function CMSConfirmDialog({
                 type="button"
                 onClick={onCancel}
                 disabled={isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-300 hover:text-white rounded-xl border border-card-border hover:bg-white/5 disabled:opacity-50 transition-all cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-muted hover:text-foreground rounded-xl border border-card-border hover:bg-background/80 disabled:opacity-50 transition-all cursor-pointer"
               >
                 {cancelText}
               </button>

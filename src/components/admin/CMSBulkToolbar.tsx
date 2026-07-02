@@ -57,19 +57,19 @@ export default function CMSBulkToolbar({
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
           className="fixed bottom-8 left-1/2 z-40 w-full max-w-xl px-4 pointer-events-none"
         >
-          <div className="pointer-events-auto flex items-center justify-between gap-4 p-4 rounded-2xl glass border border-primary/30 bg-[#0b0f19]/90 shadow-2xl backdrop-blur-xl">
+          <div className="pointer-events-auto flex items-center justify-between gap-4 p-4 rounded-2xl glass border border-primary/30 bg-card/95 shadow-2xl backdrop-blur-xl">
             {/* Counts info */}
             <div className="flex items-center gap-3">
               <button
                 onClick={onClear}
-                className="p-1 rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-background/85 transition-colors cursor-pointer"
                 title="Deselect All"
                 aria-label="Clear selection"
               >
                 <X className="w-4 h-4" />
               </button>
               <div className="flex flex-col">
-                <span className="text-xs font-mono font-bold text-white leading-none">
+                <span className="text-xs font-mono font-bold text-foreground leading-none">
                   {selectedCount} Selected
                 </span>
                 <span className="text-[10px] text-muted font-mono leading-tight">

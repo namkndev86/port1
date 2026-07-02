@@ -29,7 +29,7 @@ export default function Toast({ toasts, onClose }: ToastProps) {
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-xl bg-[#0b0f19] backdrop-blur-xl ${
+              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-xl bg-card backdrop-blur-xl ${
                 isSuccess
                   ? "border-emerald-500/20 text-emerald-200"
                   : isError
@@ -51,7 +51,7 @@ export default function Toast({ toasts, onClose }: ToastProps) {
               </div>
               <button
                 onClick={() => onClose(toast.id)}
-                className="shrink-0 p-0.5 rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                className="shrink-0 p-0.5 rounded-lg text-muted hover:text-foreground hover:bg-background/80 transition-colors cursor-pointer"
                 aria-label="Close notification"
               >
                 <X className="w-4 h-4" />

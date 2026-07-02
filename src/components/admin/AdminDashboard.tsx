@@ -55,6 +55,7 @@ import CMSBulkToolbar from "./CMSBulkToolbar"
 import CMSPagination from "./CMSPagination"
 import CMSEmptyState from "./CMSEmptyState"
 import CMSSkeleton from "./CMSSkeleton"
+import ThemeSwitcher from "@/components/common/theme-switcher"
 
 interface AdminDashboardProps {
   initialProjects: any[]
@@ -738,21 +739,24 @@ export default function AdminDashboard({
   }
 
   return (
-    <div className="min-h-screen bg-[#02050b] text-foreground flex flex-col w-full relative pb-20 select-none">
+    <div className="min-h-screen bg-background text-foreground flex flex-col w-full relative pb-20 select-none transition-colors duration-300">
       
       {/* 1. Header component */}
-      <header className="border-b border-card-border/60 bg-[#040813] px-6 py-4 flex items-center justify-between z-10">
+      <header className="border-b border-card-border/60 bg-card px-6 py-4 flex items-center justify-between z-10">
         <div className="flex items-center gap-2">
           <Layers className="w-5 h-5 text-primary" />
-          <h1 className="font-display font-bold text-lg text-white">Admin CMS Control</h1>
+          <h1 className="font-display font-bold text-lg text-foreground">Admin CMS Control</h1>
         </div>
-        <button
-          onClick={() => logoutAction()}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-950/20 border border-red-500/20 text-red-200 text-xs font-semibold hover:bg-red-900/30 transition-colors cursor-pointer"
-        >
-          <LogOut className="w-4 h-4" />
-          Logout Session
-        </button>
+        <div className="flex items-center gap-4">
+          <ThemeSwitcher />
+          <button
+            onClick={() => logoutAction()}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-950/20 border border-red-500/20 text-red-200 text-xs font-semibold hover:bg-red-900/30 transition-colors cursor-pointer"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout Session
+          </button>
+        </div>
       </header>
 
       {/* 2. Main Content Frame */}
@@ -775,14 +779,14 @@ export default function AdminDashboard({
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer select-none ${
                   isActive
                     ? "bg-primary text-white shadow-lg shadow-primary/20"
-                    : "hover:bg-card-border/40 text-muted hover:text-white"
+                    : "hover:bg-card-border/40 text-muted hover:text-foreground"
                 }`}
               >
                 <span>{tab.name}</span>
                 {tab.count > 0 && (
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
-                      isActive ? "bg-white text-primary" : "bg-[#0b0f19] text-accent"
+                      isActive ? "bg-background text-primary animate-pulse" : "bg-card border border-card-border/40 text-accent"
                     }`}
                   >
                     {tab.count}
@@ -797,7 +801,7 @@ export default function AdminDashboard({
         <main className="flex-1 flex flex-col gap-6 min-w-0">
           
           <div className="flex flex-col gap-2">
-            <h2 className="font-display font-black text-2xl md:text-3xl text-white capitalize leading-none">
+            <h2 className="font-display font-black text-2xl md:text-3xl text-foreground capitalize leading-none">
               {activeTab} Manager
             </h2>
             <p className="text-muted text-xs md:text-sm leading-relaxed">
@@ -826,9 +830,9 @@ export default function AdminDashboard({
 
           {/* 5. Creation/Editing Formdisplay panel */}
           {showForm && (
-            <div className="glass rounded-2xl p-6 border border-primary/20 bg-[#040813]/60 relative">
+            <div className="glass rounded-2xl p-6 border border-card-border bg-card relative shadow-xl">
               <div className="border-b border-card-border/40 pb-3 mb-4">
-                <h3 className="font-display font-bold text-base text-white">
+                <h3 className="font-display font-bold text-base text-foreground">
                   {editingItem ? `Edit ${activeTab.slice(0, -1)}: ${editingItem.title || editingItem.name || editingItem.role}` : `Add New ${activeTab.slice(0, -1)}`}
                 </h3>
               </div>
@@ -841,69 +845,69 @@ export default function AdminDashboard({
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Project Title</label>
-                    <input required name="title" defaultValue={editingItem?.title || ""} placeholder="Project Title" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Project Title</label>
+                    <input required name="title" defaultValue={editingItem?.title || ""} placeholder="Project Title" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
                   
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Slug (kebab-case)</label>
-                    <input required name="slug" defaultValue={editingItem?.slug || ""} placeholder="slug (kebab-case)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Slug (kebab-case)</label>
+                    <input required name="slug" defaultValue={editingItem?.slug || ""} placeholder="slug (kebab-case)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Tech Stack (comma-separated list)</label>
-                    <input required name="techStack" defaultValue={editingItem?.techStack?.join(", ") || ""} placeholder="React, Go, PostgreSQL, Docker" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Tech Stack (comma-separated list)</label>
+                    <input required name="techStack" defaultValue={editingItem?.techStack?.join(", ") || ""} placeholder="React, Go, PostgreSQL, Docker" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">GitHub Repo URL</label>
-                    <input name="githubUrl" defaultValue={editingItem?.githubUrl || ""} placeholder="GitHub URL" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">GitHub Repo URL</label>
+                    <input name="githubUrl" defaultValue={editingItem?.githubUrl || ""} placeholder="GitHub URL" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
                   
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Live Demo URL</label>
-                    <input name="demoUrl" defaultValue={editingItem?.demoUrl || ""} placeholder="Live Demo URL" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Live Demo URL</label>
+                    <input name="demoUrl" defaultValue={editingItem?.demoUrl || ""} placeholder="Live Demo URL" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Featured Showcase</label>
-                      <select name="featured" defaultValue={editingItem?.featured ? "true" : "false"} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-xs">
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
+                      <label className="text-[10px] font-mono font-bold text-muted uppercase">Featured Showcase</label>
+                      <select name="featured" defaultValue={editingItem?.featured ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                        <option value="false" className="bg-card">No</option>
+                        <option value="true" className="bg-card">Yes</option>
                       </select>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Active Status</label>
-                      <select name="active" defaultValue={editingItem?.active !== false ? "true" : "false"} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-xs">
-                        <option value="true">Active (Visible)</option>
-                        <option value="false">Inactive (Hidden)</option>
+                      <label className="text-[10px] font-mono font-bold text-muted uppercase">Active Status</label>
+                      <select name="active" defaultValue={editingItem?.active !== false ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                        <option value="true" className="bg-card">Active (Visible)</option>
+                        <option value="false" className="bg-card">Inactive (Hidden)</option>
                       </select>
                     </div>
                   </div>
                   
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Short Description (Summary)</label>
-                    <textarea required name="description" defaultValue={editingItem?.description || ""} placeholder="Short summary description" rows={2} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Short Description (Summary)</label>
+                    <textarea required name="description" defaultValue={editingItem?.description || ""} placeholder="Short summary description" rows={2} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Technical Challenges Faced</label>
-                    <textarea required name="challenges" defaultValue={editingItem?.challenges || ""} placeholder="Technical Challenges faced" rows={3} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Technical Challenges Faced</label>
+                    <textarea required name="challenges" defaultValue={editingItem?.challenges || ""} placeholder="Technical Challenges faced" rows={3} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Engineering Solutions Implemented</label>
-                    <textarea required name="solutions" defaultValue={editingItem?.solutions || ""} placeholder="Engineering Solutions implemented" rows={3} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Engineering Solutions Implemented</label>
+                    <textarea required name="solutions" defaultValue={editingItem?.solutions || ""} placeholder="Engineering Solutions implemented" rows={3} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Full Overview Details (Markdown supported)</label>
-                    <textarea required name="content" defaultValue={editingItem?.content || ""} placeholder="Full overview details (Markdown)" rows={5} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Full Overview Details (Markdown supported)</label>
+                    <textarea required name="content" defaultValue={editingItem?.content || ""} placeholder="Full overview details (Markdown)" rows={5} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
-                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2">
+                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
                     {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                     {editingItem ? "Update Project" : "Publish Project"}
                   </button>
@@ -918,59 +922,59 @@ export default function AdminDashboard({
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Article Title</label>
-                    <input required name="title" defaultValue={editingItem?.title || ""} placeholder="Post Title" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Article Title</label>
+                    <input required name="title" defaultValue={editingItem?.title || ""} placeholder="Post Title" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Slug (kebab-case)</label>
-                    <input required name="slug" defaultValue={editingItem?.slug || ""} placeholder="slug (kebab-case)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Slug (kebab-case)</label>
+                    <input required name="slug" defaultValue={editingItem?.slug || ""} placeholder="slug (kebab-case)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Category</label>
-                    <select required name="categoryId" defaultValue={editingItem?.categoryId || ""} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm">
-                      <option value="">Select Category</option>
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Category</label>
+                    <select required name="categoryId" defaultValue={editingItem?.categoryId || ""} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                      <option value="" className="bg-card">Select Category</option>
                       {categories.map((c) => (
-                        <option key={c.id} value={c.id}>{c.name}</option>
+                        <option key={c.id} value={c.id} className="bg-card">{c.name}</option>
                       ))}
                     </select>
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Cover Image URL</label>
-                    <input name="coverImage" defaultValue={editingItem?.coverImage || ""} placeholder="Cover Image URL" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Cover Image URL</label>
+                    <input name="coverImage" defaultValue={editingItem?.coverImage || ""} placeholder="Cover Image URL" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 md:col-span-2">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Publication Status</label>
-                      <select name="published" defaultValue={editingItem?.published ? "true" : "false"} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-xs">
-                        <option value="false">Draft</option>
-                        <option value="true">Published</option>
+                      <label className="text-[10px] font-mono font-bold text-muted uppercase">Publication Status</label>
+                      <select name="published" defaultValue={editingItem?.published ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                        <option value="false" className="bg-card">Draft</option>
+                        <option value="true" className="bg-card">Published</option>
                       </select>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Archived Status</label>
-                      <select name="archived" defaultValue={editingItem?.archived ? "true" : "false"} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-xs">
-                        <option value="false">No (Normal)</option>
-                        <option value="true">Yes (Archived)</option>
+                      <label className="text-[10px] font-mono font-bold text-muted uppercase">Archived Status</label>
+                      <select name="archived" defaultValue={editingItem?.archived ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                        <option value="false" className="bg-card">No (Normal)</option>
+                        <option value="true" className="bg-card">Yes (Archived)</option>
                       </select>
                     </div>
                   </div>
                   
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Short Description (Summary)</label>
-                    <textarea required name="summary" defaultValue={editingItem?.summary || ""} placeholder="Short description summary" rows={2} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Short Description (Summary)</label>
+                    <textarea required name="summary" defaultValue={editingItem?.summary || ""} placeholder="Short description summary" rows={2} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Content Body (Markdown supported)</label>
-                    <textarea required name="content" defaultValue={editingItem?.content || ""} placeholder="Content Body (Markdown)" rows={6} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Content Body (Markdown supported)</label>
+                    <textarea required name="content" defaultValue={editingItem?.content || ""} placeholder="Content Body (Markdown)" rows={6} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
-                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2">
+                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
                     {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                     {editingItem ? "Update Post" : "Publish Post"}
                   </button>
@@ -985,34 +989,34 @@ export default function AdminDashboard({
                   className="grid grid-cols-1 sm:grid-cols-2 gap-4"
                 >
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Skill Name</label>
-                    <input required name="name" defaultValue={editingItem?.name || ""} placeholder="Skill Name (e.g. Next.js)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Skill Name</label>
+                    <input required name="name" defaultValue={editingItem?.name || ""} placeholder="Skill Name (e.g. Next.js)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Category Group</label>
-                    <input required name="category" defaultValue={editingItem?.category || ""} placeholder="Category (e.g. Frontend, Backend, DevOps)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Category Group</label>
+                    <input required name="category" defaultValue={editingItem?.category || ""} placeholder="Category (e.g. Frontend, Backend, DevOps)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Proficiency Percentage (1-100)</label>
-                    <input required name="proficiency" type="number" min={1} max={100} defaultValue={editingItem?.proficiency || ""} placeholder="Proficiency % (1-100)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Proficiency Percentage (1-100)</label>
+                    <input required name="proficiency" type="number" min={1} max={100} defaultValue={editingItem?.proficiency || ""} placeholder="Proficiency % (1-100)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Lucide Icon String identifier</label>
-                    <input name="icon" defaultValue={editingItem?.icon || ""} placeholder="Lucide Icon string (e.g. Layout, Server, Database)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Lucide Icon String identifier</label>
+                    <input name="icon" defaultValue={editingItem?.icon || ""} placeholder="Lucide Icon string (e.g. Layout, Server, Database)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5 sm:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Active Status</label>
-                    <select name="active" defaultValue={editingItem?.active !== false ? "true" : "false"} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-xs">
-                      <option value="true">Active (Visible)</option>
-                      <option value="false">Inactive (Hidden)</option>
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Active Status</label>
+                    <select name="active" defaultValue={editingItem?.active !== false ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                      <option value="true" className="bg-card">Active (Visible)</option>
+                      <option value="false" className="bg-card">Inactive (Hidden)</option>
                     </select>
                   </div>
 
-                  <button type="submit" disabled={isPending} className="px-6 py-2.5 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover sm:col-span-2 cursor-pointer flex items-center justify-center gap-2">
+                  <button type="submit" disabled={isPending} className="px-6 py-2.5 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover sm:col-span-2 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
                     {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                     {editingItem ? "Update Skill" : "Save Skill"}
                   </button>
@@ -1027,44 +1031,44 @@ export default function AdminDashboard({
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Company Name</label>
-                    <input required name="company" defaultValue={editingItem?.company || ""} placeholder="Company Name" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Company Name</label>
+                    <input required name="company" defaultValue={editingItem?.company || ""} placeholder="Company Name" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Job Role / Title</label>
-                    <input required name="role" defaultValue={editingItem?.role || ""} placeholder="Job Title / Role" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Job Role / Title</label>
+                    <input required name="role" defaultValue={editingItem?.role || ""} placeholder="Job Title / Role" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Start Date</label>
-                    <input required name="startDate" type="date" defaultValue={formatDateForInput(editingItem?.startDate)} placeholder="Start Date" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Start Date</label>
+                    <input required name="startDate" type="date" defaultValue={formatDateForInput(editingItem?.startDate)} placeholder="Start Date" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">End Date (optional)</label>
-                    <input name="endDate" type="date" defaultValue={formatDateForInput(editingItem?.endDate)} placeholder="End Date" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">End Date (optional)</label>
+                    <input name="endDate" type="date" defaultValue={formatDateForInput(editingItem?.endDate)} placeholder="End Date" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Office Location</label>
-                    <input name="location" defaultValue={editingItem?.location || ""} placeholder="Location (e.g. Remote, SF)" className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Office Location</label>
+                    <input name="location" defaultValue={editingItem?.location || ""} placeholder="Location (e.g. Remote, SF)" className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
                   
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Current Job</label>
-                    <select name="current" defaultValue={editingItem?.current ? "true" : "false"} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-xs">
-                      <option value="false">No (Past job)</option>
-                      <option value="true">Yes (Current job)</option>
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Current Job</label>
+                    <select name="current" defaultValue={editingItem?.current ? "true" : "false"} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+                      <option value="false" className="bg-card">No (Past job)</option>
+                      <option value="true" className="bg-card">Yes (Current job)</option>
                     </select>
                   </div>
                   
                   <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="text-[10px] font-mono font-bold text-gray-400 uppercase">Role Achievements & Duties</label>
-                    <textarea required name="description" defaultValue={editingItem?.description || ""} placeholder="Responsibilities, skills used, achievements" rows={4} className="px-3 py-2.5 bg-[#050811] border border-card-border rounded-xl text-white text-sm" />
+                    <label className="text-[10px] font-mono font-bold text-muted uppercase">Role Achievements & Duties</label>
+                    <textarea required name="description" defaultValue={editingItem?.description || ""} placeholder="Responsibilities, skills used, achievements" rows={4} className="px-3 py-2.5 bg-background border border-card-border text-foreground rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary/50 transition-colors" />
                   </div>
 
-                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2">
+                  <button type="submit" disabled={isPending} className="px-6 py-3 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover md:col-span-2 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
                     {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                     {editingItem ? "Update Experience" : "Save Experience"}
                   </button>
@@ -1078,7 +1082,7 @@ export default function AdminDashboard({
             
             {/* Header select-all toolbar */}
             {processedItems.length > 0 && (
-              <div className="flex items-center justify-between px-5 py-2 border-b border-card-border/40 text-xs font-mono text-muted">
+              <div className="flex items-center justify-between px-5 py-2 border-b border-card-border/40 text-xs font-mono text-muted select-none">
                 <div className="flex items-center gap-2">
                   <label className="relative flex items-center justify-center cursor-pointer select-none">
                     <input

@@ -73,7 +73,7 @@ export default function CMSStats({ type, items }: CMSStatsProps) {
         return (
           <div
             key={i}
-            className="glass rounded-2xl p-4 border border-card-border/40 bg-[#040813] flex items-center justify-between gap-4"
+            className="glass rounded-2xl p-4 border border-card-border/40 bg-card flex items-center justify-between gap-4 shadow-sm"
           >
             <div className="flex flex-col gap-1">
               <span className="text-[11px] font-mono font-semibold tracking-wider text-muted uppercase">
@@ -83,7 +83,7 @@ export default function CMSStats({ type, items }: CMSStatsProps) {
                 {stat.count}
               </span>
             </div>
-            <div className="p-2.5 bg-white/5 rounded-xl border border-card-border/40 shrink-0">
+            <div className="p-2.5 bg-background rounded-xl border border-card-border/40 shrink-0">
               <Icon className={`w-4 h-4 ${stat.color}`} />
             </div>
           </div>

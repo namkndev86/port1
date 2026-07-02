@@ -94,7 +94,7 @@ export default function CMSCard({
       className={`glass rounded-2xl border transition-all duration-300 p-5 flex gap-4 items-start select-none ${
         isSelected
           ? "border-primary/40 bg-primary/5 shadow-lg shadow-primary/5"
-          : "border-card-border/40 hover:border-card-border/80 bg-[#040813]/30"
+          : "border-card-border/40 hover:border-card-border/80 bg-card/45"
       }`}
     >
       {/* 1. Selection Checkbox */}
@@ -111,7 +111,7 @@ export default function CMSCard({
             className={`w-4.5 h-4.5 rounded border flex items-center justify-center transition-all ${
               isSelected
                 ? "bg-primary border-primary text-white shadow-md shadow-primary/20"
-                : "border-card-border/80 bg-[#030611] text-transparent hover:border-primary/50"
+                : "border-card-border/80 bg-background text-transparent hover:border-primary/50"
             }`}
           >
             {isSelected && (
@@ -127,7 +127,7 @@ export default function CMSCard({
       <div className="flex-1 min-w-0 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div className="flex-1 min-w-0 flex flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <h4 className="font-display font-bold text-sm md:text-base text-white truncate shrink-0 max-w-full">
+            <h4 className="font-display font-bold text-sm md:text-base text-foreground truncate shrink-0 max-w-full">
               {details.title}
             </h4>
             <span className="shrink-0">
@@ -155,7 +155,7 @@ export default function CMSCard({
               </span>
             )}
             {details.metaText && (
-              <span className="px-2 py-0.5 rounded bg-white/5 border border-card-border/40 text-[9px] text-gray-400 capitalize">
+              <span className="px-2 py-0.5 rounded bg-background border border-card-border text-[9px] text-muted capitalize">
                 {details.metaText}
               </span>
             )}
@@ -163,11 +163,11 @@ export default function CMSCard({
         </div>
 
         {/* 3. Action Buttons Section */}
-        <div className="flex items-center gap-1 shrink-0 bg-[#030611]/50 border border-card-border/40 p-1.5 rounded-xl self-end md:self-center">
+        <div className="flex items-center gap-1 shrink-0 bg-background/70 border border-card-border p-1.5 rounded-xl self-end md:self-center">
           {/* View Button */}
           <button
             onClick={() => onView(item)}
-            className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+            className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-background/80 transition-colors cursor-pointer"
             title="Preview Details"
             aria-label="Preview details"
           >
@@ -178,7 +178,7 @@ export default function CMSCard({
           {hasEdit && (
             <button
               onClick={() => onEdit(item)}
-              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-background/80 transition-colors cursor-pointer"
               title="Edit Element"
               aria-label="Edit item"
             >
@@ -190,7 +190,7 @@ export default function CMSCard({
           {hasDuplicate && (
             <button
               onClick={() => onDuplicate(item.id)}
-              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-background/80 transition-colors cursor-pointer"
               title="Duplicate Element"
               aria-label="Duplicate item"
             >

@@ -46,17 +46,17 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
             transition={{ type: "spring", duration: 0.4 }}
             role="dialog"
             aria-modal="true"
-            className="relative w-full max-w-3xl max-h-[85vh] bg-[#0b0f19] border border-card-border/60 rounded-2xl shadow-2xl flex flex-col z-10 overflow-hidden"
+            className="relative w-full max-w-3xl max-h-[85vh] bg-card border border-card-border rounded-2xl shadow-2xl flex flex-col z-10 overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-card-border/40 bg-[#040813]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-card-border/40 bg-background/80">
               <span className="text-xs font-mono font-bold tracking-wider text-accent uppercase flex items-center gap-1.5">
                 {type === "messages" ? <Mail className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5" />}
                 Previewing {type.slice(0, -1)}
               </span>
               <button
                 onClick={onClose}
-                className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-background/85 transition-colors cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -70,12 +70,12 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
               {type === "blog" && (
                 <div className="flex flex-col gap-6">
                   {item.coverImage && (
-                    <div className="w-full h-48 md:h-64 rounded-xl overflow-hidden border border-card-border p-1 bg-white/5">
+                    <div className="w-full h-48 md:h-64 rounded-xl overflow-hidden border border-card-border p-1 bg-background/5">
                       <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover rounded-lg" />
                     </div>
                   )}
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight">
+                    <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground leading-tight">
                       {item.title}
                     </h2>
                     <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-muted">
@@ -88,12 +88,12 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
                         <Calendar className="w-3.5 h-3.5" />
                         {new Date(item.createdAt).toLocaleDateString()}
                       </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono border border-card-border bg-[#030611]">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono border border-card-border bg-background">
                         {item.published ? "Published" : "Draft"}
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-gray-300 border-l-2 border-primary pl-4 py-1 bg-primary/5 rounded-r-lg italic">
+                  <p className="text-sm font-semibold text-foreground/80 border-l-2 border-primary pl-4 py-1 bg-primary/5 rounded-r-lg italic">
                     {item.summary}
                   </p>
                   <div className="prose dark:prose-invert max-w-none text-muted text-sm md:text-base leading-relaxed whitespace-pre-wrap pt-4 border-t border-card-border/40">
@@ -106,7 +106,7 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
               {type === "projects" && (
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight">
+                    <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground leading-tight">
                       {item.title}
                     </h2>
                     <span className="font-mono text-xs text-accent">Slug: /{item.slug}</span>
@@ -118,7 +118,7 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
                         href={item.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-card-border hover:border-primary text-xs font-semibold text-gray-300 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-card-border hover:border-primary text-xs font-semibold text-muted hover:text-foreground transition-colors"
                       >
                         <GitBranch className="w-3.5 h-3.5" />
                         GitHub Repository
@@ -129,7 +129,7 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
                         href={item.demoUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-card-border hover:border-primary text-xs font-semibold text-gray-300 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-card-border hover:border-primary text-xs font-semibold text-muted hover:text-foreground transition-colors"
                       >
                         <LinkIcon className="w-3.5 h-3.5" />
                         Live Demo
@@ -139,10 +139,10 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
 
                   {item.techStack && item.techStack.length > 0 && (
                     <div className="flex flex-col gap-2">
-                      <h4 className="text-xs font-mono font-bold text-gray-400 uppercase">Tech Stack</h4>
+                      <h4 className="text-xs font-mono font-bold text-muted uppercase">Tech Stack</h4>
                       <div className="flex flex-wrap gap-2">
                         {item.techStack.map((tech: string) => (
-                          <span key={tech} className="px-2 py-1 rounded bg-[#030611] border border-card-border text-xs font-mono text-gray-300 uppercase">
+                          <span key={tech} className="px-2 py-1 rounded bg-background border border-card-border text-xs font-mono text-foreground uppercase">
                             {tech}
                           </span>
                         ))}
@@ -151,27 +151,27 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
                   )}
 
                   <div className="flex flex-col gap-2 pt-4 border-t border-card-border/40">
-                    <h4 className="text-xs font-mono font-bold text-gray-400 uppercase">Summary</h4>
+                    <h4 className="text-xs font-mono font-bold text-muted uppercase">Summary</h4>
                     <p className="text-sm text-muted leading-relaxed">{item.description}</p>
                   </div>
 
                   {item.challenges && (
                     <div className="flex flex-col gap-2">
                       <h4 className="text-xs font-mono font-bold text-red-400 uppercase">Challenges</h4>
-                      <p className="text-sm text-muted leading-relaxed bg-red-950/5 border border-red-500/10 p-4 rounded-xl">{item.challenges}</p>
+                      <p className="text-sm text-muted leading-relaxed bg-red-500/5 border border-red-500/10 p-4 rounded-xl">{item.challenges}</p>
                     </div>
                   )}
 
                   {item.solutions && (
                     <div className="flex flex-col gap-2">
                       <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase">Solutions</h4>
-                      <p className="text-sm text-muted leading-relaxed bg-emerald-950/5 border border-emerald-500/10 p-4 rounded-xl">{item.solutions}</p>
+                      <p className="text-sm text-muted leading-relaxed bg-emerald-500/5 border border-emerald-500/10 p-4 rounded-xl">{item.solutions}</p>
                     </div>
                   )}
 
                   {item.content && (
                     <div className="flex flex-col gap-2 pt-4 border-t border-card-border/40">
-                      <h4 className="text-xs font-mono font-bold text-gray-400 uppercase">Details (Markdown)</h4>
+                      <h4 className="text-xs font-mono font-bold text-muted uppercase">Details (Markdown)</h4>
                       <div className="prose dark:prose-invert max-w-none text-muted text-sm leading-relaxed whitespace-pre-wrap">
                         {item.content}
                       </div>
@@ -183,22 +183,22 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
               {/* Message Inbox Preview */}
               {type === "messages" && (
                 <div className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-2 bg-[#040813] border border-card-border/40 p-4 rounded-xl">
-                    <h3 className="text-lg font-bold text-white">{item.subject}</h3>
+                  <div className="flex flex-col gap-2 bg-background border border-card-border/40 p-4 rounded-xl">
+                    <h3 className="text-lg font-bold text-foreground">{item.subject}</h3>
                     <div className="text-xs text-muted font-mono flex flex-col gap-1 mt-2">
-                      <span>Sender: <strong className="text-gray-200">{item.name}</strong></span>
-                      <span>Email: <strong className="text-gray-200">{item.email}</strong></span>
-                      <span>Received: <strong className="text-gray-200">{new Date(item.createdAt).toLocaleString()}</strong></span>
+                      <span>Sender: <strong className="text-foreground/80">{item.name}</strong></span>
+                      <span>Email: <strong className="text-foreground/80">{item.email}</strong></span>
+                      <span>Received: <strong className="text-foreground/80">{new Date(item.createdAt).toLocaleString()}</strong></span>
                       <span>Status: <strong className={item.read ? "text-muted" : "text-emerald-400"}>{item.read ? "Read" : "Unread"}</strong></span>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <h4 className="text-xs font-mono font-bold text-gray-400 uppercase flex items-center gap-1">
+                    <h4 className="text-xs font-mono font-bold text-muted uppercase flex items-center gap-1">
                       <MessageSquare className="w-3.5 h-3.5" />
                       Message Content
                     </h4>
-                    <p className="text-sm text-muted leading-relaxed whitespace-pre-line bg-[#030611] p-5 rounded-xl border border-card-border">
+                    <p className="text-sm text-muted leading-relaxed whitespace-pre-line bg-background p-5 rounded-xl border border-card-border">
                       {item.message}
                     </p>
                   </div>
@@ -208,16 +208,16 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
               {/* Skill Preview */}
               {type === "skills" && (
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-xl font-bold text-white">{item.name}</h3>
-                  <div className="grid grid-cols-2 gap-4 bg-[#030611] p-4 rounded-xl border border-card-border/40 text-sm font-mono">
+                  <h3 className="text-xl font-bold text-foreground">{item.name}</h3>
+                  <div className="grid grid-cols-2 gap-4 bg-background p-4 rounded-xl border border-card-border/40 text-sm font-mono">
                     <span className="text-muted">Category:</span>
-                    <span className="text-white capitalize">{item.category}</span>
+                    <span className="text-foreground capitalize">{item.category}</span>
                     <span className="text-muted">Proficiency:</span>
-                    <span className="text-white">{item.proficiency}%</span>
+                    <span className="text-foreground">{item.proficiency}%</span>
                     <span className="text-muted">Status:</span>
                     <span className={item.active ? "text-emerald-400" : "text-muted"}>{item.active ? "Active" : "Inactive"}</span>
                     <span className="text-muted">Icon:</span>
-                    <span className="text-white">{item.icon || "None"}</span>
+                    <span className="text-foreground">{item.icon || "None"}</span>
                   </div>
                 </div>
               )}
@@ -226,7 +226,7 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
               {type === "experience" && (
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-xl font-bold text-white">{item.role}</h3>
+                    <h3 className="text-xl font-bold text-foreground">{item.role}</h3>
                     <span className="text-sm text-accent font-semibold">{item.company}</span>
                   </div>
                   <div className="text-xs font-mono text-muted flex flex-col gap-1">
@@ -234,8 +234,8 @@ export default function CMSPreviewModal({ isOpen, item, type, onClose }: CMSPrev
                     <span>Location: {item.location || "N/A"}</span>
                   </div>
                   <div className="flex flex-col gap-2 pt-4 border-t border-card-border/40">
-                    <h4 className="text-xs font-mono font-bold text-gray-400 uppercase">Responsibilities</h4>
-                    <p className="text-sm text-muted leading-relaxed whitespace-pre-line bg-[#030611] p-5 rounded-xl border border-card-border">
+                    <h4 className="text-xs font-mono font-bold text-muted uppercase">Responsibilities</h4>
+                    <p className="text-sm text-muted leading-relaxed whitespace-pre-line bg-background p-5 rounded-xl border border-card-border">
                       {item.description}
                     </p>
                   </div>

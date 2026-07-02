@@ -48,12 +48,12 @@ export default function CMSStatusBadge({ type, item, onStatusChange }: CMSStatus
       if (item.current) {
         return { label: "Current Job", style: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300" }
       }
-      return { label: "Past Job", style: "bg-white/5 border-card-border/60 text-gray-400" }
+      return { label: "Past Job", style: "bg-card border border-card-border/60 text-muted" }
     }
 
     // messages
     if (item.read) {
-      return { label: "Read", style: "bg-white/5 border-card-border/60 text-gray-400" }
+      return { label: "Read", style: "bg-card border border-card-border/60 text-muted" }
     }
     return { label: "Unread", style: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300" }
   })()
@@ -128,13 +128,13 @@ export default function CMSStatusBadge({ type, item, onStatusChange }: CMSStatus
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 mt-1.5 w-28 rounded-xl bg-[#0b0f19] border border-card-border/80 shadow-2xl z-20 overflow-hidden py-1">
+        <div className="absolute left-0 mt-1.5 w-28 rounded-xl bg-card border border-card-border/85 shadow-2xl z-20 overflow-hidden py-1">
           {options.map((opt) => (
             <button
               key={opt.value}
               onClick={() => handleSelect(opt.value)}
-              className={`w-full text-left px-3 py-1.5 text-[10px] font-semibold font-mono hover:bg-white/5 transition-colors cursor-pointer flex items-center justify-between ${
-                opt.active ? "text-primary" : "text-gray-300"
+              className={`w-full text-left px-3 py-1.5 text-[10px] font-semibold font-mono hover:bg-background/80 transition-colors cursor-pointer flex items-center justify-between ${
+                opt.active ? "text-primary bg-primary/5" : "text-muted hover:text-foreground"
               }`}
             >
               {opt.label}
