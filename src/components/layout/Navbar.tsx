@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+
+import { AnimatePresence,motion } from "framer-motion";
+import { ArrowUpRight,Menu, X } from "lucide-react";
+
+import LanguageSwitcher from "@/components/common/language-switcher";
 import { useTranslation } from "@/components/common/locale-provider";
 import ThemeSwitcher from "@/components/common/theme-switcher";
-import LanguageSwitcher from "@/components/common/language-switcher";
 
 export default function Navbar() {
   const pathname = usePathname();

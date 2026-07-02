@@ -1,7 +1,8 @@
-import { SkillRepository } from '@/repositories/skill.repository';
-import { skillSchema, SkillInput } from '@/lib/validation';
+import { type Skill } from '@prisma/client';
+
 import { NotFoundError, ValidationError } from '@/lib/errors';
-import { Skill } from '@prisma/client';
+import { type SkillInput,skillSchema } from '@/lib/validation';
+import { SkillRepository } from '@/repositories/skill.repository';
 
 export class SkillService {
   private skillRepo = new SkillRepository();

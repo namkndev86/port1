@@ -1,5 +1,6 @@
+import { type Skill } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { Skill } from '@prisma/client';
 
 export class SkillRepository {
   async findAll(options?: { activeOnly?: boolean }): Promise<Skill[]> {

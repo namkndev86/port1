@@ -1,5 +1,6 @@
+import { type Experience } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { Experience } from '@prisma/client';
 
 export class ExperienceRepository {
   async findAll(): Promise<Experience[]> {

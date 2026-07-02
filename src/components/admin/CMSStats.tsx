@@ -1,7 +1,8 @@
 "use client"
 
 import { useMemo } from "react"
-import { BarChart3, Globe, ShieldAlert, FileText, CheckCircle2, MessageSquare, Briefcase, Sparkles, FolderGit2 } from "lucide-react"
+
+import { BarChart3, Briefcase, CheckCircle2, FileText, FolderGit2,Globe, MessageSquare, ShieldAlert, Sparkles } from "lucide-react"
 
 interface CMSStatsProps {
   type: "projects" | "blog" | "skills" | "experience" | "messages"

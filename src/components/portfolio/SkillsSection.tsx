@@ -1,9 +1,10 @@
 "use client"
 
-import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
+
+import { type Skill } from "@prisma/client"
+import { motion, useInView } from "framer-motion"
 import * as LucideIcons from "lucide-react"
-import { Skill } from "@prisma/client"
 
 import { useTranslation } from "@/components/common/locale-provider"
 

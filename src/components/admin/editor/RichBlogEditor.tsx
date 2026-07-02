@@ -1,31 +1,31 @@
 "use client"
 
-import { useState, useEffect, useRef, useTransition, useMemo } from "react"
+import { useEffect, useMemo,useRef, useState } from "react"
+
 import {
-  ChevronUp,
+  BookOpen,
   ChevronDown,
+  ChevronUp,
   Copy,
-  Trash2,
-  Plus,
+  HelpCircle,
   Maximize2,
   Minimize2,
-  Eye,
-  Undo2,
+  Plus,
   Redo2,
-  BookOpen,
-  HelpCircle,
+  Trash2,
+  Undo2,
 } from "lucide-react"
-import { Block, BlockType } from "./types"
 
-// Blocks Editors
-import ParagraphBlock from "./blocks/ParagraphBlock"
+import { AccordionBlock, DividerBlock, MathBlock, MermaidBlock, TabsBlock, TimelineBlock,TocBlock } from "./blocks/AdvancedBlocks"
+import CodeBlock from "./blocks/CodeBlock"
+import EmbedBlock from "./blocks/EmbedBlock"
 import HeadingBlock from "./blocks/HeadingBlock"
 import ListBlock from "./blocks/ListBlock"
-import CodeBlock from "./blocks/CodeBlock"
-import TableBlock from "./blocks/TableBlock"
+// Blocks Editors
+import ParagraphBlock from "./blocks/ParagraphBlock"
 import QuoteBlock from "./blocks/QuoteBlock"
-import EmbedBlock from "./blocks/EmbedBlock"
-import { DividerBlock, TocBlock, MathBlock, MermaidBlock, AccordionBlock, TabsBlock, TimelineBlock } from "./blocks/AdvancedBlocks"
+import TableBlock from "./blocks/TableBlock"
+import { type Block, type BlockType } from "./types"
 
 interface RichBlogEditorProps {
   initialValue?: string // JSON string

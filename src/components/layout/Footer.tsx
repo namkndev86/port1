@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+
+import { useTranslation } from "@/components/common/locale-provider";
 import {
   GithubIcon as Github,
   LinkedinIcon as Linkedin,
   TwitterIcon as Twitter,
 } from "@/components/ui/social-icons";
-import { useTranslation } from "@/components/common/locale-provider";
 
 export default function Footer() {
   const { t, locale } = useTranslation();

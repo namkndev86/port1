@@ -1,7 +1,8 @@
 "use client"
 
-import { Video, Play, Code2, Globe, FileText, Frame } from "lucide-react"
-import { Block } from "../types"
+import { Code2, FileText, Frame,Globe, Play, Video } from "lucide-react"
+
+import { type Block } from "../types"
 
 interface EmbedBlockProps {
   block: Block

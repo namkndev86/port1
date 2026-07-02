@@ -1,8 +1,9 @@
-import { ProjectService } from "@/services/project.service"
+import { LocaleProvider } from "@/components/common/locale-provider"
 import ProjectsFilterList from "@/components/portfolio/ProjectsFilterList"
 import { getDictionary } from "@/i18n/get-dictionary"
-import { LocaleProvider } from "@/components/common/locale-provider"
 import { getTranslation } from "@/i18n/server"
+import { ProjectService } from "@/services/project.service"
+
 import type { Locale } from "@/i18n/config"
 
 export const revalidate = 60

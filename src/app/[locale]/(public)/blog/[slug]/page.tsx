@@ -1,14 +1,17 @@
-import { BlogService } from "@/services/blog.service"
-import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Calendar, User, Clock, Tag } from "lucide-react"
-import { formatDate } from "@/lib/utils"
-import type { Metadata } from "next"
-import { getDictionary } from "@/i18n/get-dictionary"
-import { LocaleProvider } from "@/components/common/locale-provider"
-import { getTranslation } from "@/i18n/server"
-import type { Locale } from "@/i18n/config"
+import { notFound } from "next/navigation"
+
+import { ArrowLeft, Calendar, Clock, Tag,User } from "lucide-react"
+
 import BlockRenderer from "@/components/common/BlockRenderer"
+import { LocaleProvider } from "@/components/common/locale-provider"
+import { getDictionary } from "@/i18n/get-dictionary"
+import { getTranslation } from "@/i18n/server"
+import { formatDate } from "@/lib/utils"
+import { BlogService } from "@/services/blog.service"
+
+import type { Locale } from "@/i18n/config"
+import type { Metadata } from "next"
 
 interface BlogPostDetailPageProps {
   params: Promise<{ locale: string; slug: string }>

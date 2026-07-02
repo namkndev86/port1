@@ -1,9 +1,11 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation"
 import { useState, useTransition } from "react"
-import { Search, Loader2 } from "lucide-react"
-import { BlogCategory } from "@prisma/client"
+
+import { useRouter, useSearchParams } from "next/navigation"
+
+import { type BlogCategory } from "@prisma/client"
+import { Loader2,Search } from "lucide-react"
 
 import { useTranslation } from "@/components/common/locale-provider"
 

@@ -1,6 +1,7 @@
 "use client"
 
-import { Eye, Edit3, Copy, Trash2, Calendar, User, Tag } from "lucide-react"
+import { Calendar, Copy, Edit3, Eye, Tag,Trash2, User } from "lucide-react"
+
 import CMSStatusBadge from "./CMSStatusBadge"
 
 interface CMSCardProps {

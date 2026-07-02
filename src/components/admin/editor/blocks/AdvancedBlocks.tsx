@@ -1,7 +1,8 @@
 "use client"
 
-import { Plus, Trash2, GitPullRequest, Sigma, Layers, Calendar, Minus, List } from "lucide-react"
-import { Block } from "../types"
+import { Calendar, GitPullRequest, Layers, List,Minus, Plus, Sigma, Trash2 } from "lucide-react"
+
+import { type Block } from "../types"
 
 interface AdvancedBlockProps {
   block: Block

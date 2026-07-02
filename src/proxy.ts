@@ -1,6 +1,8 @@
-import { auth } from "@/lib/auth"
 import { NextResponse } from "next/server"
-import { locales, defaultLocale } from "./i18n/config"
+
+import { auth } from "@/lib/auth"
+
+import { defaultLocale,locales } from "./i18n/config"
 
 export const proxy = auth((request) => {
   const { pathname } = request.nextUrl

@@ -1,7 +1,8 @@
 "use client"
 
-import { Quote, AlertTriangle, AlertCircle, CheckCircle, Info, Sparkles } from "lucide-react"
-import { Block } from "../types"
+import { AlertCircle, AlertTriangle, CheckCircle, Info, Quote, Sparkles } from "lucide-react"
+
+import { type Block } from "../types"
 
 interface QuoteBlockProps {
   block: Block

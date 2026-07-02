@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
+
 import { useTranslation } from "@/components/common/locale-provider";
 
 export default function HomeClient() {

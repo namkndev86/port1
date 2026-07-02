@@ -1,20 +1,23 @@
-import { SkillService } from "@/services/skill.service";
-import { ExperienceService } from "@/services/experience.service";
-import { ProjectService } from "@/services/project.service";
-import { UserRepository } from "@/repositories/user.repository";
-import SkillsSection from "@/components/portfolio/SkillsSection";
-import ExperienceTimeline from "@/components/portfolio/ExperienceTimeline";
+import Link from "next/link";
+
+import { ArrowUpRight, Code2,FileText } from "lucide-react";
+
+import { LocaleProvider } from "@/components/common/locale-provider";
 import ArchitectureShowcase from "@/components/portfolio/ArchitectureShowcase";
 import ContactForm from "@/components/portfolio/ContactForm";
-import Link from "next/link";
-import { ArrowUpRight, FileText, Code2 } from "lucide-react";
+import ExperienceTimeline from "@/components/portfolio/ExperienceTimeline";
+import SkillsSection from "@/components/portfolio/SkillsSection";
 import {
   GithubIcon as Github,
   LinkedinIcon as Linkedin,
 } from "@/components/ui/social-icons";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { LocaleProvider } from "@/components/common/locale-provider";
 import { getTranslation } from "@/i18n/server";
+import { UserRepository } from "@/repositories/user.repository";
+import { ExperienceService } from "@/services/experience.service";
+import { ProjectService } from "@/services/project.service";
+import { SkillService } from "@/services/skill.service";
+
 import type { Locale } from "@/i18n/config";
 
 export const revalidate = 60; // Revalidate cache every minute

@@ -1,6 +1,6 @@
 "use client"
 
-import { Block } from "../types"
+import { type Block } from "../types"
 
 interface HeadingBlockProps {
   block: Block

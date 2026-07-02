@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
 import { Inter, Outfit, Space_Mono } from "next/font/google";
-import "../globals.css";
-import { ThemeProvider, themeFoucScript } from "@/components/common/theme-provider";
+
 import { LocaleProvider } from "@/components/common/locale-provider";
+import { themeFoucScript,ThemeProvider } from "@/components/common/theme-provider";
+import { type Locale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { Locale, locales } from "@/i18n/config";
+
+import "../globals.css";
+
+import type { Metadata } from "next";
 
 const inter = Inter({
   variable: "--font-inter",

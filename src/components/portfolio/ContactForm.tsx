@@ -1,12 +1,13 @@
 "use client"
 
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { contactMessageSchema, ContactMessageInput } from "@/lib/validation"
 import { useState } from "react"
-import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AlertCircle, CheckCircle2, Loader2,Send } from "lucide-react"
+import { useForm } from "react-hook-form"
 
 import { useTranslation } from "@/components/common/locale-provider"
+import { type ContactMessageInput,contactMessageSchema } from "@/lib/validation"
 
 export default function ContactForm() {
   const { t } = useTranslation()

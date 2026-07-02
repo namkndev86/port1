@@ -1,63 +1,61 @@
 "use client"
 
-import { useState, useTransition, useMemo, useEffect } from "react"
-import {
-  // Projects
-  createProjectAction,
-  updateProjectAction,
-  deleteProjectAction,
-  duplicateProjectAction,
-  bulkUpdateProjectsAction,
-  bulkDeleteProjectsAction,
+import { useEffect,useMemo, useState, useTransition } from "react"
 
+import { type BlogCategory, type ContactMessage, type Experience, type Skill } from "@prisma/client"
+import { Layers, Loader2,LogOut } from "lucide-react"
+
+import {
+  bulkDeleteBlogPostsAction,
+  bulkDeleteExperiencesAction,
+  bulkDeleteMessagesAction,
+  bulkDeleteProjectsAction,
+  bulkDeleteSkillsAction,
+  bulkUpdateBlogPostsAction,
+  bulkUpdateExperiencesAction,
+  bulkUpdateMessagesAction,
+  bulkUpdateProjectsAction,
+  bulkUpdateSkillsAction,
   // Blogs
   createBlogPostAction,
-  updateBlogPostAction,
-  deleteBlogPostAction,
-  duplicateBlogPostAction,
-  bulkUpdateBlogPostsAction,
-  bulkDeleteBlogPostsAction,
-
-  // Skills
-  createSkillAction,
-  updateSkillAction,
-  deleteSkillAction,
-  duplicateSkillAction,
-  bulkUpdateSkillsAction,
-  bulkDeleteSkillsAction,
-
   // Experiences
   createExperienceAction,
-  updateExperienceAction,
+  // Projects
+  createProjectAction,
+  // Skills
+  createSkillAction,
+  deleteBlogPostAction,
+  deleteContactMessageAction,
   deleteExperienceAction,
+  deleteProjectAction,
+  deleteSkillAction,
+  duplicateBlogPostAction,
   duplicateExperienceAction,
-  bulkUpdateExperiencesAction,
-  bulkDeleteExperiencesAction,
-
+  duplicateProjectAction,
+  duplicateSkillAction,
+  logoutAction,
   // Message inbox
   markContactMessageReadAction,
-  deleteContactMessageAction,
-  bulkUpdateMessagesAction,
-  bulkDeleteMessagesAction,
-  logoutAction,
+  updateBlogPostAction,
+  updateExperienceAction,
+  updateProjectAction,
+  updateSkillAction,
 } from "@/app/[locale]/admin/actions"
-import { Project, BlogPost, Skill, Experience, ContactMessage, BlogCategory } from "@prisma/client"
-import { Layers, LogOut, Loader2 } from "lucide-react"
-
-// Custom Components
-import Toast, { ToastMessage } from "./Toast"
-import CMSConfirmDialog from "./CMSConfirmDialog"
-import CMSPreviewModal from "./CMSPreviewModal"
-import CMSStats from "./CMSStats"
-import CMSFilterBar from "./CMSFilterBar"
-import CMSCard from "./CMSCard"
-import CMSBulkToolbar from "./CMSBulkToolbar"
-import CMSPagination from "./CMSPagination"
-import CMSEmptyState from "./CMSEmptyState"
-import CMSSkeleton from "./CMSSkeleton"
 import ThemeSwitcher from "@/components/common/theme-switcher"
+
+import CMSBulkToolbar from "./CMSBulkToolbar"
+import CMSCard from "./CMSCard"
+import CMSConfirmDialog from "./CMSConfirmDialog"
+import CMSEmptyState from "./CMSEmptyState"
+import CMSFilterBar from "./CMSFilterBar"
+import CMSPagination from "./CMSPagination"
+import CMSPreviewModal from "./CMSPreviewModal"
+import CMSSkeleton from "./CMSSkeleton"
+import CMSStats from "./CMSStats"
 import RichBlogEditor from "./editor/RichBlogEditor"
 import MediaLibrary from "./media/MediaLibrary"
+// Custom Components
+import Toast, { type ToastMessage } from "./Toast"
 
 interface AdminDashboardProps {
   initialProjects: any[]

@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+
 import { AnimatePresence, motion } from "framer-motion"
-import { X, Calendar, Link as LinkIcon, GitBranch, Sparkles, Mail, MessageSquare } from "lucide-react"
+import { Calendar, GitBranch, Link as LinkIcon, Mail, MessageSquare,Sparkles, X } from "lucide-react"
 
 interface CMSPreviewModalProps {
   isOpen: boolean

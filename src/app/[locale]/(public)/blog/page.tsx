@@ -1,12 +1,16 @@
-import { BlogService } from "@/services/blog.service"
-import BlogSearchFilter from "@/components/blog/BlogSearchFilter"
-import Link from "next/link"
-import { formatDate } from "@/lib/utils"
 import { Suspense } from "react"
-import { Calendar, ChevronLeft, ChevronRight, User, BookOpen } from "lucide-react"
-import { getDictionary } from "@/i18n/get-dictionary"
+
+import Link from "next/link"
+
+import { BookOpen,Calendar, ChevronLeft, ChevronRight, User } from "lucide-react"
+
+import BlogSearchFilter from "@/components/blog/BlogSearchFilter"
 import { LocaleProvider } from "@/components/common/locale-provider"
+import { getDictionary } from "@/i18n/get-dictionary"
 import { getTranslation } from "@/i18n/server"
+import { formatDate } from "@/lib/utils"
+import { BlogService } from "@/services/blog.service"
+
 import type { Locale } from "@/i18n/config"
 
 export const revalidate = 30 // Short cache time for active blog updates
