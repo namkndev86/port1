@@ -63,9 +63,30 @@ export default function RichBlogEditor({
   const [slashSearch, setSlashSearch] = useState("")
   const [focusMode, setFocusMode] = useState(false)
   const [fullscreen, setFullscreen] = useState(false)
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null)
+  const [commandIndex, setCommandIndex] = useState(0)
 
   // References
   const slashMenuRef = useRef<HTMLDivElement>(null)
+
+  // Reset command index when menu filters change
+  useEffect(() => {
+    setCommandIndex(0)
+  }, [slashSearch, slashIndex])
+
+  // Focus synchronization effect
+  useEffect(() => {
+    if (focusedIndex !== null) {
+      const el = document.querySelector(`[data-block-idx="${focusedIndex}"]`) as HTMLTextAreaElement | HTMLInputElement | null
+      if (el) {
+        el.focus()
+        if (el.setSelectionRange) {
+          const len = el.value.length
+          el.setSelectionRange(len, len)
+        }
+      }
+    }
+  }, [focusedIndex, blocks])
 
   // Update blocks state and save history
   const setBlocks = (newBlocks: Block[], trackHistory = true) => {
@@ -191,6 +212,35 @@ export default function RichBlogEditor({
     nextBlocks.splice(index + 1, 0, newBlock)
     setBlocks(nextBlocks)
     setSlashIndex(null)
+    setFocusedIndex(index + 1)
+  }
+
+  const handleBackspaceBlock = (index: number) => {
+    if (index === 0) return
+    const prevBlock = blocks[index - 1]
+    const currentBlock = blocks[index]
+
+    if (
+      (prevBlock.type === "paragraph" || prevBlock.type === "heading") &&
+      (currentBlock.type === "paragraph" || currentBlock.type === "heading")
+    ) {
+      const prevText = prevBlock.data.text || ""
+      const currText = currentBlock.data.text || ""
+
+      const nextBlocks = [...blocks]
+      nextBlocks[index - 1] = {
+        ...prevBlock,
+        data: { ...prevBlock.data, text: prevText + currText },
+      }
+      nextBlocks.splice(index, 1)
+      setBlocks(nextBlocks)
+      setFocusedIndex(index - 1)
+    } else {
+      const nextBlocks = [...blocks]
+      nextBlocks.splice(index, 1)
+      setBlocks(nextBlocks)
+      setFocusedIndex(index - 1)
+    }
   }
 
   const handleDuplicateBlock = (index: number) => {
@@ -204,12 +254,14 @@ export default function RichBlogEditor({
     const nextBlocks = [...blocks]
     nextBlocks.splice(index + 1, 0, copyBlock)
     setBlocks(nextBlocks)
+    setFocusedIndex(index + 1)
   }
 
   const handleDeleteBlock = (index: number) => {
     if (blocks.length <= 1) return
-    const nextBlocks = blocks.filter((_, i) => i !== index)
+    const nextBlocks = blocks.filter((itemVal: any, i: number) => i !== index)
     setBlocks(nextBlocks)
+    setFocusedIndex(Math.max(0, index - 1))
   }
 
   const handleMoveBlock = (index: number, direction: "up" | "down") => {
@@ -222,6 +274,7 @@ export default function RichBlogEditor({
     nextBlocks[index] = nextBlocks[targetIdx]
     nextBlocks[targetIdx] = temp
     setBlocks(nextBlocks)
+    setFocusedIndex(targetIdx)
   }
 
   const handleConvertBlockType = (index: number, type: BlockType) => {
@@ -252,6 +305,7 @@ export default function RichBlogEditor({
     }
     setBlocks(nextBlocks)
     setSlashIndex(null)
+    setFocusedIndex(index)
   }
 
   // Available command menu options
@@ -408,10 +462,40 @@ export default function RichBlogEditor({
                     <ParagraphBlock
                       block={block}
                       onChange={(data) => handleUpdateBlockData(idx, data)}
+                      dataBlockIdx={idx}
                       onKeyDown={(e) => {
+                        if (slashIndex === idx) {
+                          if (e.key === "ArrowDown") {
+                            e.preventDefault()
+                            setCommandIndex((prev) => (prev + 1) % filteredCommands.length)
+                            return
+                          }
+                          if (e.key === "ArrowUp") {
+                            e.preventDefault()
+                            setCommandIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length)
+                            return
+                          }
+                          if (e.key === "Enter") {
+                            e.preventDefault()
+                            const cmd = filteredCommands[commandIndex]
+                            if (cmd) {
+                              handleConvertBlockType(idx, cmd.type)
+                            }
+                            return
+                          }
+                          if (e.key === "Escape") {
+                            e.preventDefault()
+                            setSlashIndex(null)
+                            return
+                          }
+                        }
+
                         if (e.key === "Enter") {
                           e.preventDefault()
                           handleInsertBlock(idx)
+                        } else if (e.key === "Backspace" && e.currentTarget.selectionStart === 0) {
+                          e.preventDefault()
+                          handleBackspaceBlock(idx)
                         }
                       }}
                     />
@@ -421,10 +505,14 @@ export default function RichBlogEditor({
                     <HeadingBlock
                       block={block}
                       onChange={(data) => handleUpdateBlockData(idx, data)}
+                      dataBlockIdx={idx}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault()
                           handleInsertBlock(idx)
+                        } else if (e.key === "Backspace" && e.currentTarget.selectionStart === 0) {
+                          e.preventDefault()
+                          handleBackspaceBlock(idx)
                         }
                       }}
                     />
@@ -469,12 +557,14 @@ export default function RichBlogEditor({
                       </div>
                       
                       {filteredCommands.length > 0 ? (
-                        filteredCommands.map((cmd) => (
+                        filteredCommands.map((cmd, cIdx) => (
                           <button
                             key={cmd.label}
                             type="button"
                             onClick={() => handleConvertBlockType(idx, cmd.type)}
-                            className="w-full text-left px-3 py-2 hover:bg-background/80 transition-colors flex flex-col gap-0.5 cursor-pointer border-none"
+                            className={`w-full text-left px-3 py-2 transition-colors flex flex-col gap-0.5 cursor-pointer border-none ${
+                              commandIndex === cIdx ? "bg-primary/20 text-primary border-l-2 border-primary" : "hover:bg-background/80"
+                            }`}
                           >
                             <span className="text-xs font-bold text-foreground">{cmd.label}</span>
                             <span className="text-[10px] text-muted">{cmd.desc}</span>

@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic" // Ensure session checks run on every req
 
 export default async function AdminPage() {
   const session = await auth()
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !session.user || session.user.role !== "ADMIN") {
     redirect("/admin/login")
   }
 

@@ -6,9 +6,10 @@ interface HeadingBlockProps {
   block: Block
   onChange: (data: any) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  dataBlockIdx?: number
 }
 
-export default function HeadingBlock({ block, onChange, onKeyDown }: HeadingBlockProps) {
+export default function HeadingBlock({ block, onChange, onKeyDown, dataBlockIdx }: HeadingBlockProps) {
   const level = block.data.level || 2
   const text = block.data.text || ""
 
@@ -48,6 +49,7 @@ export default function HeadingBlock({ block, onChange, onKeyDown }: HeadingBloc
         onChange={(e) => onChange({ level, text: e.target.value })}
         onKeyDown={onKeyDown}
         placeholder={`Heading ${level}...`}
+        data-block-idx={dataBlockIdx}
         className={`flex-1 bg-transparent text-foreground placeholder:text-muted focus:outline-none py-1 block border-b border-transparent focus:border-card-border/40 ${levelClasses}`}
       />
     </div>

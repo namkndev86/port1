@@ -15,7 +15,7 @@ import prisma from "@/lib/db"
 // Helper to assert admin authorization status
 async function assertAdmin() {
   const session = await auth()
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !session.user || session.user.role !== "ADMIN") {
     throw new Error("Access denied. Unauthorized operation.")
   }
   return session

@@ -8,6 +8,7 @@ interface ParagraphBlockProps {
   onChange: (data: any) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
   placeholder?: string
+  dataBlockIdx?: number
 }
 
 export default function ParagraphBlock({
@@ -15,6 +16,7 @@ export default function ParagraphBlock({
   onChange,
   onKeyDown,
   placeholder = "Type '/' for commands...",
+  dataBlockIdx,
 }: ParagraphBlockProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -41,6 +43,7 @@ export default function ParagraphBlock({
       onKeyDown={onKeyDown}
       placeholder={placeholder}
       rows={1}
+      data-block-idx={dataBlockIdx}
       className="w-full bg-transparent text-foreground placeholder:text-muted focus:outline-none resize-none overflow-hidden text-sm md:text-base leading-relaxed py-1 block"
     />
   )
