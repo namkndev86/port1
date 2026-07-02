@@ -1,12 +1,17 @@
 'use client'
 
-import { useTranslation } from './locale-provider'
-import { useRouter, usePathname } from 'next/navigation'
+import { useEffect, useRef,useState } from 'react'
+
+import { usePathname,useRouter } from 'next/navigation'
+
+import { AnimatePresence,motion } from 'framer-motion'
+import { ChevronDown,Globe } from 'lucide-react'
+
 import { locales } from '@/i18n/config'
+
+import { useTranslation } from './locale-provider'
+
 import type { Locale } from '@/i18n/config'
-import { useState, useEffect, useRef } from 'react'
-import { Globe, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 
 export default function LanguageSwitcher() {
   const { locale, t } = useTranslation()

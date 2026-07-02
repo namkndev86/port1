@@ -1,17 +1,18 @@
-import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { ProjectService } from "@/services/project.service"
-import { BlogService } from "@/services/blog.service"
-import { SkillService } from "@/services/skill.service"
-import { ExperienceService } from "@/services/experience.service"
-import { ContactService } from "@/services/contact.service"
+
 import AdminDashboard from "@/components/admin/AdminDashboard"
+import { auth } from "@/lib/auth"
+import { BlogService } from "@/services/blog.service"
+import { ContactService } from "@/services/contact.service"
+import { ExperienceService } from "@/services/experience.service"
+import { ProjectService } from "@/services/project.service"
+import { SkillService } from "@/services/skill.service"
 
 export const dynamic = "force-dynamic" // Ensure session checks run on every request
 
 export default async function AdminPage() {
   const session = await auth()
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !session.user || session.user.role !== "ADMIN") {
     redirect("/admin/login")
   }
 

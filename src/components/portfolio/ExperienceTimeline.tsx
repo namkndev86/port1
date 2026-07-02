@@ -1,11 +1,11 @@
 "use client"
 
+import { type Experience } from "@prisma/client"
 import { motion } from "framer-motion"
-import { formatDate } from "@/lib/utils"
-import { Experience } from "@prisma/client"
-import { Calendar, MapPin, Briefcase } from "lucide-react"
+import { Briefcase,Calendar, MapPin } from "lucide-react"
 
 import { useTranslation } from "@/components/common/locale-provider"
+import { formatDate } from "@/lib/utils"
 
 interface ExperienceTimelineProps {
   experiences: Experience[]

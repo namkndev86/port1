@@ -1,13 +1,16 @@
-import { ProjectService } from "@/services/project.service"
-import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, ExternalLink, Terminal, Shield, Sparkles } from "lucide-react"
-import { GithubIcon as Github } from "@/components/ui/social-icons"
-import type { Metadata } from "next"
-import { getDictionary } from "@/i18n/get-dictionary"
+import { notFound } from "next/navigation"
+
+import { ArrowLeft, ExternalLink, Shield, Sparkles,Terminal } from "lucide-react"
+
 import { LocaleProvider } from "@/components/common/locale-provider"
+import { GithubIcon as Github } from "@/components/ui/social-icons"
+import { getDictionary } from "@/i18n/get-dictionary"
 import { getTranslation } from "@/i18n/server"
+import { ProjectService } from "@/services/project.service"
+
 import type { Locale } from "@/i18n/config"
+import type { Metadata } from "next"
 
 interface ProjectDetailPageProps {
   params: Promise<{ locale: string; slug: string }>

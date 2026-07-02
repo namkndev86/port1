@@ -1,5 +1,6 @@
+import { type Profile,type User } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { User, Profile } from '@prisma/client';
 
 export class UserRepository {
   async findByEmail(email: string): Promise<User | null> {

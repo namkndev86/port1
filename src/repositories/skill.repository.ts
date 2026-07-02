@@ -1,9 +1,15 @@
+import { type Skill } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { Skill } from '@prisma/client';
 
 export class SkillRepository {
-  async findAll(): Promise<Skill[]> {
+  async findAll(options?: { activeOnly?: boolean }): Promise<Skill[]> {
+    const whereClause: any = {};
+    if (options?.activeOnly) {
+      whereClause.active = true;
+    }
     return prisma.skill.findMany({
+      where: whereClause,
       orderBy: [
         { category: 'asc' },
         { proficiency: 'desc' },

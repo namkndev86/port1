@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+
 import Link from "next/link"
+
+import { AnimatePresence,motion } from "framer-motion"
 import { ArrowUpRight, Code2, Search } from "lucide-react"
-import { ProjectWithImages } from "@/repositories/project.repository"
 
 import { useTranslation } from "@/components/common/locale-provider"
+import { type ProjectWithImages } from "@/repositories/project.repository"
 
 interface ProjectsFilterListProps {
   projects: ProjectWithImages[]

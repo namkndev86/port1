@@ -1,8 +1,9 @@
-import NextAuth, { DefaultSession } from "next-auth"
-import Credentials from "next-auth/providers/credentials"
-import { UserRepository } from "@/repositories/user.repository"
 import * as bcrypt from "bcryptjs"
+import NextAuth, { type DefaultSession } from "next-auth"
+import Credentials from "next-auth/providers/credentials"
+
 import { loginSchema } from "@/lib/validation"
+import { UserRepository } from "@/repositories/user.repository"
 
 declare module "next-auth" {
   interface Session {
@@ -18,6 +19,7 @@ declare module "next-auth" {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       name: "Credentials",

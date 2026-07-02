@@ -1,13 +1,14 @@
-import { SkillRepository } from '@/repositories/skill.repository';
-import { skillSchema, SkillInput } from '@/lib/validation';
+import { type Skill } from '@prisma/client';
+
 import { NotFoundError, ValidationError } from '@/lib/errors';
-import { Skill } from '@prisma/client';
+import { type SkillInput,skillSchema } from '@/lib/validation';
+import { SkillRepository } from '@/repositories/skill.repository';
 
 export class SkillService {
   private skillRepo = new SkillRepository();
 
-  async getSkills(): Promise<Skill[]> {
-    return this.skillRepo.findAll();
+  async getSkills(options?: { activeOnly?: boolean }): Promise<Skill[]> {
+    return this.skillRepo.findAll(options);
   }
 
   async createSkill(input: SkillInput): Promise<Skill> {

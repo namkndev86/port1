@@ -1,11 +1,17 @@
+import { type Project, type ProjectImage } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { Project, ProjectImage } from '@prisma/client';
 
 export type ProjectWithImages = Project & { images: ProjectImage[] };
 
 export class ProjectRepository {
-  async findAll(): Promise<ProjectWithImages[]> {
+  async findAll(options?: { activeOnly?: boolean }): Promise<ProjectWithImages[]> {
+    const whereClause: any = {};
+    if (options?.activeOnly) {
+      whereClause.active = true;
+    }
     return prisma.project.findMany({
+      where: whereClause,
       include: { images: true },
       orderBy: { createdAt: 'desc' },
     });
@@ -13,7 +19,7 @@ export class ProjectRepository {
 
   async findFeatured(): Promise<ProjectWithImages[]> {
     return prisma.project.findMany({
-      where: { featured: true },
+      where: { featured: true, active: true },
       include: { images: true },
       orderBy: { createdAt: 'desc' },
     });

@@ -1,0 +1,116 @@
+{
+  // ─── Formatting ──────────────────────────────────────────────────────────────
+  // Use Prettier as the default formatter for all supported file types.
+  // This ensures VSCode doesn't use its own opinionated formatter.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+
+  // ─── Indentation ─────────────────────────────────────────────────────────────
+  // Mirrors the .prettierrc settings: 2 spaces, no tabs.
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  // ─── Line endings ────────────────────────────────────────────────────────────
+  // LF for Linux/Mac consistency.
+  "files.eol": "\n",
+
+  // ─── Trailing whitespace ─────────────────────────────────────────────────────
+  // Remove trailing spaces on save — detected trailing spaces in theme-provider.tsx
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  // ─── ESLint integration ──────────────────────────────────────────────────────
+  // Run ESLint fix on save alongside Prettier formatting.
+  "eslint.enable": true,
+  "eslint.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    // Fix ESLint errors on save (removes unused imports, fixes import order)
+    "source.fixAll.eslint": "explicit",
+    // Organize TypeScript imports (removes unused, groups type imports)
+    "source.organizeImports": "never" // disabled — simple-import-sort handles this
+  },
+
+  // ─── ESLint validation scope ─────────────────────────────────────────────────
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // ─── TypeScript ──────────────────────────────────────────────────────────────
+  // Use the workspace TypeScript version (project's own typescript package)
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // ─── File-type overrides ─────────────────────────────────────────────────────
+  // Per-language formatter assignments
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false // Don't auto-format markdown (i18n content)
+  },
+
+  // ─── Tailwind CSS IntelliSense ───────────────────────────────────────────────
+  // Enable class sorting and autocomplete for Tailwind CSS v4
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
+  // ─── Explorer exclusions ─────────────────────────────────────────────────────
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.next": true
+  },
+
+  // ─── Search exclusions ───────────────────────────────────────────────────────
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/pnpm-lock.yaml": true,
+    "**/build": true,
+    "**/out": true,
+    "**/.git": true
+  },
+
+  // ─── Emmet (JSX support) ─────────────────────────────────────────────────────
+  "emmet.includeLanguages": {
+    "typescriptreact": "html"
+  },
+
+  // ─── Import module specifier ─────────────────────────────────────────────────
+  // Prefer non-relative imports when a path alias is available (@/)
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+
+  // ─── Auto-imports ────────────────────────────────────────────────────────────
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true
+}

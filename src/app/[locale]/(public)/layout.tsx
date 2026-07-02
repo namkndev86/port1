@@ -1,8 +1,9 @@
-import Navbar from "@/components/layout/Navbar"
-import Footer from "@/components/layout/Footer"
+import { type ReactNode } from "react"
+
 import { LenisProvider } from "@/components/animations/lenis-provider"
-import { ReactNode } from "react"
 import ReadingProgress from "@/components/blog/ReadingProgress"
+import Footer from "@/components/layout/Footer"
+import Navbar from "@/components/layout/Navbar"
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (

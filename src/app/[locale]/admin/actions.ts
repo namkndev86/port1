@@ -1,20 +1,22 @@
 "use server"
 
-import { auth, signIn, signOut } from "@/lib/auth"
-import { ProjectService } from "@/services/project.service"
-import { BlogService } from "@/services/blog.service"
-import { SkillService } from "@/services/skill.service"
-import { ExperienceService } from "@/services/experience.service"
-import { ContactService } from "@/services/contact.service"
-import { UserRepository } from "@/repositories/user.repository"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { loginSchema, ContactMessageInput, ProfileInput, SkillInput, ExperienceInput, ProjectInput, BlogPostInput } from "@/lib/validation"
+
+import { auth, signIn, signOut } from "@/lib/auth"
+import prisma from "@/lib/db"
+import { type BlogPostInput, type ExperienceInput, loginSchema, type ProfileInput, type ProjectInput, type SkillInput } from "@/lib/validation"
+import { UserRepository } from "@/repositories/user.repository"
+import { BlogService } from "@/services/blog.service"
+import { ContactService } from "@/services/contact.service"
+import { ExperienceService } from "@/services/experience.service"
+import { ProjectService } from "@/services/project.service"
+import { SkillService } from "@/services/skill.service"
 
 // Helper to assert admin authorization status
 async function assertAdmin() {
   const session = await auth()
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !session.user || session.user.role !== "ADMIN") {
     throw new Error("Access denied. Unauthorized operation.")
   }
   return session
@@ -175,4 +177,237 @@ export async function deleteContactMessageAction(id: string) {
   const service = new ContactService()
   const msg = await service.deleteMessage(id)
   return { success: true, data: msg }
+}
+
+// 8. Clones & Duplications actions
+export async function duplicateProjectAction(id: string) {
+  await assertAdmin()
+  const original = await prisma.project.findUnique({
+    where: { id },
+    include: { images: true }
+  })
+  if (!original) throw new Error("Project not found")
+
+  const slugSuffix = Math.floor(Math.random() * 10000)
+  const newSlug = `${original.slug}-copy-${slugSuffix}`
+
+  const project = await prisma.project.create({
+    data: {
+      title: `Copy of ${original.title}`,
+      slug: newSlug,
+      description: original.description,
+      content: original.content,
+      githubUrl: original.githubUrl,
+      demoUrl: original.demoUrl,
+      featured: false,
+      active: original.active,
+      techStack: original.techStack,
+      challenges: original.challenges,
+      solutions: original.solutions,
+      images: {
+        create: original.images.map((img) => ({
+          url: img.url,
+          alt: img.alt,
+          isMain: img.isMain,
+        })),
+      },
+    },
+    include: { images: true },
+  })
+
+  revalidatePath("/portfolio")
+  revalidatePath("/portfolio/projects")
+  return { success: true, data: project }
+}
+
+export async function duplicateBlogPostAction(id: string) {
+  await assertAdmin()
+  const original = await prisma.blogPost.findUnique({
+    where: { id },
+    include: { tags: true }
+  })
+  if (!original) throw new Error("Blog post not found")
+
+  const slugSuffix = Math.floor(Math.random() * 10000)
+  const newSlug = `${original.slug}-copy-${slugSuffix}`
+
+  const post = await prisma.blogPost.create({
+    data: {
+      title: `Copy of ${original.title}`,
+      slug: newSlug,
+      summary: original.summary,
+      description: original.description,
+      content: original.content,
+      coverImage: original.coverImage,
+      thumbnail: original.thumbnail,
+      readingTime: original.readingTime,
+      status: "DRAFT",
+      published: false,
+      archived: false,
+      seoTitle: original.seoTitle,
+      seoDescription: original.seoDescription,
+      seoKeywords: original.seoKeywords,
+      canonicalUrl: original.canonicalUrl,
+      ogImage: original.ogImage,
+      visibility: original.visibility,
+      language: original.language,
+      themeMetadata: original.themeMetadata,
+      authorId: original.authorId,
+      categoryId: original.categoryId,
+      tags: {
+        connect: original.tags.map((tag) => ({ id: tag.id })),
+      },
+    },
+    include: { category: true, tags: true },
+  })
+
+  revalidatePath("/blog")
+  return { success: true, data: post }
+}
+
+export async function duplicateSkillAction(id: string) {
+  await assertAdmin()
+  const original = await prisma.skill.findUnique({ where: { id } })
+  if (!original) throw new Error("Skill not found")
+
+  const nameSuffix = Math.floor(Math.random() * 10000)
+  const newName = `${original.name} Copy ${nameSuffix}`
+
+  const skill = await prisma.skill.create({
+    data: {
+      name: newName,
+      category: original.category,
+      proficiency: original.proficiency,
+      icon: original.icon,
+      active: original.active,
+    },
+  })
+
+  revalidatePath("/portfolio")
+  return { success: true, data: skill }
+}
+
+export async function duplicateExperienceAction(id: string) {
+  await assertAdmin()
+  const original = await prisma.experience.findUnique({ where: { id } })
+  if (!original) throw new Error("Experience not found")
+
+  const exp = await prisma.experience.create({
+    data: {
+      company: original.company,
+      role: `Copy of ${original.role}`,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      current: original.current,
+      description: original.description,
+      location: original.location,
+    },
+  })
+
+  revalidatePath("/portfolio")
+  return { success: true, data: exp }
+}
+
+// 9. Bulk Actions
+export async function bulkUpdateProjectsAction(ids: string[], active: boolean) {
+  await assertAdmin()
+  await prisma.project.updateMany({
+    where: { id: { in: ids } },
+    data: { active },
+  })
+  revalidatePath("/portfolio")
+  revalidatePath("/portfolio/projects")
+  return { success: true }
+}
+
+export async function bulkDeleteProjectsAction(ids: string[]) {
+  await assertAdmin()
+  await prisma.project.deleteMany({
+    where: { id: { in: ids } },
+  })
+  revalidatePath("/portfolio")
+  revalidatePath("/portfolio/projects")
+  return { success: true }
+}
+
+export async function bulkUpdateBlogPostsAction(ids: string[], data: { published?: boolean; archived?: boolean }) {
+  await assertAdmin()
+  const updateData: any = {}
+  if (data.published !== undefined) {
+    updateData.published = data.published
+    updateData.publishedAt = data.published ? new Date() : null
+  }
+  if (data.archived !== undefined) {
+    updateData.archived = data.archived
+  }
+  await prisma.blogPost.updateMany({
+    where: { id: { in: ids } },
+    data: updateData,
+  })
+  revalidatePath("/blog")
+  return { success: true }
+}
+
+export async function bulkDeleteBlogPostsAction(ids: string[]) {
+  await assertAdmin()
+  await prisma.blogPost.deleteMany({
+    where: { id: { in: ids } },
+  })
+  revalidatePath("/blog")
+  return { success: true }
+}
+
+export async function bulkUpdateSkillsAction(ids: string[], active: boolean) {
+  await assertAdmin()
+  await prisma.skill.updateMany({
+    where: { id: { in: ids } },
+    data: { active },
+  })
+  revalidatePath("/portfolio")
+  return { success: true }
+}
+
+export async function bulkDeleteSkillsAction(ids: string[]) {
+  await assertAdmin()
+  await prisma.skill.deleteMany({
+    where: { id: { in: ids } },
+  })
+  revalidatePath("/portfolio")
+  return { success: true }
+}
+
+export async function bulkUpdateExperiencesAction(ids: string[], current: boolean) {
+  await assertAdmin()
+  await prisma.experience.updateMany({
+    where: { id: { in: ids } },
+    data: { current },
+  })
+  revalidatePath("/portfolio")
+  return { success: true }
+}
+
+export async function bulkDeleteExperiencesAction(ids: string[]) {
+  await assertAdmin()
+  await prisma.experience.deleteMany({
+    where: { id: { in: ids } },
+  })
+  revalidatePath("/portfolio")
+  return { success: true }
+}
+
+export async function bulkUpdateMessagesAction(ids: string[], read: boolean) {
+  await assertAdmin()
+  await prisma.contactMessage.updateMany({
+    where: { id: { in: ids } },
+    data: { read },
+  })
+  return { success: true }
+}
+
+export async function bulkDeleteMessagesAction(ids: string[]) {
+  await assertAdmin()
+  await prisma.contactMessage.deleteMany({
+    where: { id: { in: ids } },
+  })
+  return { success: true }
 }

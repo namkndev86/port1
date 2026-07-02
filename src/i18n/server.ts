@@ -1,4 +1,5 @@
 import { getDictionary } from './get-dictionary'
+
 import type { Locale } from './config'
 import type { TranslationKey } from './types'
 

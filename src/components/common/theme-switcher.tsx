@@ -1,10 +1,12 @@
 'use client'
 
-import { useTheme } from './theme-provider'
+import { useEffect, useRef,useState } from 'react'
+
+import { AnimatePresence,motion } from 'framer-motion'
+import { ChevronDown,Monitor, Moon, Sun } from 'lucide-react'
+
 import { useTranslation } from './locale-provider'
-import { useState, useEffect, useRef } from 'react'
-import { Sun, Moon, Monitor, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useTheme } from './theme-provider'
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme()

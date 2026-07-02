@@ -1,9 +1,12 @@
 "use client"
 
 import { useActionState } from "react"
-import { loginAction } from "@/app/[locale]/admin/actions"
-import { Loader2, Lock, Mail, ArrowLeft } from "lucide-react"
+
 import Link from "next/link"
+
+import { ArrowLeft,Loader2, Lock, Mail } from "lucide-react"
+
+import { loginAction } from "@/app/[locale]/admin/actions"
 
 export default function AdminLoginPage() {
   const [state, formAction, isPending] = useActionState(loginAction, null)

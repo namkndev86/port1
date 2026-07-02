@@ -1,8 +1,9 @@
-import "dotenv/config"
-import { PrismaClient, Role } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { Pool } from 'pg'
+import { PrismaClient, Role } from '@prisma/client'
 import * as bcrypt from 'bcryptjs'
+import { Pool } from 'pg'
+
+import "dotenv/config"
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -151,6 +152,7 @@ async function main() {
       title: 'Architecting a Resilient Serverless API with Next.js 15',
       slug: 'architecting-resilient-serverless-api-nextjs15',
       summary: 'Explore advanced caching strategies, connection pooling with Prisma, and error isolation methods inside Next.js 15 serverless functions.',
+      description: 'A deep dive into advanced caching strategies, connection pooling with Prisma, and error isolation methods inside Next.js 15 serverless functions.',
       content: `## The Serverless Database Connection Dilemma
 
 One of the most persistent hurdles in serverless environments is database connection management. Unlike traditional long-running Node.js servers, serverless functions scale horizontally instantly, spinning up and tearing down container instances rapidly. If not properly configured, each instance establishes a separate connection to your PostgreSQL database, quickly exhausting the maximum connection limit.
@@ -182,6 +184,10 @@ With the Next.js 15 App Router, you can leverage dynamic routing tags and the fe
 *   Enforce \`stale-while-revalidate\` patterns using Route Handler headers to serve instantaneous cached payloads while fetching fresh updates asynchronously.
 `,
       published: true,
+      status: 'PUBLISHED',
+      visibility: 'PUBLIC',
+      language: 'en',
+      readingTime: 2,
       publishedAt: new Date(),
       coverImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800',
       authorId: adminUser.id,
@@ -195,6 +201,7 @@ With the Next.js 15 App Router, you can leverage dynamic routing tags and the fe
       title: 'Mastering Tailwind CSS v4: What Developers Need to Know',
       slug: 'mastering-tailwind-css-v4',
       summary: 'Tailwind CSS v4 introduces a fully overhauled compiler, CSS-first configuration, and native cascading variables. Discover the performance implications and migration pathways.',
+      description: 'Tailwind CSS v4 introduces a fully overhauled compiler, CSS-first configuration, and native cascading variables. Discover the performance implications and migration pathways.',
       content: `## The Evolution of Utility-First Styling
 
 Tailwind CSS v4 marks a dramatic shift in how utility styles are compiled. Moving away from the JavaScript-based configuration model (\`tailwind.config.js\`), version 4 adopts a native CSS architecture. 
@@ -218,6 +225,10 @@ Instead of writing a JavaScript configuration, you customize your design tokens 
 Thanks to the Rust-based compiler engine (Oxide), compilation speeds are up to 10x faster compared to v3, enabling instant Hot Module Replacement (HMR) and significantly lighter build payloads.
 `,
       published: true,
+      status: 'PUBLISHED',
+      visibility: 'PUBLIC',
+      language: 'en',
+      readingTime: 2,
       publishedAt: new Date(),
       coverImage: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800',
       authorId: adminUser.id,

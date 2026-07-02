@@ -57,6 +57,7 @@ model Skill {
   name        String   @unique
   category    String   // Frontend, Backend, DevOps, Design, etc.
   proficiency Int      // 1 to 100 percentage
+  active      Boolean  @default(true)
   icon        String?  // Lucide icon name or SVG path
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -71,6 +72,7 @@ model Project {
   githubUrl    String?
   demoUrl      String?
   featured     Boolean        @default(false)
+  active       Boolean        @default(true)
   techStack    String[]       // List of technologies (e.g., Next.js, Go)
   challenges   String         @db.Text
   solutions    String         @db.Text
@@ -94,10 +96,23 @@ model BlogPost {
   title       String
   slug        String       @unique
   summary     String       @db.Text
-  content     String       @db.Text // Markdown / Rich Text
+  description String?      @db.Text
+  content     String       @db.Text // Markdown / Rich Text / Block JSON
   coverImage  String?
+  thumbnail   String?
+  readingTime Int?
+  status      String       @default("DRAFT") // DRAFT, PUBLISHED, SCHEDULED, ARCHIVED
   published   Boolean      @default(false)
+  archived    Boolean      @default(false)
   publishedAt DateTime?
+  seoTitle    String?
+  seoDescription String?   @db.Text
+  seoKeywords String?
+  canonicalUrl String?
+  ogImage     String?
+  visibility  String       @default("PUBLIC") // PUBLIC, PRIVATE
+  language    String       @default("en")
+  themeMetadata String?
   authorId    String
   author      User         @relation(fields: [authorId], references: [id])
   categoryId  String

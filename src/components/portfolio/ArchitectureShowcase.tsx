@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Server, Database, Globe, Layers, ShieldCheck, Zap } from "lucide-react"
+
+import { AnimatePresence,motion } from "framer-motion"
+import { Database, Globe, Layers, Server, ShieldCheck, Zap } from "lucide-react"
+
 import { useTranslation } from "@/components/common/locale-provider"
 
 const architectureNodes = [
