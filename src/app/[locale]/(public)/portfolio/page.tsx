@@ -445,40 +445,5 @@ function getDefaultExperiences(): any[] {
 }
 
 function getDefaultProjects(): any[] {
-  return [
-    {
-      id: "1",
-      title: "Vtracking Viettel",
-      slug: "vtracking-viettel",
-      description:
-        "Vehicle tracking and online monitoring solution utilizing GPS, mobile data transmission, and GIS digital maps. Includes live camera streams and WebSocket integrations.",
-      techStack: [
-        "jQuery",
-        "Bootstrap",
-        "WebSocket",
-        "Video Streaming",
-        "Play Framework",
-        "Go",
-      ],
-      demoUrl: "https://github.com/namkndev86/port1",
-      images: [],
-    },
-    {
-      id: "2",
-      title: "Manufacturing Execution System (MES-X)",
-      slug: "manufacturing-execution-system-mes-x",
-      description:
-        "A comprehensive management solution providing real-time tracking of manufacturing processes, order management, and interactive dashboards.",
-      techStack: [
-        "React",
-        "Redux",
-        "SWR",
-        "Material UI",
-        "NestJS",
-        "PostgreSQL",
-      ],
-      demoUrl: "https://github.com/namkndev86/port1",
-      images: [],
-    },
-  ];
+  return [];
 }
