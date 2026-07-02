@@ -12,7 +12,7 @@ export default function CMSSkeleton({ count = 3 }: CMSSkeletonProps) {
       {arr.map((_, i) => (
         <div
           key={i}
-          className="rounded-2xl border border-card-border/30 bg-[#040813]/25 p-5 flex items-start gap-4 h-24"
+          className="rounded-2xl border border-card-border/30 bg-card/25 p-5 flex items-start gap-4 h-24"
         >
           {/* Checkbox Skeleton */}
           <div className="w-4.5 h-4.5 rounded bg-card-border/40 shrink-0 mt-1.5" />

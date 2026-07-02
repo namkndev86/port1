@@ -23,12 +23,12 @@ export default function CMSPagination({ currentPage, totalPages, onPageChange }:
   const pages = getPageNumbers()
 
   return (
-    <div className="flex items-center justify-between p-4 glass rounded-2xl border border-card-border/40 bg-[#040813]/20 shadow-md">
+    <div className="flex items-center justify-between p-4 glass rounded-2xl border border-card-border/40 bg-card/45 shadow-md">
       
       {/* 1. Page Info text */}
       <span className="font-mono text-xs text-muted">
-        Page <span className="text-white font-bold">{currentPage}</span> of{" "}
-        <span className="text-white font-bold">{totalPages}</span>
+        Page <span className="text-foreground font-bold">{currentPage}</span> of{" "}
+        <span className="text-foreground font-bold">{totalPages}</span>
       </span>
 
       {/* 2. Page Buttons */}
@@ -40,7 +40,7 @@ export default function CMSPagination({ currentPage, totalPages, onPageChange }:
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           aria-label="Go to previous page"
-          className="p-2 rounded-xl border border-card-border/40 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-not-allowed"
+          className="p-2 rounded-xl border border-card-border/40 text-muted hover:text-foreground disabled:opacity-30 disabled:hover:text-muted hover:bg-background/80 transition-all cursor-pointer disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -58,7 +58,7 @@ export default function CMSPagination({ currentPage, totalPages, onPageChange }:
               className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                 isActive
                   ? "bg-primary border border-primary/20 text-white shadow-lg shadow-primary/10"
-                  : "border border-card-border/40 text-gray-400 hover:text-white hover:bg-white/5"
+                  : "border border-card-border/40 text-muted hover:text-foreground hover:bg-background/80"
               }`}
             >
               {p}
@@ -72,7 +72,7 @@ export default function CMSPagination({ currentPage, totalPages, onPageChange }:
           onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           aria-label="Go to next page"
-          className="p-2 rounded-xl border border-card-border/40 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-not-allowed"
+          className="p-2 rounded-xl border border-card-border/40 text-muted hover:text-foreground disabled:opacity-30 disabled:hover:text-muted hover:bg-background/80 transition-all cursor-pointer disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-4 h-4" />
         </button>

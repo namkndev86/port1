@@ -1096,7 +1096,7 @@ export default function AdminDashboard({
                       className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
                         paginatedItems.length > 0 && paginatedItems.map((item) => item.id).every((id) => selectedIds.includes(id))
                           ? "bg-primary border-primary text-white"
-                          : "border-card-border/80 bg-[#030611] text-transparent hover:border-primary/50"
+                          : "border-card-border/80 bg-background text-transparent hover:border-primary/50"
                       }`}
                     >
                       {paginatedItems.length > 0 && paginatedItems.map((item) => item.id).every((id) => selectedIds.includes(id)) && (
