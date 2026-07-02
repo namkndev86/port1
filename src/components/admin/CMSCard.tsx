@@ -98,14 +98,29 @@ export default function CMSCard({
       }`}
     >
       {/* 1. Selection Checkbox */}
-      <div className="pt-1.5 shrink-0 flex items-center justify-center">
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={() => onSelectToggle(item.id)}
-          aria-label={`Select row for bulk actions`}
-          className="w-4.5 h-4.5 rounded border-card-border/80 bg-[#030611] text-primary focus:ring-primary focus:ring-offset-[#0b0f19] cursor-pointer"
-        />
+      <div className="pt-1.5 shrink-0">
+        <label className="relative flex items-center justify-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => onSelectToggle(item.id)}
+            aria-label={`Select row for bulk actions`}
+            className="sr-only"
+          />
+          <div
+            className={`w-4.5 h-4.5 rounded border flex items-center justify-center transition-all ${
+              isSelected
+                ? "bg-primary border-primary text-white shadow-md shadow-primary/20"
+                : "border-card-border/80 bg-[#030611] text-transparent hover:border-primary/50"
+            }`}
+          >
+            {isSelected && (
+              <svg className="w-3 h-3 stroke-current" viewBox="0 0 24 24" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            )}
+          </div>
+        </label>
       </div>
 
       {/* 2. Middle Content Section */}

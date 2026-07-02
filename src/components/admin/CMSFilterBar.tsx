@@ -1,6 +1,7 @@
 "use client"
 
-import { Search, Plus, CalendarRange, ListFilter, ArrowUpDown, X } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import { Search, Plus, ListFilter, ArrowUpDown, X, ChevronDown } from "lucide-react"
 
 interface CMSFilterBarProps {
   type: "projects" | "blog" | "skills" | "experience" | "messages"
@@ -25,6 +26,24 @@ export default function CMSFilterBar({
   showForm,
   onAddClick,
 }: CMSFilterBarProps) {
+  const [statusOpen, setStatusOpen] = useState(false)
+  const [sortOpen, setSortOpen] = useState(false)
+  const statusRef = useRef<HTMLDivElement>(null)
+  const sortRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdowns on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (statusRef.current && !statusRef.current.contains(event.target as Node)) {
+        setStatusOpen(false)
+      }
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
+        setSortOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
   
   // Status options mapping based on resource type
   const statusOptions = {
@@ -67,9 +86,11 @@ export default function CMSFilterBar({
   ]
 
   const showAddBtn = type !== "messages"
+  const currentStatusLabel = statusOptions.find((opt) => opt.value === statusFilter)?.label || "All Statuses"
+  const currentSortLabel = sortOptions.find((opt) => opt.value === sortBy)?.label || "Newest Created"
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between w-full p-4 glass rounded-2xl border border-card-border/40 bg-[#040813]/60 shadow-lg">
+    <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between w-full p-4 glass rounded-2xl border border-card-border/40 bg-[#040813]/60 shadow-lg relative">
       
       {/* 1. Search Box with Icon */}
       <div className="flex-1 min-w-[200px] relative">
@@ -97,42 +118,82 @@ export default function CMSFilterBar({
 
       {/* 2. Filters & Actions toolbar */}
       <div className="flex flex-wrap items-center gap-3">
-        {/* Status Filter */}
-        <div className="flex items-center gap-2 relative">
+        {/* Status Filter Dropdown */}
+        <div ref={statusRef} className="flex items-center gap-2 relative">
           <span className="text-gray-500 shrink-0 hidden sm:inline">
             <ListFilter className="w-4 h-4" />
           </span>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            aria-label="Filter by Status"
-            className="px-3.5 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-xs font-semibold text-gray-300 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          <button
+            type="button"
+            onClick={() => {
+              setStatusOpen(!statusOpen)
+              setSortOpen(false)
+            }}
+            className="px-4 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-xs font-semibold text-gray-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary select-none w-40 justify-between"
           >
-            {statusOptions.map((opt) => (
-              <option key={opt.value} value={opt.value} className="bg-[#0b0f19]">
-                {opt.label}
-              </option>
-            ))}
-          </select>
+            <span className="truncate">{currentStatusLabel}</span>
+            <ChevronDown className="w-3.5 h-3.5 opacity-60 shrink-0" />
+          </button>
+
+          {statusOpen && (
+            <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl bg-[#0b0f19] border border-card-border/80 shadow-2xl z-20 overflow-hidden py-1">
+              {statusOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    setStatusFilter(opt.value)
+                    setStatusOpen(false)
+                  }}
+                  className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-[#1a2333]/50 transition-colors cursor-pointer flex items-center justify-between ${
+                    opt.value === statusFilter ? "text-primary bg-primary/5" : "text-gray-300"
+                  }`}
+                >
+                  {opt.label}
+                  {opt.value === statusFilter && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Sort selector */}
-        <div className="flex items-center gap-2 relative">
+        {/* Sort Selector Dropdown */}
+        <div ref={sortRef} className="flex items-center gap-2 relative">
           <span className="text-gray-500 shrink-0 hidden sm:inline">
             <ArrowUpDown className="w-4 h-4" />
           </span>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            aria-label="Sort options"
-            className="px-3.5 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-xs font-semibold text-gray-300 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          <button
+            type="button"
+            onClick={() => {
+              setSortOpen(!sortOpen)
+              setStatusOpen(false)
+            }}
+            className="px-4 py-2.5 bg-[#030611] border border-card-border/60 rounded-xl text-xs font-semibold text-gray-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary select-none w-44 justify-between"
           >
-            {sortOptions.map((opt) => (
-              <option key={opt.value} value={opt.value} className="bg-[#0b0f19]">
-                {opt.label}
-              </option>
-            ))}
-          </select>
+            <span className="truncate">{currentSortLabel}</span>
+            <ChevronDown className="w-3.5 h-3.5 opacity-60 shrink-0" />
+          </button>
+
+          {sortOpen && (
+            <div className="absolute right-0 top-full mt-1.5 w-48 rounded-xl bg-[#0b0f19] border border-card-border/80 shadow-2xl z-20 overflow-hidden py-1">
+              {sortOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    setSortBy(opt.value)
+                    setSortOpen(false)
+                  }}
+                  className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-[#1a2333]/50 transition-colors cursor-pointer flex items-center justify-between ${
+                    opt.value === sortBy ? "text-primary bg-primary/5" : "text-gray-300"
+                  }`}
+                >
+                  {opt.label}
+                  {opt.value === sortBy && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Create/Add Item toggle */}

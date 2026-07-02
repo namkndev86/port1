@@ -1080,13 +1080,28 @@ export default function AdminDashboard({
             {processedItems.length > 0 && (
               <div className="flex items-center justify-between px-5 py-2 border-b border-card-border/40 text-xs font-mono text-muted">
                 <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={paginatedItems.map((item) => item.id).every((id) => selectedIds.includes(id))}
-                    onChange={handleSelectAllToggle}
-                    aria-label="Select all on current page"
-                    className="w-4 h-4 rounded border-card-border bg-[#030611] text-primary focus:ring-primary cursor-pointer"
-                  />
+                  <label className="relative flex items-center justify-center cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={paginatedItems.length > 0 && paginatedItems.map((item) => item.id).every((id) => selectedIds.includes(id))}
+                      onChange={handleSelectAllToggle}
+                      aria-label="Select all on current page"
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                        paginatedItems.length > 0 && paginatedItems.map((item) => item.id).every((id) => selectedIds.includes(id))
+                          ? "bg-primary border-primary text-white"
+                          : "border-card-border/80 bg-[#030611] text-transparent hover:border-primary/50"
+                      }`}
+                    >
+                      {paginatedItems.length > 0 && paginatedItems.map((item) => item.id).every((id) => selectedIds.includes(id)) && (
+                        <svg className="w-2.5 h-2.5 stroke-current" viewBox="0 0 24 24" fill="none" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      )}
+                    </div>
+                  </label>
                   <span>Select All on Page ({paginatedItems.length})</span>
                 </div>
                 <span>Total Filtered: {processedItems.length}</span>
