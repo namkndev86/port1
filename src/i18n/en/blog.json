@@ -1,0 +1,15 @@
+{
+  "title": "Technical Writings",
+  "subtitle": "Insights on database design, serverless performance, and frontend animations.",
+  "search": "Search articles...",
+  "read_time": "{minutes} min read",
+  "published_at": "Published {date}",
+  "back": "Back to Blog",
+  "no_posts": "No posts found matching the query.",
+  "categories": {
+    "all": "All",
+    "architecture": "Architecture",
+    "engineering": "Engineering",
+    "design": "Design"
+  }
+}

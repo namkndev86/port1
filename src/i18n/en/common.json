@@ -1,0 +1,28 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "connect": "Connect"
+  },
+  "footer": {
+    "tagline": "Designing resilient architectures and immersive interfaces.",
+    "rights": "All rights reserved.",
+    "tech": "Built with Next.js 15, Tailwind v4 & Prisma."
+  },
+  "themes": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt",
+    "ja": "日本語"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "submit": "Submit"
+  }
+}
