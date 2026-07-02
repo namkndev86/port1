@@ -6,8 +6,8 @@ import { Skill } from '@prisma/client';
 export class SkillService {
   private skillRepo = new SkillRepository();
 
-  async getSkills(): Promise<Skill[]> {
-    return this.skillRepo.findAll();
+  async getSkills(options?: { activeOnly?: boolean }): Promise<Skill[]> {
+    return this.skillRepo.findAll(options);
   }
 
   async createSkill(input: SkillInput): Promise<Skill> {

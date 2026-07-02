@@ -6,8 +6,8 @@ import { Project } from '@prisma/client';
 export class ProjectService {
   private projectRepo = new ProjectRepository();
 
-  async getProjects(): Promise<ProjectWithImages[]> {
-    return this.projectRepo.findAll();
+  async getProjects(options?: { activeOnly?: boolean }): Promise<ProjectWithImages[]> {
+    return this.projectRepo.findAll(options);
   }
 
   async getFeaturedProjects(): Promise<ProjectWithImages[]> {

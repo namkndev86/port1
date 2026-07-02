@@ -19,6 +19,12 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
   const blogService = new BlogService()
   try {
     const post = await blogService.getPostBySlug(slug)
+    if (post.archived || !post.published) {
+      return {
+        title: "Blog Publication",
+        description: "Read technical publication details",
+      }
+    }
     return {
       title: post.title,
       description: post.summary,
@@ -43,6 +49,9 @@ export default async function BlogPostDetailPage({ params }: BlogPostDetailPageP
 
   try {
     post = await blogService.getPostBySlug(slug)
+    if (post.archived || !post.published) {
+      notFound()
+    }
   } catch (err) {
     // Check mock data
     const mock = getMockPostBySlug(slug)

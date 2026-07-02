@@ -22,7 +22,7 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   const { t } = await getTranslation(locale as Locale)
 
   try {
-    projects = await projectService.getProjects()
+    projects = await projectService.getProjects({ activeOnly: true })
     if (projects.length === 0) {
       projects = getDefaultProjects()
     }

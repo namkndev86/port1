@@ -55,7 +55,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
   try {
     // Attempt database fetching
     const [dbSkills, dbExperiences, dbProjects, dbUser] = await Promise.all([
-      skillService.getSkills().catch(() => []),
+      skillService.getSkills({ activeOnly: true }).catch(() => []),
       expService.getExperiences().catch(() => []),
       projectService.getFeaturedProjects().catch(() => []),
       userRepo.findByEmail("namkndev86@gmail.com").catch(() => null),

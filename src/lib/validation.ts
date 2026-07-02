@@ -29,6 +29,7 @@ export const skillSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   proficiency: z.number().int().min(1).max(100, 'Proficiency must be between 1 and 100'),
   icon: z.string().optional().nullable(),
+  active: z.boolean().optional().default(true),
 });
 
 export const experienceSchema = z.object({
@@ -49,6 +50,7 @@ export const projectSchema = z.object({
   githubUrl: z.string().url().optional().nullable().or(z.literal('')),
   demoUrl: z.string().url().optional().nullable().or(z.literal('')),
   featured: z.boolean().default(false),
+  active: z.boolean().optional().default(true),
   techStack: z.array(z.string()).min(1, 'At least one technology is required'),
   challenges: z.string().min(10, 'Challenges description is required'),
   solutions: z.string().min(10, 'Solutions description is required'),
@@ -62,6 +64,7 @@ export const blogPostSchema = z.object({
   content: z.string().min(20, 'Content details must be at least 20 characters'),
   coverImage: z.string().url().optional().nullable().or(z.literal('')),
   published: z.boolean().default(false),
+  archived: z.boolean().optional().default(false),
   categoryId: z.string().min(1, 'Category is required'),
   tagIds: z.array(z.string()).optional().default([]),
 });

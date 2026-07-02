@@ -32,6 +32,7 @@ export class BlogRepository {
 
     if (publishedOnly) {
       whereClause.published = true;
+      whereClause.archived = false;
     }
 
     if (categorySlug) {
