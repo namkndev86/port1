@@ -1,0 +1,29 @@
+{
+  "recommendations": [
+    // ── Required for this config to work ──────────────────────────────────────
+    // Prettier formatter (required by .prettierrc and .vscode/settings.json)
+    "esbenp.prettier-vscode",
+
+    // ESLint (required by eslint.config.mjs)
+    "dbaeumer.vscode-eslint",
+
+    // ── Tailwind CSS v4 ───────────────────────────────────────────────────────
+    // IntelliSense, class sorting, and autocomplete for @utility and @theme
+    "bradlc.vscode-tailwindcss",
+
+    // ── Prisma ────────────────────────────────────────────────────────────────
+    // Schema syntax highlighting and formatting for prisma/schema.prisma
+    "prisma.prisma",
+
+    // ── TypeScript productivity ───────────────────────────────────────────────
+    // Error lens shows TypeScript/ESLint errors inline
+    "usernamehw.errorlens",
+
+    // ── Import helper ─────────────────────────────────────────────────────────
+    // Auto-sorts and organizes imports (works alongside simple-import-sort)
+    "wix.vscode-import-cost",
+
+    // ── Git ───────────────────────────────────────────────────────────────────
+    "eamodio.gitlens"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+
+  // ── Quotes ─────────────────────────────────────────────────────────────────
+  // Detected: majority of TSX/JSX files use double quotes.
+  // Reason: JSX attribute strings are double-quoted by convention; this avoids
+  // mixed styles when writing className="..." and template literals `${}`.
+  "singleQuote": false,
+
+  // ── JSX Quotes ─────────────────────────────────────────────────────────────
+  // Keep JSX attributes with double quotes: className="..." href="..."
+  "jsxSingleQuote": false,
+
+  // ── Semicolons ──────────────────────────────────────────────────────────────
+  // Detected: most component and page files omit semicolons.
+  // Reason: ASI (Automatic Semicolon Insertion) is safe in TypeScript with
+  // proper module syntax. Omitting semicolons is cleaner and consistent with
+  // the majority of files in this project.
+  "semi": false,
+
+  // ── Trailing Commas ─────────────────────────────────────────────────────────
+  // "all" = trailing commas in function params and call args.
+  // Reason: Reduces git diff noise (adding a new param doesn't touch previous
+  // line). Supported in ES2017+ which this project targets (ES2017 in tsconfig).
+  "trailingComma": "all",
+
+  // ── Print Width ─────────────────────────────────────────────────────────────
+  // Detected: many Tailwind className strings and JSX attributes push lines to
+  // 100+ chars. 80 would cause excessive wrapping. 100 is the sweet spot.
+  "printWidth": 100,
+
+  // ── Tab Width ───────────────────────────────────────────────────────────────
+  // Detected: 2-space indentation throughout the entire codebase.
+  "tabWidth": 2,
+
+  // ── Tabs vs Spaces ──────────────────────────────────────────────────────────
+  // Spaces used everywhere — no tab characters detected.
+  "useTabs": false,
+
+  // ── Bracket Spacing ─────────────────────────────────────────────────────────
+  // Add spaces inside object literals: { key: value } not {key: value}.
+  // Consistent with how objects are written throughout the codebase.
+  "bracketSpacing": true,
+
+  // ── JSX Brackets ────────────────────────────────────────────────────────────
+  // false = closing > on its own line for multi-line JSX elements.
+  // Detected: JSX in this project puts > on new line for multi-prop elements.
+  "bracketSameLine": false,
+
+  // ── Arrow Function Parens ───────────────────────────────────────────────────
+  // "always" = always include parens: (x) => x  not  x => x
+  // Reason: TypeScript benefits from explicit param parens for type annotations.
+  "arrowParens": "always",
+
+  // ── End of Line ─────────────────────────────────────────────────────────────
+  // Linux development environment detected. LF line endings.
+  "endOfLine": "lf",
+
+  // ── Embedded Language Formatting ───────────────────────────────────────────
+  // Format code inside template literals when language is detectable.
+  "embeddedLanguageFormatting": "auto",
+
+  // ── HTML Whitespace ─────────────────────────────────────────────────────────
+  // "strict" = no inline whitespace collapsed.
+  "htmlWhitespaceSensitivity": "css",
+
+  // ── Prose Wrap ──────────────────────────────────────────────────────────────
+  // "preserve" = don't reformat markdown prose (for i18n JSON and README).
+  "proseWrap": "preserve"
+}

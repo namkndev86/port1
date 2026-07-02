@@ -1,0 +1,41 @@
+# .prettierignore
+# Generated from repository structure analysis
+
+# ─── Next.js build output ────────────────────────────────────────────────────
+.next/
+out/
+build/
+
+# ─── Dependencies ────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── TypeScript generated files ──────────────────────────────────────────────
+next-env.d.ts
+*.tsbuildinfo
+
+# ─── Prisma generated client ─────────────────────────────────────────────────
+# Prisma generates its own formatted code — do not reformat
+node_modules/.prisma/
+
+# ─── Lock files ──────────────────────────────────────────────────────────────
+# Package manager lock files use their own formatting
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# ─── Environment files ───────────────────────────────────────────────────────
+# Env files may have comments that shouldn't be wrapped
+.env
+.env.*
+
+# ─── Public assets ───────────────────────────────────────────────────────────
+# SVGs, generated images — not source code
+public/
+
+# ─── i18n JSON files ─────────────────────────────────────────────────────────
+# Translation files are hand-maintained; Prettier may corrupt nested key order
+# Uncomment if you want to preserve manual JSON formatting:
+# src/i18n/**/*.json
+
+# ─── Coverage / test artifacts ───────────────────────────────────────────────
+coverage/

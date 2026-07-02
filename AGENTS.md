@@ -1,10 +1,12 @@
-# AGENT.md
+# AGENTS.md
 
-## Purpose
+# Purpose
 
 This repository is maintained by both humans and AI agents.
 
-The purpose of this document is to define how agents should understand, modify, and maintain the project while preserving architecture, consistency, and historical knowledge.
+The purpose of this document is to define how AI agents should understand, modify, and maintain the project while preserving architecture, consistency, documentation, and historical knowledge.
+
+The repository is the source of truth. AI agents are collaborators responsible for producing production-ready implementations while keeping documentation synchronized with the codebase.
 
 ---
 
@@ -12,13 +14,22 @@ The purpose of this document is to define how agents should understand, modify, 
 
 The agent must:
 
-- Treat the repository as the source of truth.
-- Modify files directly when implementation is requested.
-- Keep architecture, implementation, documentation, and memory synchronized.
-- Preserve project consistency.
-- Prefer existing patterns over introducing new ones.
-- Never delete historical records unless explicitly requested.
-- Avoid making assumptions when requirements are unclear.
+* Treat the repository as the primary source of truth.
+* Read relevant documentation before making changes.
+* Modify files directly when implementation is requested.
+* Preserve the existing architecture whenever possible.
+* Prefer existing patterns over introducing new ones.
+* Keep implementation and documentation synchronized.
+* Avoid making assumptions when requirements are unclear.
+* Preserve project history and decision records.
+* Produce maintainable, readable, and production-ready code.
+
+The agent must not:
+
+* Introduce unnecessary architectural changes.
+* Rewrite large portions of the codebase without justification.
+* Remove historical documentation or decision records.
+* Claim work has been verified without evidence.
 
 ---
 
@@ -26,42 +37,109 @@ The agent must:
 
 When instructions conflict, use the following priority:
 
-1. Architecture documents
-2. ADRs (Architecture Decision Records)
-3. Requirements documents
-4. Conventions and standards
-5. Feature specifications
-6. Session logs
-7. Inline comments
+1. Architecture Documentation
+2. Architecture Decision Records (ADR)
+3. Requirements Documentation
+4. Coding Conventions & Standards
+5. Feature Specifications
+6. Project Memory
+7. Session Logs
+8. Inline Comments
 
-Higher-priority documents always override lower-priority documents.
+Higher-priority documentation always overrides lower-priority documentation.
 
 ---
 
-# Project Memory Workflow
+# Repository Bootstrap
 
-Before starting any task:
+If this is the first AI interaction with an existing repository, the agent must initialize the documentation structure before performing any implementation.
 
-Read all relevant memory and documentation files.
-
-Examples:
+Verify that the following directories exist:
 
 ```text
 .ai-memory/
 docs/
 architecture/
 specifications/
+adr/
+runbooks/
+walkthroughs/
 ```
+
+If any directory is missing:
+
+* Create the directory.
+* Generate a README.md describing its purpose.
+* Never overwrite existing files.
+
+Ensure the following files exist:
+
+```text
+.ai-memory/README.md
+docs/README.md
+architecture/README.md
+specifications/README.md
+adr/README.md
+```
+
+If any file is missing:
+
+* Create it.
+* Add an appropriate initial description.
+
+The bootstrap process must never overwrite existing documentation.
+
+After bootstrap is complete, continue with Project Discovery.
+
+---
+
+# Project Discovery
+
+Before implementing any task, the agent must understand the project.
+
+Review all documentation relevant to the task.
 
 At minimum, review:
 
-- architecture documentation
-- requirements
-- conventions
-- decision records
-- feature specifications related to the task
+* Architecture documentation
+* Requirements
+* Coding conventions
+* Architecture Decision Records (ADR)
+* Feature specifications
+* Project memory
 
-Memory and documentation are considered the source of truth.
+Typical locations include:
+
+```text
+.ai-memory/
+docs/
+architecture/
+specifications/
+adr/
+```
+
+If documentation does not exist, the existing source code temporarily becomes the source of truth.
+
+When requirements are ambiguous, the agent should request clarification instead of making assumptions.
+
+---
+
+# Task Execution Workflow
+
+For every implementation request:
+
+1. Understand the requirements.
+2. Review documentation.
+3. Review the affected source code.
+4. Understand the current architecture.
+5. Implement the requested changes.
+6. Update or add tests when appropriate.
+7. Update documentation.
+8. Update project memory.
+9. Create or update ADRs if architectural decisions changed.
+10. Summarize the completed work.
+
+Implementation should not stop at analysis when coding has been explicitly requested.
 
 ---
 
@@ -69,95 +147,96 @@ Memory and documentation are considered the source of truth.
 
 Before making changes:
 
-- Understand the existing architecture.
-- Follow established patterns.
-- Reuse existing modules when possible.
-- Avoid introducing duplicate solutions.
+* Understand the existing architecture.
+* Follow established design patterns.
+* Reuse existing modules whenever possible.
+* Maintain consistency with the existing codebase.
 
 Do not:
 
-- Rewrite large sections unnecessarily.
-- Replace established patterns without justification.
-- Introduce breaking architectural changes without documentation.
+* Introduce duplicate implementations.
+* Replace established patterns without justification.
+* Introduce breaking architectural changes without documentation.
 
 When architecture changes:
 
-- Update documentation.
-- Record decisions.
-- Explain reasoning.
+* Update architecture documentation.
+* Record an ADR.
+* Explain the reasoning.
 
 ---
 
 # Documentation Rules
 
-Whenever implementation changes affect behavior, architecture, APIs, workflows, or deployment:
+Documentation must evolve together with the implementation.
 
-Update the corresponding documentation.
+Whenever implementation changes:
 
-Possible locations include:
+* Behavior
+* Architecture
+* APIs
+* Workflows
+* Deployment
+* User-facing functionality
 
-```text
-docs/
-architecture/
-specifications/
-runbooks/
-walkthroughs/
-```
+the corresponding documentation must also be updated.
 
-Documentation should remain synchronized with implementation.
+If documentation for the modified area does not exist, the agent must create it.
+
+Depending on the scope of the implementation, generate or update:
+
+* Feature Specification
+* Architecture Notes
+* Architecture Decision Record (ADR)
+* Project Memory Summary
+* API Contract
+* Runbook
+* Walkthrough Documentation
+
+Never leave newly implemented functionality undocumented.
 
 ---
 
-# Decision Records
+# Decision Records (ADR)
 
-Significant technical decisions should be recorded.
+Significant technical decisions should always be documented.
 
-Examples:
+Examples include:
 
-- architecture changes
-- technology selection
-- database changes
-- deployment strategy changes
-- API contract changes
-- security decisions
+* Architecture changes
+* Technology selection
+* Database changes
+* Deployment strategy
+* API contract changes
+* Authentication changes
+* Authorization changes
+* Security decisions
+* Scalability decisions
+* Performance optimizations
 
-Historical decisions must remain traceable.
+Decision history must remain traceable.
+
+Never modify historical ADRs to hide previous decisions.
 
 ---
 
 # API Contract Rules
 
-For systems that expose APIs:
+For every public API:
 
-Every API should have:
+Document:
 
-- endpoint definition
-- request contract
-- response contract
-- error contract
+* Endpoint
+* Method
+* Request contract
+* Response contract
+* Error contract
+* Authentication requirements
+* Validation rules
 
 Consumers and providers must remain synchronized.
 
-API contracts are the source of truth for integrations.
-
-Do not introduce undocumented API changes.
-
----
-
-# Implementation Rules
-
-When implementing a task:
-
-1. Understand requirements.
-2. Review relevant documentation.
-3. Review affected code.
-4. Implement the solution.
-5. Update tests when necessary.
-6. Update documentation.
-7. Update memory and decision records if required.
-8. Summarize changes.
-
-Do not stop at analysis when implementation is requested.
+Undocumented API changes are not allowed.
 
 ---
 
@@ -165,16 +244,17 @@ Do not stop at analysis when implementation is requested.
 
 Refactoring should:
 
-- Improve maintainability.
-- Preserve behavior.
-- Reduce duplication.
-- Improve clarity.
+* Improve maintainability.
+* Improve readability.
+* Reduce duplication.
+* Simplify complexity.
+* Preserve behavior.
 
 Avoid:
 
-- unnecessary rewrites
-- speculative abstractions
-- large-scale restructuring without justification
+* Speculative abstractions.
+* Unnecessary rewrites.
+* Large-scale restructuring without justification.
 
 ---
 
@@ -182,11 +262,14 @@ Avoid:
 
 When modifying code:
 
-- Run relevant tests when available.
-- Add tests for new behavior when appropriate.
-- Ensure existing behavior remains functional.
+* Run relevant tests if available.
+* Add tests for new behavior when appropriate.
+* Preserve existing functionality.
+* Do not introduce regressions.
 
-Do not claim verification without validation.
+Do not claim verification unless validation has been performed.
+
+If tests cannot be executed, clearly explain why.
 
 ---
 
@@ -194,11 +277,11 @@ Do not claim verification without validation.
 
 If the project uses phases, milestones, or roadmaps:
 
-- Follow the current phase scope.
-- Do not implement future-scope features unless explicitly requested.
-- Complete implementation before claiming completion.
-- Complete integration before claiming delivery.
-- Complete verification before claiming final completion.
+* Respect the current phase.
+* Do not implement future-scope functionality unless explicitly requested.
+* Complete implementation before claiming delivery.
+* Complete integration before claiming integration.
+* Complete verification before claiming completion.
 
 Implementation, integration, and verification are separate stages.
 
@@ -206,9 +289,7 @@ Implementation, integration, and verification are separate stages.
 
 # Status Definitions
 
-Use status reporting consistently.
-
-Allowed statuses:
+Use only the following statuses:
 
 ```text
 PLANNING
@@ -223,13 +304,18 @@ COMPLETED
 BLOCKED
 ```
 
-Do not report:
+Never report:
 
 ```text
 COMPLETED
 ```
 
-unless implementation, integration, and verification requirements have been satisfied.
+unless all of the following are true:
+
+* Implementation is complete.
+* Integration is complete.
+* Documentation is synchronized.
+* Verification has been completed.
 
 ---
 
@@ -237,37 +323,60 @@ unless implementation, integration, and verification requirements have been sati
 
 Do not remove:
 
-- ADRs
-- decision history
-- changelogs
-- session logs
-- architectural records
+* ADRs
+* Changelogs
+* Project Memory
+* Session Logs
+* Architecture Documentation
+* Historical Specifications
 
-Preserve historical context whenever possible.
+Historical context should always be preserved.
 
 ---
 
 # Agent Execution Checklist
 
-Before Task
+## Before Every Task
 
-- Read relevant documentation.
-- Read memory files.
-- Understand requirements.
-- Understand architecture.
+* Read architecture documentation.
+* Read relevant requirements.
+* Read project memory.
+* Review ADRs.
+* Review feature specifications.
+* Understand the affected code.
+* Verify documentation structure.
 
-During Task
+## During Implementation
 
-- Follow existing conventions.
-- Maintain consistency.
-- Implement requested changes.
+* Follow existing architecture.
+* Reuse existing patterns.
+* Keep implementation consistent.
+* Avoid unnecessary refactoring.
+* Maintain code quality.
 
-After Task
+## After Implementation
 
-- Update documentation.
-- Update memory.
-- Update decision records if needed.
-- Record significant changes.
-- Summarize completed work.
+* Update documentation.
+* Update project memory.
+* Update ADR if necessary.
+* Update API contracts if necessary.
+* Update tests if necessary.
+* Summarize the completed work.
+* Report the appropriate project status.
 
-Failure to follow this workflow is considered a project defect.
+---
+
+# Definition of Done
+
+A task is considered complete only when:
+
+* Requirements have been implemented.
+* Architecture remains consistent.
+* Tests have been updated when appropriate.
+* Documentation has been synchronized.
+* Project memory has been updated.
+* ADRs have been recorded when necessary.
+* API contracts have been updated when applicable.
+* No unintended regressions have been introduced.
+
+Only after these conditions have been satisfied may the task be reported as **COMPLETED**.
