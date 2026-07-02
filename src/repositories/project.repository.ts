@@ -1,5 +1,6 @@
+import { type Project, type ProjectImage } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { Project, ProjectImage } from '@prisma/client';
 
 export type ProjectWithImages = Project & { images: ProjectImage[] };
 

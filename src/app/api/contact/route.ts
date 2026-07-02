@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server"
-import { ContactService } from "@/services/contact.service"
+import { type NextRequest, NextResponse } from "next/server"
+
 import { handleApiError } from "@/lib/errors"
+import { ContactService } from "@/services/contact.service"
 
 export async function POST(req: NextRequest) {
   try {

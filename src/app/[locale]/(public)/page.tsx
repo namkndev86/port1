@@ -1,6 +1,7 @@
-import { getDictionary } from "@/i18n/get-dictionary"
 import { LocaleProvider } from "@/components/common/locale-provider"
 import HomeClient from "@/components/portfolio/HomeClient"
+import { getDictionary } from "@/i18n/get-dictionary"
+
 import type { Locale } from "@/i18n/config"
 
 interface HomePageProps {

@@ -1,7 +1,7 @@
 "use client"
 
 import { AnimatePresence, motion } from "framer-motion"
-import { Check, X, ShieldAlert, Trash2, Globe, FileDown } from "lucide-react"
+import { Check, FileDown,Globe, ShieldAlert, Trash2, X } from "lucide-react"
 
 interface CMSBulkToolbarProps {
   type: "projects" | "blog" | "skills" | "experience" | "messages"

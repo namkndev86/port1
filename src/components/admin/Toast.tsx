@@ -1,7 +1,7 @@
 "use client"
 
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircle2, AlertCircle, Info, X } from "lucide-react"
+import { AlertCircle, CheckCircle2, Info, X } from "lucide-react"
 
 export interface ToastMessage {
   id: string

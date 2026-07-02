@@ -1,7 +1,8 @@
 "use client"
 
-import { Plus, Trash2, ArrowRight, ArrowDown } from "lucide-react"
-import { Block } from "../types"
+import { ArrowDown,ArrowRight, Trash2 } from "lucide-react"
+
+import { type Block } from "../types"
 
 interface TableBlockProps {
   block: Block

@@ -1,7 +1,8 @@
 "use client"
 
 import { Terminal } from "lucide-react"
-import { Block } from "../types"
+
+import { type Block } from "../types"
 
 interface CodeBlockProps {
   block: Block

@@ -1,11 +1,13 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
-import { Eye, Copy, Check, Terminal, ExternalLink, Sparkles, AlertTriangle, AlertCircle, CheckCircle, Info, Quote, ChevronDown } from "lucide-react"
-import katex from "katex"
-import "katex/dist/katex.min.css"
+import { useEffect, useMemo,useState } from "react"
 
-import { Block } from "../admin/editor/types"
+import katex from "katex"
+import { AlertCircle, AlertTriangle, Check, CheckCircle, ChevronDown,Copy, ExternalLink, Info, Quote, Sparkles, Terminal } from "lucide-react"
+
+import { type Block } from "../admin/editor/types"
+
+import "katex/dist/katex.min.css"
 
 interface BlockRendererProps {
   content: string // JSON string array of blocks

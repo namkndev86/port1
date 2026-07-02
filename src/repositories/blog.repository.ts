@@ -1,5 +1,6 @@
+import { type BlogCategory, type BlogPost, type BlogTag } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { BlogPost, BlogCategory, BlogTag } from '@prisma/client';
 
 export type BlogPostWithRelations = BlogPost & {
   category: BlogCategory;

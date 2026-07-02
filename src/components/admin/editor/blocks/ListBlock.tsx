@@ -1,7 +1,8 @@
 "use client"
 
-import { Plus, Trash2, List, ListOrdered, CheckSquare } from "lucide-react"
-import { Block } from "../types"
+import { CheckSquare,List, ListOrdered, Plus, Trash2 } from "lucide-react"
+
+import { type Block } from "../types"
 
 interface ListBlockProps {
   block: Block

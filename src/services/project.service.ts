@@ -1,7 +1,8 @@
-import { ProjectRepository, ProjectWithImages } from '@/repositories/project.repository';
-import { projectSchema, ProjectInput } from '@/lib/validation';
+import { type Project } from '@prisma/client';
+
 import { NotFoundError, ValidationError } from '@/lib/errors';
-import { Project } from '@prisma/client';
+import { type ProjectInput,projectSchema } from '@/lib/validation';
+import { ProjectRepository, type ProjectWithImages } from '@/repositories/project.repository';
 
 export class ProjectService {
   private projectRepo = new ProjectRepository();

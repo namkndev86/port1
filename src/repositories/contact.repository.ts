@@ -1,5 +1,6 @@
+import { type ContactMessage } from '@prisma/client';
+
 import prisma from '@/lib/db';
-import { ContactMessage } from '@prisma/client';
 
 export class ContactRepository {
   async create(data: Omit<ContactMessage, 'id' | 'read' | 'createdAt'>): Promise<ContactMessage> {

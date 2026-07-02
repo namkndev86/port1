@@ -1,7 +1,8 @@
-import { ContactRepository } from '@/repositories/contact.repository';
-import { contactMessageSchema, ContactMessageInput } from '@/lib/validation';
+import { type ContactMessage } from '@prisma/client';
+
 import { NotFoundError, ValidationError } from '@/lib/errors';
-import { ContactMessage } from '@prisma/client';
+import { type ContactMessageInput,contactMessageSchema } from '@/lib/validation';
+import { ContactRepository } from '@/repositories/contact.repository';
 
 export class ContactService {
   private contactRepo = new ContactRepository();

@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { Block } from "../types"
+
+import { type Block } from "../types"
 
 interface ParagraphBlockProps {
   block: Block
